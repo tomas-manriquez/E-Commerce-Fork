@@ -1,4 +1,4 @@
 package com.example.ecommerce.services;
 
-public class detalleOrdenService {
+public class ClienteService {
 }
