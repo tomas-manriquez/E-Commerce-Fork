@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class clienteEntity {
+public class ClienteEntity {
     private Long idCliente;
     private String nombre;
     private String direccion;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class categoriaEntity {
+public class CategoriaEntity {
     private Long idCategoria;
     private String nombre;
 }

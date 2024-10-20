@@ -5,15 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ordenEntity {
+public class DetalleOrdenEntity {
+    private Long idDetalle;
     private Long idOrden;
-    private LocalDateTime fechaOrden;
-    private String estado;
-    private Long idCliente;
-    private BigDecimal total;
+    private Long idProducto;
+    private int cantidad;
+    private BigDecimal precioUnitario;
 }

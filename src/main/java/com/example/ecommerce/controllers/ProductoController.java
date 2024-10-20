@@ -1,4 +1,4 @@
 package com.example.ecommerce.controllers;
 
-public class ordenController {
+public class ProductoController {
 }
