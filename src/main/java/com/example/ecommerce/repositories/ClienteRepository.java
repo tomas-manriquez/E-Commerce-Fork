@@ -8,9 +8,8 @@ import java.util.List;
 @Repository
 public interface ClienteRepository {
     ClienteEntity findById(Long id);
-    List<ClienteEntity> findAll();
+    ClienteEntity findClienteByUsername(String username);
     void save(ClienteEntity cliente);
     void update(ClienteEntity cliente);
     void delete(ClienteEntity cliente);
-    void deleteById(Long id);
 }

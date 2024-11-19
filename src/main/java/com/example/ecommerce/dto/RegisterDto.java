@@ -1,14 +1,9 @@
-package com.example.ecommerce.entities;
+package com.example.ecommerce.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ClienteEntity {
-    private Long idCliente;
+public class RegisterDto {
     private String nombre;
     private String direccion;
     private String email;
