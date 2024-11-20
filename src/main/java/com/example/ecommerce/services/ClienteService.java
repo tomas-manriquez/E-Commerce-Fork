@@ -23,7 +23,16 @@ public class ClienteService {
     }
 
     public ClienteEntity getUserByUsername(String username) {
-        return clienteRepository.findClienteByUsername(username);
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de usuario no puede ser nulo o vacío.");
+        }
+
+        ClienteEntity cliente = clienteRepository.findClienteByUsername(username);
+        if (cliente == null) {
+            throw new IllegalArgumentException("No se encontró ningún cliente con el nombre de usuario: " + username);
+        }
+
+        return cliente;
     }
 
     public void updateCliente(ClienteEntity cliente) {

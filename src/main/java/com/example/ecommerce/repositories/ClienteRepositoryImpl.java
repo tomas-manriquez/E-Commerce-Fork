@@ -24,16 +24,12 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public ClienteEntity findClienteByUsername(String username) {
-        if (username == null || username.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de usuario no puede ser nulo o vacío.");
-        }
-
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM clientes WHERE username = :username")
                     .addParameter("username", username)
                     .executeAndFetchFirst(ClienteEntity.class);
         } catch (Exception e) {
-            throw new RuntimeException("Error al buscar el cliente por username: " + username, e);
+            throw new RuntimeException("Error al buscar el cliente por username.", e);
         }
     }
 
