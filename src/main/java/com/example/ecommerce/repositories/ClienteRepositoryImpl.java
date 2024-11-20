@@ -59,9 +59,6 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public void update(ClienteEntity cliente) {
-        if (cliente.getIdCliente() == null) {
-            throw new IllegalArgumentException("El ID del cliente no puede ser nulo para actualizar.");
-        }
         StringBuilder queryBuilder = new StringBuilder("UPDATE clientes SET ");
         Map<String, Object> parameters = new HashMap<>();
         if (cliente.getNombre() != null && !cliente.getNombre().isBlank()) {
@@ -105,10 +102,6 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public void delete(ClienteEntity cliente) {
-        if (cliente == null || cliente.getIdCliente() == null) {
-            throw new IllegalArgumentException("El cliente o su ID no puede ser nulo para eliminar.");
-        }
-
         try (org.sql2o.Connection con = sql2o.open()) {
             con.createQuery("DELETE FROM clientes WHERE idcliente = :idCliente")
                     .addParameter("idCliente", cliente.getIdCliente())

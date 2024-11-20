@@ -81,3 +81,26 @@ CREATE TABLE IF NOT EXISTS public.ordenes
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.ordenes
     OWNER TO postgres;
+
+
+-- Table: public.detalleordenes
+
+-- Eliminar la tabla si ya existe (para evitar errores)
+-- DROP TABLE IF EXISTS public.detalleordenes;
+
+-- Crear la tabla detalleordenes
+CREATE TABLE IF NOT EXISTS public.detalleordenes
+(
+    iddetalle BIGSERIAL PRIMARY KEY,        -- ID autoincremental
+    idorden BIGINT,                         -- Referencia a la orden
+    idproducto BIGINT,                      -- Referencia al producto
+    cantidad int,                           -- Cantidad de producto en la orden
+    preciounitario DECIMAL(10,2)            -- Precio unitario del producto
+    CONSTRAINT fk_orden FOREIGN KEY (idorden) REFERENCES public.ordenes (idorden),
+    CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto)
+    )
+    TABLESPACE pg_default;
+
+-- Establecer el propietario de la tabla
+ALTER TABLE IF EXISTS public.detalleordenes
+    OWNER TO postgres;
