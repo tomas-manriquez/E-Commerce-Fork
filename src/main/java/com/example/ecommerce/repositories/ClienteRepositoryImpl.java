@@ -41,14 +41,15 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     public void save(ClienteEntity cliente) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
             con.createQuery(
-                            "INSERT INTO clientes (nombre, direccion, email, telefono, password, username) " +
-                                    "VALUES (:nombre, :direccion, :email, :telefono, :password, :username)")
+                            "INSERT INTO clientes (nombre, direccion, email, telefono, password, username, rol) " +
+                                    "VALUES (:nombre, :direccion, :email, :telefono, :password, :username, :rol)")
                     .addParameter("nombre", cliente.getNombre())
                     .addParameter("direccion", cliente.getDireccion())
                     .addParameter("email", cliente.getEmail())
                     .addParameter("telefono", cliente.getTelefono())
                     .addParameter("password", cliente.getPassword())
                     .addParameter("username", cliente.getUsername())
+                    .addParameter("rol", cliente.getRol())
                     .executeUpdate();
             Long generatedId = con.createQuery("SELECT currval('clientes_idcliente_seq')")
                     .executeScalar(Long.class);

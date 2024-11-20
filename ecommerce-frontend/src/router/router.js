@@ -2,33 +2,57 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
     history: createWebHistory(process.env.VUE_APP_BASE_URL),
-    routes:[
+    routes: [
         {
             path: '/',
-            name: "home",
+            name: 'home',
             component: () => import('../vistas/PrincipalView.vue'),
-            alias: '/Home'
+            alias: '/Home',
+            meta: { requiresAuth: false }, // No requiere autenticación
         },
         {
             path: '/clientes',
-            name: "clientes",
+            name: 'clientes',
             component: () => import('../vistas/ManejoClienteView.vue'),
-            alias: '/Cliente'
+            alias: '/Cliente',
+            meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
             path: '/ordenes',
-            name: "ordenes",
+            name: 'ordenes',
             component: () => import('../vistas/ManejoOrdenView.vue'),
-            alias: '/Orden'
+            alias: '/Orden',
+            meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
             path: '/productos',
-            name: "productos",
+            name: 'productos',
             component: () => import('../vistas/ManejoProductoView.vue'),
-            alias: '/Productos'
-        }
-    ]
+            alias: '/Productos',
+            meta: { requiresAuth: true }, // Requiere autenticación
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: () => import('../vistas/LoginView.vue'),
+            meta: { requiresAuth: false }, // No requiere autenticación
+        },{
+            path: '/registro',
+            name: 'registro',
+            component: () => import('../vistas/RegisterView.vue'),
+            meta: { requiresAuth: false}, // No requiere autenticación
+        },
+    ],
 });
 
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('token');
+
+    if (to.meta.requiresAuth && !token) {
+        next('/login');
+    } else {
+        next();
+    }
+});
 
 export default router;

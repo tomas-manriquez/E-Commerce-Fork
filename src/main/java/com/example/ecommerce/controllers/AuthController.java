@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,6 +61,7 @@ public class AuthController {
         ClienteEntity newUser = new ClienteEntity();
         newUser.setUsername(registerDto.getUsername());
         newUser.setPassword(passwordEncoder.encode(registerDto.getPassword())); // Encriptar la contraseña
+        System.out.println("Rol guardandose: " + registerDto.getRol());
         newUser.setRol(registerDto.getRol());
         newUser.setEmail(registerDto.getEmail());
         newUser.setNombre(registerDto.getNombre());
@@ -73,6 +71,15 @@ public class AuthController {
         userService.createCliente(newUser);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // Remueve "Bearer " del token
+        }
+        boolean isValid = jwtUtil.isValid(token);
+        return ResponseEntity.ok(isValid);
     }
 
     @PostMapping("/test")
