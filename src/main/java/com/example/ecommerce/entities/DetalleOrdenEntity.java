@@ -13,6 +13,6 @@ public class DetalleOrdenEntity {
     private Long idDetalle;
     private Long idOrden;
     private Long idProducto;
-    private int cantidad;
+    private Integer cantidad;
     private BigDecimal precioUnitario;
 }

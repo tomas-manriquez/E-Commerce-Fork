@@ -53,8 +53,28 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 
     @Override
     public void update(ProductoEntity producto) {
-
+        try (org.sql2o.Connection con = sql2o.open()) {
+            con.createQuery("UPDATE productos SET " +
+                            "nombre = :nombre, " +
+                            "descripcion = :descripcion, " +
+                            "precio = :precio, " +
+                            "stock = :stock, " +
+                            "estado = :estado, " +
+                            "idcategoria = :idcategoria " +
+                            "WHERE idproducto = :idproducto")
+                    .addParameter("nombre", producto.getNombre())
+                    .addParameter("descripcion", producto.getDescripcion())
+                    .addParameter("precio", producto.getPrecio())
+                    .addParameter("stock", producto.getStock())
+                    .addParameter("estado", producto.getEstado())
+                    .addParameter("idcategoria", producto.getIdCategoria())
+                    .addParameter("idproducto", producto.getIdProducto())
+                    .executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al actualizar el producto", ex);
+        }
     }
+
 
     @Override
     public void delete(ProductoEntity producto) {
