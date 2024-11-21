@@ -11,8 +11,8 @@ public class ProductoEntity {
     private Long idProducto;
     private String nombre;
     private String descripcion;
-    private double precio;
-    private int stock;
+    private Double precio;
+    private Integer stock;
     private String estado;
     private Long idCategoria;
 }

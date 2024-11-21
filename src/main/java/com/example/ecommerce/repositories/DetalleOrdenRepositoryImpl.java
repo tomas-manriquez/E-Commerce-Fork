@@ -54,7 +54,22 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
 
     @Override
     public void update(DetalleOrdenEntity detalleOrden) {
-
+        try (org.sql2o.Connection con = sql2o.open()) {
+            con.createQuery("UPDATE detalleordenes SET "+
+                            "idorden = :idorden, " +
+                            "idproducto = :idproducto, " +
+                            "cantidad = :cantidad, " +
+                            "preciounitario = :preciounitario " +
+                            "WHERE iddetalle = :iddetalle")
+                    .addParameter("idorden", detalleOrden.getIdOrden())
+                    .addParameter("idproducto", detalleOrden.getIdProducto())
+                    .addParameter("cantidad", detalleOrden.getCantidad())
+                    .addParameter("preciounitario", detalleOrden.getPrecioUnitario())
+                    .addParameter("iddetalle", detalleOrden.getIdDetalle())
+                    .executeUpdate();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al actualizar el producto", ex);
+        }
     }
 
     @Override
