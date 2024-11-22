@@ -37,7 +37,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
                                     "VALUES (:nombre)")
                     .addParameter("nombre", categoria.getNombre())
                     .executeUpdate();
-            Long generatedId = con.createQuery("SELECT currval('categoria_idcategoria_seq')")
+            Long generatedId = con.createQuery("SELECT currval('categorias_idcategoria_seq')")
                     .executeScalar(Long.class);
             categoria.setIdCategoria(generatedId);
             con.commit();
