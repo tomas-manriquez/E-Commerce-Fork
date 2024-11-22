@@ -12,7 +12,7 @@ public class DetalleOrdenService {
     @Autowired
     private DetalleOrdenRepository detalleOrdenRepository;
 
-    public List<DetalleOrdenEntity> getdAllDetalles() {
+    public List<DetalleOrdenEntity> getAllDetalles() {
         return detalleOrdenRepository.findAll();
     }
 
