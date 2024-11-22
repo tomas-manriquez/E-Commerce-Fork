@@ -16,7 +16,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public ProductoEntity findById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM productos WHERE id = :id")
+            return con.createQuery("SELECT * FROM productos WHERE idproducto = :id")
                         .addParameter("id", id)
                         .executeAndFetchFirst(ProductoEntity.class);
         }
@@ -79,7 +79,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public void delete(ProductoEntity producto) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM productos WHERE id = :id")
+            con.createQuery("DELETE FROM productos WHERE idproducto = :id")
                     .addParameter("id", producto.getIdProducto())
                     .executeUpdate();
         } catch (Sql2oException ex) {
@@ -90,7 +90,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public void deleteById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM productos WHERE id = :id")
+            con.createQuery("DELETE FROM productos WHERE idproducto = :id")
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
