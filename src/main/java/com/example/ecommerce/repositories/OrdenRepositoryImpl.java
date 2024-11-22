@@ -15,7 +15,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     @Override
     public OrdenEntity findById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("SELECT * FROM ordenes WHERE idorden = :id")
+            return con.createQuery("SELECT * FROM ordenes WHERE idorden = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(OrdenEntity.class);
         }
@@ -24,7 +24,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     @Override
     public List<OrdenEntity> findAll() {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("SELECT * FROM ordenes")
+            return con.createQuery("SELECT * FROM ordenes")
                     .executeAndFetch(OrdenEntity.class);
         }
     }
