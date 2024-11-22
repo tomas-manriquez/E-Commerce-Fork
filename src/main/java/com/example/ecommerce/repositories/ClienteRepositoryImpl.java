@@ -16,7 +16,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     @Override
     public ClienteEntity findById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM clientes WHERE clienteid = :id")
+            return con.createQuery("SELECT * FROM clientes WHERE idcliente = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(ClienteEntity.class);
         }

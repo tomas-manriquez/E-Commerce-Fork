@@ -15,7 +15,7 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     @Override
     public DetalleOrdenEntity findById(long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM detalleordenes WHERE id = :id")
+            return con.createQuery("SELECT * FROM detalleordenes WHERE idorden = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(DetalleOrdenEntity.class);
         } catch (Exception e) {
@@ -36,8 +36,7 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     @Override
     public void save(DetalleOrdenEntity detalleOrden) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
-            con.createQuery("INSERT INTO productos (idorden, idproducto, cantidad, preciounitario)"+
-                            "VALUES (:idorden, :idproducto, :cantidad, :preciounitario)")
+            con.createQuery("INSERT INTO public.detalleordenes(idorden, idproducto, cantidad, preciounitario) VALUES (:idorden,:idproducto,:cantidad,:preciounitario);")
                     .addParameter("idorden", detalleOrden.getIdOrden())
                     .addParameter("idproducto", detalleOrden.getIdProducto())
                     .addParameter("cantidad", detalleOrden.getCantidad())
@@ -75,7 +74,7 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     @Override
     public void delete(DetalleOrdenEntity detalleOrden) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM detalleordenes WHERE id = :id")
+            con.createQuery("DELETE FROM detalleordenes WHERE idorden = :id")
                     .addParameter("id", detalleOrden.getIdOrden())
                     .executeUpdate();
         }
@@ -84,7 +83,7 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     @Override
     public void deleteById(long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM detalleordenes WHERE id = :id")
+            con.createQuery("DELETE FROM detalleordenes WHERE idorden = :id")
                     .addParameter("id", id)
                     .executeUpdate();
         }
