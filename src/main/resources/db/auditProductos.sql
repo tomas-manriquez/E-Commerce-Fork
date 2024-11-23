@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.auditoria_productos
     operacion VARCHAR(10) NOT NULL, -- 'INSERT', 'UPDATE', 'DELETE'
     consulta TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE CASCADE
+    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE CASCADE,
     CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto) ON DELETE CASCADE
     )
     TABLESPACE pg_default;

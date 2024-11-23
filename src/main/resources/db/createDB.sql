@@ -58,8 +58,6 @@ CREATE TABLE IF NOT EXISTS public.productos
     )
     TABLESPACE pg_default;
 
-select audit.enable_tracking('public.productos');
-
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.productos
     OWNER TO postgres;
