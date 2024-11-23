@@ -1,89 +1,71 @@
 <template>
   <header class="header">
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <h1 class="logo" @click="$router.push('/')">
-      <img src="@/images/logo-no-background-no-subtitle.png" alt="logo" class="img">
+      <img src="@/images/logo-no-background-no-subtitle.png" alt="logo" class="img" />
     </h1>
     <ul class="main-nav">
-      <li v-if="tipoUsuario === 'UsuarioCorredor'">
-        <router-link to="/publicar-proyecto">Publicar Proyecto</router-link>
-      </li>
-      <li v-if="tipoUsuario === 'UsuarioParticular' || tipoUsuario === 'UsuarioInmobiliaria'">
-        <router-link to="/publicarpropiedad">Publicar Propiedad</router-link>
-      </li>
-      <li>
-        <router-link to="/busquedapropiedades">Buscar</router-link>
-      </li>
-      <li>
-        <router-link to="/top5clientes">Top 5 Clientes</router-link>
-      </li>
-      <li v-if="isLoggedIn">
-        <div class="dropdown">
-          <a href="#" @click="toggleDropdown">{{ username }}</a>
-          <ul class="dropdown-menu" :class="{ fixed: dropdownFixed }" v-if="dropdownVisible">
-            <li>
-              <router-link to="/perfil">Mi Perfil</router-link>
-            </li>
-            <li v-if="tipoUsuario === 'UsuarioParticular' || tipoUsuario === 'UsuarioInmobiliaria'">
-              <router-link :to="`/usuario/${idUsuario}/gestionarPublicaciones`">Mis Propiedades</router-link>
-            </li>
-            <li v-if="tipoUsuario === 'UsuarioCorredor'">
-              <router-link to="/">Mis Proyectos</router-link>
-            </li>
-            <li v-if="tipoUsuario === 'Admin'">
-              <router-link to="/admintickets">Revisar Soporte</router-link>
-            </li>
-            <li v-if="tipoUsuario === 'Admin'">
-              <router-link to="/">Revisar Reportes</router-link>
-            </li>
-            <li><a href="#" @click="cerrarSesion">Cerrar Sesión</a></li>
-          </ul>
-        </div>
-      </li>
-      <li v-if="!isLoggedIn">
-        <router-link to="/login">Iniciar sesión</router-link>
-      </li>
-      <li v-if="!isLoggedIn">
-        <router-link to="/registro">Registrarse</router-link>
-      </li>
+      <!-- Si el usuario está autenticado -->
+      <template v-if="isLoggedIn">
+        <li>
+          <router-link to="/top5clientes">Top 5 Clientes</router-link>
+        </li>
+        <li>
+          <div class="dropdown">
+            <a href="#" @click="toggleDropdown">Perfil</a>
+            <ul class="dropdown-menu" v-if="dropdownVisible">
+              <li>
+                <router-link to="/perfil">Mi Perfil</router-link>
+              </li>
+              <li>
+                <a href="#" @click="cerrarSesion">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </template>
+      <!-- Si el usuario no está autenticado -->
+      <template v-else>
+        <li>
+          <router-link to="/login">Iniciar sesión</router-link>
+        </li>
+        <li>
+          <router-link to="/registro">Registrarse</router-link>
+        </li>
+      </template>
     </ul>
   </header>
 </template>
 
 <script>
+import {token, setToken} from "@/services/store";
 
 export default {
   data() {
     return {
-      isLoggedIn: false,
-      username: '',
-      tipoUsuario: '',
-      idUsuario: '',
-      dropdownVisible: false
-    }
+      dropdownVisible: false, // Controla la visibilidad del menú desplegable
+    };
   },
-  mounted() {
-    this.isLoggedIn = localStorage.getItem('login') !== null;
-    this.username = localStorage.getItem('username');
-    this.tipoUsuario = localStorage.getItem('tipoUsuario');
-    this.idUsuario = localStorage.getItem('idUsuario');
+  computed: {
+    isLoggedIn() {
+      return token.value !== null; // Reactivo porque usamos `ref`
+    },
+  },
+  watch: {
+    isLoggedIn() {
+      // Reinicia el estado del dropdown al cambiar el estado de autenticación
+      this.dropdownVisible = false;
+    },
   },
   methods: {
     toggleDropdown() {
       this.dropdownVisible = !this.dropdownVisible;
     },
-    async cerrarSesion() {
-      localStorage.removeItem('login');
-      localStorage.removeItem('username');
-      localStorage.removeItem('idUsuario');
-      localStorage.setItem('tipoUsuario', 'guest');
-      this.userType = 'guest';
-      this.$router.push('/').then(() => {
-        window.location.reload();
-      });
-    }
-  }
-}
+    cerrarSesion() {
+      setToken(null); // Actualiza el token y elimina de localStorage
+      this.$router.push("/"); // Redirige al inicio
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -1,5 +1,13 @@
 <script>
 export default {
+  data() {
+    return {
+      userType: ''
+    }
+  },
+  mounted() {
+    this.userType = localStorage.getItem('userType');
+  },
   methods: {
     ordenes() {
       this.$router.push("/ordenes");
@@ -20,10 +28,10 @@ export default {
       <div class="container" @click="ordenes">
         Ordenes
       </div>
-      <div class="container" @click="clientes">
+      <div v-if="userType === 'ADMIN'" class="container" @click="clientes">
         Clientes
       </div>
-      <div class="container" @click="productos">
+      <div v-if="userType === 'ADMIN'" class="container" @click="productos">
         Productos
       </div>
     </div>

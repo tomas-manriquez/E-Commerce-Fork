@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8090', // Dirección de tu backend
+    baseURL: 'http://localhost:8090', // Dirección del backend
 });
 
 // **Interceptor de solicitudes**
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token'); // Obtiene el token del almacenamiento local
-    console.log("Este es el token: ", token);
     if (token) {
         config.headers.Authorization = `Bearer ${token}`; // Agrega el token al encabezado
     }

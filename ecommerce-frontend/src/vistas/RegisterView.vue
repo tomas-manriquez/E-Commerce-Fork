@@ -51,7 +51,6 @@ export default {
         nombre: "Nombre Completo",
         direccion: "Dirección",
         telefono: "Teléfono",
-        rol: "Rol",
       },
       inputTypes: {
         username: "text",
@@ -60,16 +59,17 @@ export default {
         nombre: "text",
         direccion: "text",
         telefono: "text",
-        rol: "text",
       },
     };
   },
   computed: {
     chunkedRegisterData() {
-      const entries = Object.entries(this.registerData); // Convertir el objeto a un array de pares [key, value]
+      const filteredEntries = Object.entries(this.registerData).filter(
+          ([key]) => key !== "rol" // // Convertir el objeto a un array de pares [key, value] y excluir 'rol'
+      );
       const chunks = [];
-      for (let i = 0; i < entries.length; i += 2) {
-        chunks.push(Object.fromEntries(entries.slice(i, i + 2))); // Dividir en grupos de dos
+      for (let i = 0; i < filteredEntries.length; i += 2) {
+        chunks.push(Object.fromEntries(filteredEntries.slice(i, i + 2))); // Dividir en grupos de dos
       }
       return chunks;
     },
