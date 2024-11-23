@@ -30,7 +30,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     }
 
     @Override
-    public void save(OrdenEntity orden) {
+    public Long save(OrdenEntity orden) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
             con.createQuery("INSERT INTO ordenes (fechaorden, estado, idcliente, total) " +
                             "VALUES (:fechaorden, :estado, :idcliente, :total)")
@@ -43,6 +43,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                     .executeScalar(Long.class);
             orden.setIdOrden(generatedId);
             con.commit();
+            return generatedId;
         } catch (Exception e) {
             throw new RuntimeException("Error al guardar la orden", e);
         }
@@ -81,6 +82,16 @@ public class OrdenRepositoryImpl implements OrdenRepository {
         try (org.sql2o.Connection con = sql2o.open()) {
             con.createQuery("DELETE FROM ordenes WHERE idorden = :id")
                     .addParameter("id", id)
+                    .executeUpdate();
+        }
+    }
+
+    @Override
+    public void updateTotal(Long idOrden) {
+        try (org.sql2o.Connection con = sql2o.open())  {
+            con.createQuery("UPDATE ordenes SET total = (SELECT SUM(cantidad * preciounitario)" +
+                            " FROM detalles_orden WHERE idorden = :idOrden) WHERE idorden = :idOrden")
+                    .addParameter("idOrden", idOrden)
                     .executeUpdate();
         }
     }
