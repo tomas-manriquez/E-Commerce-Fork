@@ -4,7 +4,6 @@ import com.example.ecommerce.dto.DetalleOrdenRequest;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
-import com.example.ecommerce.repositories.DetalleOrdenRepository;
 import com.example.ecommerce.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,27 +32,44 @@ public class OrdenService {
         return ordenRepository.findAll();
     }
 
-    public void saveOrden(Long idCliente, List<DetalleOrdenRequest> detalles) {
-        //Crear Orden
+    public void placeOrden(Long idCliente, List<DetalleOrdenRequest> detalles) {
+        //Crear y guardar Orden
+        OrdenEntity orden = createOrden(idCliente);
+        Long idOrden = ordenRepository.save(orden);
+
+        //Primero verificar disponibilidad de Stock de los productos
+        for (DetalleOrdenRequest detalleRequest : detalles) {
+            ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
+            Integer cantidad = detalleRequest.getCantidad();
+            if (producto == null) {
+                throw new RuntimeException("No existe la producto");
+            }
+            if (!productoService.hasEnoughStock(producto, cantidad)) {
+                throw new RuntimeException("Producto no tiene stock suficiente");
+            }
+        }
+
+        //Si hay stock de todos los productos:
+        // Crear detalles, asignarles orden, actualizar stocks y guardar detalles
+        for (DetalleOrdenRequest detalleRequest : detalles) {
+            ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
+            Integer cantidad = detalleRequest.getCantidad();
+            DetalleOrdenEntity detalle = detalleOrdenService.createDetalle(detalleRequest);
+            detalle.setIdOrden(idOrden);
+            productoService.reduceStock(producto, cantidad);
+            detalleOrdenService.saveDetalle(detalle);
+        }
+
+        //Tras guardar todos los detalles, actualizar Orden con cálculo del total
+        ordenRepository.updateTotal(idOrden);
+    }
+
+    public OrdenEntity createOrden(Long idCliente) {
         OrdenEntity orden = new OrdenEntity();
         orden.setFechaOrden(LocalDateTime.now());
         orden.setEstado("pendiente");
         orden.setIdCliente(idCliente);
-        Long idOrden = ordenRepository.save(orden);
-
-        //Construir detalles
-        for (DetalleOrdenRequest detalleRequest : detalles) {
-            DetalleOrdenEntity detalle = new DetalleOrdenEntity();
-            detalle.setIdOrden(idOrden);
-            detalle.setIdProducto(detalleRequest.getIdProducto());
-            detalle.setCantidad(detalleRequest.getCantidad());
-            ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
-            detalle.setPrecioUnitario(producto.getPrecio());
-            detalleOrdenService.saveDetalle(detalle);
-        }
-
-        //Calcular total de la orden
-        ordenRepository.updateTotal(idOrden);
+        return orden;
     }
 
     public void updateOrden(OrdenEntity orden) {

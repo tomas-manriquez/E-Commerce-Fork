@@ -50,6 +50,21 @@ public class ProductoService {
         productoRepository.update(producto);
     }
 
+    public boolean hasEnoughStock(ProductoEntity producto, Integer cantidad) {
+        if ((producto.getStock() - cantidad) >= 0){
+            return true;
+        }
+        return false;
+    }
+
+    public void reduceStock(ProductoEntity producto, Integer cantidad) {
+        producto.setStock(producto.getStock() - cantidad);
+        if (producto.getStock() == 0){
+            producto.setEstado("agotado");
+        }
+        productoRepository.update(producto);
+    }
+
     public void deleteProductoById(Long id) {
         ProductoEntity producto = productoRepository.findById(id);
         if (producto == null) {

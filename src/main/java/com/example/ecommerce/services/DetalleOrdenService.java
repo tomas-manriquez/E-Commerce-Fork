@@ -1,5 +1,6 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.DetalleOrdenRequest;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.DetalleOrdenRepository;
@@ -26,6 +27,15 @@ public class DetalleOrdenService {
 
     public void saveDetalle(DetalleOrdenEntity detalle) {
         detalleOrdenRepository.save(detalle);
+    }
+
+    public DetalleOrdenEntity createDetalle(DetalleOrdenRequest detalleRequest) {
+        DetalleOrdenEntity detalle = new DetalleOrdenEntity();
+        detalle.setIdProducto(detalleRequest.getIdProducto());
+        detalle.setCantidad(detalleRequest.getCantidad());
+        ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
+        detalle.setPrecioUnitario(producto.getPrecio());
+        return detalle;
     }
 
     public void updateDetalle(DetalleOrdenEntity detalleOrden) {

@@ -129,7 +129,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
                             "JOIN  " +
                             "    clientes c ON o.idcliente = c.idcliente " +
                             "WHERE  " +
-                            "    cat.nombre = 'Tecnología'  " +
+                            "    cat.nombre = 'Tecnologia'  " +
                             "    AND o.fechaorden >= NOW() - INTERVAL '1 year' " +
                             "GROUP BY  " +
                             "    c.idcliente, c.nombre " +

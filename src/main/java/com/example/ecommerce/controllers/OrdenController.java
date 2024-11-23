@@ -37,11 +37,11 @@ public class OrdenController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> saveOrden(@RequestBody OrdenRequest request) {
+    public ResponseEntity<String> placeOrden(@RequestBody OrdenRequest request) {
         if (request.getIdCliente() == null || request.getDetalles() == null || request.getDetalles().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del cliente y los detalles de la orden son obligatorios.");
         }
-        ordenService.saveOrden(request.getIdCliente(), request.getDetalles());
+        ordenService.placeOrden(request.getIdCliente(), request.getDetalles());
         return ResponseEntity.status(HttpStatus.CREATED).body("Orden creada exitosamente.");
     }
 
