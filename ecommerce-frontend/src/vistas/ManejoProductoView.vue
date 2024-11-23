@@ -128,7 +128,7 @@ export default {
         <div class="form-row submit-btn">
           <div class="input-data">
             <div class="inner"></div>
-            <input type="submit" value="submit" :disabled="showModal">
+            <input type="submit" value="agregar" :disabled="showModal">
           </div>
         </div>
       </form>
@@ -267,8 +267,8 @@ form .form-row .textarea{
   position: relative;
   overflow: hidden;
   height: 45px;
-  width: auto; /* Ajusta al contenido */
-  display: inline-block; /* Asegura que respeta su tamaño */
+  width: auto;
+  display: inline-block;
 }
 .submit-btn .input-data .inner{
   height: 100%;
@@ -302,7 +302,7 @@ form .form-row .textarea{
   font-size: 17px;
   border-bottom: 2px solid rgba(0,0,0, 0.12);
   background: none;
-  appearance: none; /* Elimina el estilo por defecto del navegador */
+  appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
