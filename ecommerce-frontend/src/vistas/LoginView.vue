@@ -1,37 +1,44 @@
 <template>
-  <div class="login-container">
-    <h1>Iniciar Sesión</h1>
-    <form @submit.prevent="handleLogin">
-      <div class="form-group">
-        <label for="username">Nombre de Usuario</label>
-        <input
-            id="username"
-            type="text"
-            v-model="loginData.username"
-            required
-            placeholder="Ingrese su usuario"
-        />
+  <body>
+    <div class="container">
+      <div class="text">Iniciar Sesión</div>
+      <form @submit.prevent="handleLogin">
+        <div class="form-row">
+          <div class="input-data">
+            <input
+                id="username"
+                type="text"
+                v-model="loginData.username"
+                required
+            />
+            <label for="username">Nombre de Usuario</label>
+          </div>
+          <div class="input-data">
+            <input
+                id="password"
+                type="password"
+                v-model="loginData.password"
+                required
+            />
+            <label for="password">Contraseña</label>
+          </div>
+        </div>
+        <div class="form-row submit-btn">
+          <div class="input-data">
+            <div class="inner"></div>
+            <input type="submit" value="Iniciar sesión">
+          </div>
+        </div>
+      </form>
+      <p v-if="error" class="error-message">{{ error }}</p>
+      <div class="register-link">
+        <div class="question">¿No tienes una cuenta?</div>
+        <button @click="$router.push('/registro')" class="btn-register">
+          Registrarse
+        </button>
       </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input
-            id="password"
-            type="password"
-            v-model="loginData.password"
-            required
-            placeholder="Ingrese su contraseña"
-        />
-      </div>
-      <button type="submit" class="btn-login">Iniciar Sesión</button>
-    </form>
-    <p v-if="error" class="error-message">{{ error }}</p>
-    <div class="register-link">
-      <p>¿No tienes una cuenta?</p>
-      <button @click="$router.push('/registro')" class="btn-register">
-        Registrarse
-      </button>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -77,69 +84,197 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: "Almarai", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-h1 {
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(115deg, #FF7E5F 10%, #FEB47B 90%);
+}
+
+.container {
+  max-width: 800px;
+  background: #fff;
+  width: 100%;
+  padding: 25px 40px 10px 40px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.container .text {
   text-align: center;
-  color: #a15315;
+  font-size: 41px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  background: -webkit-linear-gradient(right, #FF7E5F, #FEB47B, #FF7E5F, #FEB47B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.container form {
+  padding: 30px 0 0 0;
 }
 
-label {
-  display: block;
-  font-weight: bold;
+.container form .form-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 0;
+  flex-wrap: wrap;
+}
+
+form .form-row .input-data {
+  width: calc(50% - 10px);
+  height: 40px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+form .form-row .input-data:last-child {
+  margin-right: 0;
+}
+
+.question {
   margin-bottom: 5px;
 }
 
-input {
+.input-data input {
+  display: block;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-input:focus {
-  outline: none;
-  border-color: #a15315;
-}
-
-.btn-login {
-  width: 100%;
-  padding: 10px;
-  background-color: #a15315;
-  color: white;
+  height: 100%;
   border: none;
-  border-radius: 4px;
+  font-size: 17px;
+  border-bottom: 2px solid rgba(0,0,0, 0.12);
+}
+
+.input-data input:focus ~ label,
+.input-data input:valid ~ label{
+  transform: translateY(-20px);
+  font-size: 14px;
+  color: #FF7E5F;
+}
+
+.input-data label {
+  position: absolute;
+  pointer-events: none;
+  bottom: 10px;
   font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.input-data .underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+}
+
+.input-data .underline:before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: #FF7E5F;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.input-data input:focus ~ .underline:before,
+.input-data input:valid ~ .underline:before {
+  transform: scale(1);
+}
+
+.submit-btn .input-data {
+  position: relative;
+  overflow: hidden;
+  height: 45px;
+  width: auto;
+  display: inline-block;
+}
+
+.submit-btn .input-data .inner {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  background: -webkit-linear-gradient(right, #FF7E5F, #FEB47B, #FF7E5F, #FEB47B);
+  transition: all 0.4s;
+}
+
+.submit-btn .input-data:hover .inner {
+  left: 0;
+}
+
+.submit-btn .input-data input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.input-data select {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 17px;
+  border-bottom: 2px solid rgba(0,0,0, 0.12);
+  background: none;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
 }
 
-.btn-login:hover {
-  background-color: #86420f;
+.input-data select:focus ~ label,
+.input-data select:valid ~ label {
+  transform: translateY(-20px);
+  font-size: 14px;
+  color: #FF7E5F;
+}
+
+.input-data select:focus ~ .underline:before,
+.input-data select:valid ~ .underline:before {
+  transform: scale(1);
+}
+
+.input-data select + .underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+}
+
+.input-data select + .underline:before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: #FF7E5F;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
 }
 
 .error-message {
   color: red;
   margin-top: 10px;
   text-align: center;
-}
-
-.register-link {
-  text-align: center;
-  margin-top: 20px;
 }
 
 .btn-register {
@@ -153,5 +288,17 @@ input:focus {
 
 .btn-register:hover {
   background-color: #aaa;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .form-row .input-data {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .container {
+    padding: 25px;
+  }
 }
 </style>
