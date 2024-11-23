@@ -9,8 +9,9 @@ import java.util.List;
 public interface OrdenRepository {
     OrdenEntity findById(Long id);
     List<OrdenEntity> findAll();
-    void save(OrdenEntity orden);
+    Long save(OrdenEntity orden);
     void update(OrdenEntity orden);
     void delete(OrdenEntity orden);
     void deleteById(Long id);
+    void updateTotal(Long id);
 }

@@ -1,17 +1,18 @@
 -- storedProcedures.sql
 
 -- Procedimiento ID 17 Reporte de usuarios con más queries
+/*
 CREATE OR REPLACE PROCEDURE reporte_auditoria_productos()
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    SELECT id_usuario, operacion, COUNT(*) AS cantidad
+    SELECT idusuario, operacion, COUNT(*) AS cantidad
     FROM auditoria_productos
-    GROUP BY id_usuario, operacion
+    GROUP BY idusuario, operacion
     ORDER BY cantidad DESC;
 END;
 $$;
-
+*/
 
 -- Procedimiento ID 18
 CREATE OR REPLACE PROCEDURE registrar_orden(

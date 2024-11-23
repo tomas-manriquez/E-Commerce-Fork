@@ -1,16 +1,20 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.entities.DetalleOrdenEntity;
+import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.DetalleOrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class DetalleOrdenService {
     @Autowired
     private DetalleOrdenRepository detalleOrdenRepository;
+    @Autowired
+    private ProductoService productoService;
 
     public List<DetalleOrdenEntity> getAllDetalles() {
         return detalleOrdenRepository.findAll();
@@ -20,8 +24,8 @@ public class DetalleOrdenService {
         return detalleOrdenRepository.findById(id);
     }
 
-    public void saveDetalle(DetalleOrdenEntity detalleOrdenEntity) {
-        detalleOrdenRepository.save(detalleOrdenEntity);
+    public void saveDetalle(DetalleOrdenEntity detalle) {
+        detalleOrdenRepository.save(detalle);
     }
 
     public void updateDetalle(DetalleOrdenEntity detalleOrden) {

@@ -1,5 +1,6 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.OrdenRequest;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.services.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,12 @@ public class OrdenController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> saveOrden(@RequestBody OrdenEntity ord) {
-        ordenService.saveOrden(ord);
-        return ResponseEntity.status(HttpStatus.CREATED).body("OrdenEntity created successfully");
+    public ResponseEntity<String> saveOrden(@RequestBody OrdenRequest request) {
+        if (request.getIdCliente() == null || request.getDetalles() == null || request.getDetalles().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del cliente y los detalles de la orden son obligatorios.");
+        }
+        ordenService.saveOrden(request.getIdCliente(), request.getDetalles());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Orden creada exitosamente.");
     }
 
     @PostMapping("/update")

@@ -1,3 +1,4 @@
+-- createDB.sql
 -- Table: public.clientes
 
 -- Eliminar la tabla si ya existe (para evitar errores)
@@ -56,8 +57,6 @@ CREATE TABLE IF NOT EXISTS public.productos
     CONSTRAINT fk_categoria FOREIGN KEY (idcategoria) REFERENCES public.categorias (idcategoria)
     )
     TABLESPACE pg_default;
-
-select audit.enable_tracking('public.productos');
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.productos
