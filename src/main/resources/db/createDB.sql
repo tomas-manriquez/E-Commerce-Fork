@@ -1,3 +1,4 @@
+-- createDB.sql
 -- Table: public.clientes
 
 -- Eliminar la tabla si ya existe (para evitar errores)
