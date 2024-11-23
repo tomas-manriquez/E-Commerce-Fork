@@ -5,8 +5,9 @@ export default {
   data() {
     return {
       product: {
-        name: '',
-        price: 0,
+        nombre: '',
+        precio: 0,
+        descripcion: '',
         stock: 0,
         estado: '',
         idCategoria: null // Aquí se seleccionará el ID de la categoría
@@ -96,9 +97,9 @@ export default {
       <form @submit.prevent="addProduct">
         <div class="form-row">
           <div class="input-data">
-            <input type="text" id="name" v-model="product.name" required :disabled="showModal" />
+            <input type="text" id="nombre" v-model="product.nombre" required :disabled="showModal" />
             <div class="underline"></div>
-            <label for="name">Nombre</label>
+            <label for="nombre">Nombre</label>
           </div>
           <div class="input-data">
             <input type="text" id="status" v-model="product.estado" required :disabled="showModal" />
@@ -108,9 +109,9 @@ export default {
         </div>
         <div class="form-row">
           <div class="input-data">
-            <input type="number" id="price" v-model.number="product.price" required :disabled="showModal" />
+            <input type="number" id="precio" v-model.number="product.precio" required :disabled="showModal" />
             <div class="underline"></div>
-            <label for="price">Precio</label>
+            <label for="precio">Precio</label>
           </div>
           <div class="input-data">
             <input type="number" id="stock" v-model.number="product.stock" required :disabled="showModal" />
@@ -130,7 +131,7 @@ export default {
         </div>
         <div class="form-row">
           <div class="input-data textarea">
-            <textarea rows="8" cols="80" v-model="product.description" :disabled="showModal" required></textarea>
+            <textarea rows="8" cols="80" v-model="product.descripcion" :disabled="showModal" required></textarea>
             <br />
             <div class="underline"></div>
             <label for="">Descripción</label>
