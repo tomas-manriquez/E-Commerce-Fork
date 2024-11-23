@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .main-section {
-  background-color: #130912;
+  background: linear-gradient(115deg, #FF7E5F 10%, #FEB47B 90%);
   background-size: cover;
   background-position: center;
   height: 600px;
