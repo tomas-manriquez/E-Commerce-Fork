@@ -31,6 +31,7 @@ public class SecurityConfig {
                         //.requestMatchers("/api/v1/").hasAnyRole("MOD") // Solo los ADMIN pueden acceder
                         //.requestMatchers("/api/v1/**").hasAnyRole("ADMIN") // Solo los ADMIN pueden acceder
                         //.requestMatchers("/api/v1/tasks/").hasAnyRole("USER", "ADMIN", "MOD")
+                        .requestMatchers("/api/v1/clientes/top-gastadores-tecnologia").permitAll() // Todos pueden acceder a este
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación

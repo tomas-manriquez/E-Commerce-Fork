@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -108,6 +109,39 @@ public class ClienteRepositoryImpl implements ClienteRepository {
                     .executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar el cliente", e);
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findTopSpendingClientsInCategoryTechnologyLastYear(){
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT  " +
+                            "    c.nombre AS cliente, " +
+                            "    SUM(dor.cantidad * dor.preciounitario) AS total_gastado " +
+                            "FROM  " +
+                            "    categorias cat " +
+                            "JOIN  " +
+                            "    productos p ON cat.idcategoria = p.idcategoria " +
+                            "JOIN  " +
+                            "    detalleordenes dor ON p.idproducto = dor.idproducto " +
+                            "JOIN  " +
+                            "    ordenes o ON dor.idorden = o.idorden " +
+                            "JOIN  " +
+                            "    clientes c ON o.idcliente = c.idcliente " +
+                            "WHERE  " +
+                            "    cat.nombre = 'Tecnología'  " +
+                            "    AND o.fechaorden >= NOW() - INTERVAL '1 year' " +
+                            "GROUP BY  " +
+                            "    c.idcliente, c.nombre " +
+                            "ORDER BY  " +
+                            "    total_gastado DESC " +
+                            "LIMIT 5;")
+                    .executeAndFetchTable()
+                    .asList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los 5 clientes " +
+                    "que más dinero han gastado en órdenes con productos de la " +
+                    "categoría Tecnología durante el último año", e);
         }
     }
 }
