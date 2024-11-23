@@ -14,6 +14,9 @@
       <li>
         <router-link to="/busquedapropiedades">Buscar</router-link>
       </li>
+      <li>
+        <router-link to="/top5clientes">Top 5 Clientes</router-link>
+      </li>
       <li v-if="isLoggedIn">
         <div class="dropdown">
           <a href="#" @click="toggleDropdown">{{ username }}</a>

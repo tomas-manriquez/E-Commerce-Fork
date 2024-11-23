@@ -20,14 +20,14 @@ public class CorsConfig {
         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8090"));
 
         // Permite que se puedan hacer peticiones con los métodos que tengas dentro de la lista
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // Permite que se puedan enviar los headers que tengas dentro de la lista
-        // Por lo general se coloca "*", que significa que se pueden enviar todos los headers
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "Cache-Control"));
 
         // Permite que el Frontend accede al Authorization para el token
         corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+
+        corsConfiguration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

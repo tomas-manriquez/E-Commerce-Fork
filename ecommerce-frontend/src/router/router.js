@@ -41,7 +41,12 @@ const router = createRouter({
             name: 'registro',
             component: () => import('../vistas/RegisterView.vue'),
             meta: { requiresAuth: false}, // No requiere autenticación
-        },
+        },{
+            path: '/top5clientes',
+            name: 'top5clientes',
+            component: () => import('../vistas/Query48View.vue'),
+            meta: { requiresAuth: false},
+        }
     ],
 });
 

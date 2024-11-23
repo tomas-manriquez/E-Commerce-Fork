@@ -5,6 +5,9 @@ import com.example.ecommerce.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class ClienteService {
     @Autowired
@@ -41,5 +44,9 @@ public class ClienteService {
             throw new IllegalArgumentException("El ID del cliente no puede ser nulo para actualizar.");
         }
         clienteRepository.update(cliente);
+    }
+
+    public List<Map<String, Object>> findTopSpendingClientsInCategoryTechnologyLastYear() {
+        return clienteRepository.findTopSpendingClientsInCategoryTechnologyLastYear();
     }
 }
