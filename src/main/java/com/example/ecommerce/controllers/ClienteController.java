@@ -2,13 +2,18 @@ package com.example.ecommerce.controllers;
 
 import com.example.ecommerce.entities.ClienteEntity;
 import com.example.ecommerce.services.ClienteService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("api/v1/clientes")
+@RequestMapping("/api/v1/clientes")
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
@@ -45,4 +50,16 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/top-gastadores-tecnologia")
+    public ResponseEntity<?> getTopClientesTecnologia(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ": " + request.getHeader(headerName));
+        }
+        List<Map<String, Object>> topClientes = clienteService.findTopSpendingClientsInCategoryTechnologyLastYear();
+        return ResponseEntity.ok(topClientes);
+    }
+
 }
