@@ -1,5 +1,5 @@
 <script>
-import axios from "axios";
+import api from "@/services/api";
 
 export default {
   data() {
@@ -13,7 +13,7 @@ export default {
     async fetchQuery() {
       this.isLoading = true;
       try {
-        const response = await axios.get('/api/v1/clientes/top-gastadores-tecnologia', {
+        const response = await api.get('/api/v1/clientes/top-gastadores-tecnologia', {
           headers: {
             'Accept': 'application/json',
           },

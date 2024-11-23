@@ -43,7 +43,7 @@
 
 <script>
 import api from "@/services/api"; // Importar la configuración de Axios
-
+import { setToken } from "@/services/store";
 export default {
   data() {
     return {
@@ -58,15 +58,17 @@ export default {
     async handleLogin() {
       try {
         this.error = null; // Limpiar errores anteriores
-        console.log("Estos son los datos: ", this.loginData);
         const response = await api.post("/auth/login", this.loginData); // Llamada al backend
-        console.log("este es el response: ", response.headers);
         const token = response.headers.authorization; // Obtener el token del header
-        const userId = response.data; // Obtener el ID del usuario
-
+        const userId = response.data.userId; // Obtener el ID del usuario
+        const userType = response.data.rol; // Obtener el rol del usuario
+        console.log("Este es el token: ", token);
+        console.log("Este es el userid: ", userId);
+        console.log("Este es el usertype: ", userType);
         // Guardar datos en localStorage
-        localStorage.setItem("token", token);
+        setToken(token);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("userType", userType);
 
         // Redirigir al HeaderView
         this.$router.push("/");

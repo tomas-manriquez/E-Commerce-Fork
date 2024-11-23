@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import api from "@/services/api";
 
 export default {
   data() {
@@ -9,7 +9,7 @@ export default {
         price: 0,
         stock: 0,
         estado: '',
-        category: '' // Aquí se seleccionará el ID de la categoría
+        idCategoria: null // Aquí se seleccionará el ID de la categoría
       },
       categories: [], // Lista de categorías existentes
       newCategory: '', // Nombre de la nueva categoría a agregar
@@ -20,10 +20,9 @@ export default {
     this.fetchCategories();
   },
   methods: {
-    // Cargar categorías desde el backend
     async fetchCategories() {
       try {
-        const response = await axios.get('/api/v1/categorias/all');
+        const response = await api.get('/api/v1/categorias/all');
         this.categories = response.data;
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -32,9 +31,15 @@ export default {
 
     // Manejar cambio en el select de categoría
     handleCategoryChange() {
-      if (this.product.category === 'add-new-category') {
-        this.showModal = true; // Mostrar ventana emergente
-        this.product.category = ''; // Reiniciar la selección
+      if (this.product.idCategoria === 'add-new-category') {
+        this.showModal = true;
+        this.product.idCategoria = null; // Reiniciar la selección
+      }
+      else {
+        const selectedCategory = this.categories.find(category => category.idCategoria === this.product.idCategoria);
+        if (selectedCategory) {
+          this.product.idCategoria = selectedCategory.idCategoria;
+        }
       }
     },
 
@@ -44,12 +49,17 @@ export default {
 
       try {
         // Enviar nueva categoría al backend
-        const response = await axios.post('/api/v1/categories/create', { nombre: this.newCategory });
-        const newCategory = response.data; // Suponiendo que el backend retorna la categoría creada
-
+        const response = await api.post('/api/v1/categorias/create', { nombre: this.newCategory }, {
+          headers: {
+            'Accept': 'application/json',
+          },
+          withCredentials: false,
+        });
+        console.log(response);
+        console.log(this.newCategory)
         // Agregar la nueva categoría a la lista y seleccionarla automáticamente
-        this.categories.unshift(newCategory);
-        this.product.category = newCategory.id;
+        this.categories.unshift(this.newCategory);
+        this.product.idCategoria = this.newCategory;
 
         // Limpiar y cerrar ventana
         this.newCategory = '';
@@ -67,9 +77,10 @@ export default {
     // Enviar producto al backend
     async addProduct() {
       try {
-        const response = await axios.post('/api/products', this.product);
+        console.log("producto: ", this.product);
+        const response = await api.post('/api/v1/productos/create', this.product);
         console.log('Producto agregado:', response.data);
-        this.$router.push('/products'); // Redirigir después de guardar
+        this.$router.push('/productos'); // Redirigir después de guardar
       } catch (error) {
         console.error('Error adding product:', error);
       }
@@ -107,11 +118,11 @@ export default {
             <label for="stock">Stock</label>
           </div>
           <div class="input-data">
-            <select v-model="product.category" @change="handleCategoryChange" required :disabled="showModal">
+            <select v-model="product.idCategoria" @change="handleCategoryChange" required :disabled="showModal">
               <option disabled value="">Seleccionar categoría</option>
               <option value="add-new-category">Agregar nueva categoría</option>
-              <option v-for="category in categories" :key="category.id" :value="category.id">
-                {{ category.name }}
+              <option v-for="category in categories" :key="category.idCategoria" :value="category.idCategoria">
+                {{ category.nombre }}
               </option>
             </select>
             <div class="underline"></div>
