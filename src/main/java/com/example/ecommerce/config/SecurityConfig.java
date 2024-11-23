@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/clientes/top-gastadores-tecnologia").permitAll() // Todos pueden acceder a este
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/api/v1/ordenes/create").authenticated()
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .sessionManagement(session -> session // Configura la política de creación de sesiones

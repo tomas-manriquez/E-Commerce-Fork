@@ -75,11 +75,50 @@ SELECT setval('public.productos_idproducto_seq', (SELECT MAX(idproducto) FROM pu
 
 -- contraseñas en formato pass123, pass234, pass345 etc segun numeros del nombre de usuario
 INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, password, username, rol) VALUES
-(1, 'Juan Perez', 'Av. Siempre Viva 123', 'juan.perez@example.com', '987654321', '$2a$10$VVf/yAaV7YWAqLnTn3f3weO7uB/g4i0TZKedKPJvtEr87VE6yhIZm', 'juan123', 'USER'),
-(2, 'María Lopez', 'Calle Falsa 456', 'maria.lopez@example.com', '987654322', '$2a$10$lkU792clrkZm8crs6jpQbu9DXqyuG4caZ6zIip34T3Q.LJvrB9shS', 'maria234', 'USER'),
-(3, 'Carlos González', 'Pje. Los Alamos 789', 'carlos.gonzalez@example.com', '987654323', '$2a$10$3/e6BmfT11nd.La4FGHrF.LfBA2z0ZQhEaPelbNqxG52VlEEnrkZO', 'carlos345', 'USER'),
-(4, 'Ana Ramírez', 'Calle Primavera 101', 'ana.ramirez@example.com', '987654324', '$2a$10$M9szaYukFgTQPjIMCtfV6OHRY56gL61qWt0izMsOeng9S4TJSVC/S', 'ana456', 'USER'),
-(5, 'Pedro Soto', 'Av. El Bosque 202', 'pedro.soto@example.com', '987654325', '$2a$10$IqEV840R.55a1/oFFZDMiOFRNDXj1szi5mH6veL1H7.H.7QUD42cq', 'pedro567', 'USER'),
-(6, 'Lucia Herrera', 'Pje. Las Rosas 303', 'lucia.herrera@example.com', '987654326', '$2a$10$UnyuFqlCgPwnyTpgpwjfru4CprAopmgc7E.2BYzGahCp.HT2ushEq', 'lucia678', 'USER');
+(1, 'nombre', 'direccion', 'admin@ecommerce.cl', 'telefono', '$2a$10$dZVr6KP5UyftVBA48HHbve4NHsD3CPzkjcu3dJBuwJuykEC2zoEIS', 'admin', 'ADMIN'),
+(2, 'Juan Perez', 'Av. Siempre Viva 123', 'juan.perez@example.com', '987654321', '$2a$10$VVf/yAaV7YWAqLnTn3f3weO7uB/g4i0TZKedKPJvtEr87VE6yhIZm', 'juan123', 'USER'),
+(3, 'María Lopez', 'Calle Falsa 456', 'maria.lopez@example.com', '987654322', '$2a$10$lkU792clrkZm8crs6jpQbu9DXqyuG4caZ6zIip34T3Q.LJvrB9shS', 'maria234', 'USER'),
+(4, 'Carlos González', 'Pje. Los Alamos 789', 'carlos.gonzalez@example.com', '987654323', '$2a$10$3/e6BmfT11nd.La4FGHrF.LfBA2z0ZQhEaPelbNqxG52VlEEnrkZO', 'carlos345', 'USER'),
+(5, 'Ana Ramírez', 'Calle Primavera 101', 'ana.ramirez@example.com', '987654324', '$2a$10$M9szaYukFgTQPjIMCtfV6OHRY56gL61qWt0izMsOeng9S4TJSVC/S', 'ana456', 'USER'),
+(6, 'Pedro Soto', 'Av. El Bosque 202', 'pedro.soto@example.com', '987654325', '$2a$10$IqEV840R.55a1/oFFZDMiOFRNDXj1szi5mH6veL1H7.H.7QUD42cq', 'pedro567', 'USER'),
+(7, 'Lucia Herrera', 'Pje. Las Rosas 303', 'lucia.herrera@example.com', '987654326', '$2a$10$UnyuFqlCgPwnyTpgpwjfru4CprAopmgc7E.2BYzGahCp.HT2ushEq', 'lucia678', 'USER');
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
+--Datos iniciales para ordenes de compra
+INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total) VALUES
+(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00),
+(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00),
+(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00),
+(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00),
+(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00),
+(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00),
+(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00),
+(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00),
+SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
+
+--Detalles correspondientes con las ordenes anteriores
+INSERT INTO public.detalleordenes (idorden, idproducto, cantidad, preciounitario) VALUES
+INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario) VALUES
+(1, 2, 1, 2, 450000.00),
+(2, 2, 2, 1, 499000.00),
+(3, 3, 1, 4, 450000.00),
+(4, 3, 2, 3, 499000.00),
+(5, 4, 11, 1, 120000.00),
+(6, 4, 14, 2, 60000.00),
+(7, 4, 17, 2, 130000.00),
+(8, 5, 20, 10, 120000.00),
+(9, 5, 29, 5, 80000.00),
+(10, 5, 30, 1, 150000.00),
+(11, 6, 2, 5, 499000.00),
+(12, 6, 6, 8, 500000.00),
+(13, 6, 7, 5, 620000.00),
+(14, 6, 8, 10, 550000.00),
+(15, 7, 3, 4, 220000.00),
+(16, 7, 1, 10, 450000.00),
+(17, 7, 8, 10, 550000.00),
+(18, 8, 4, 4, 180000.00),
+(19, 8, 12, 4, 95000.00),
+(20, 8, 21, 7, 95000.00),
+(21, 9, 4, 7, 180000.00),
+(22, 9, 15, 6, 45000.00);
+SELECT setval('public.detalleordenes_iddetalle_seq', (SELECT MAX(iddetalle) FROM public.detalleordenes), true);

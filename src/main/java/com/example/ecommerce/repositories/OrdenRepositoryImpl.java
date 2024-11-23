@@ -90,7 +90,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     public void updateTotal(Long idOrden) {
         try (org.sql2o.Connection con = sql2o.open())  {
             con.createQuery("UPDATE ordenes SET total = (SELECT SUM(cantidad * preciounitario)" +
-                            " FROM detalles_orden WHERE idorden = :idOrden) WHERE idorden = :idOrden")
+                            " FROM detalleordenes WHERE idorden = :idOrden) WHERE idorden = :idOrden")
                     .addParameter("idOrden", idOrden)
                     .executeUpdate();
         }
