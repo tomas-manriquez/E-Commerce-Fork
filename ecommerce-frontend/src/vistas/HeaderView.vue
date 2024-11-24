@@ -10,11 +10,17 @@
           <router-link to="/top5clientes">Top 5 Clientes</router-link>
         </li>
         <li>
+          <router-link to="/productos/all">Ver Productos</router-link>
+        </li>
+        <li v-if="userType === 'ADMIN'">
+          <router-link to="/clientes">Ver lista de Clientes</router-link>
+        </li>
+        <li>
           <div class="dropdown">
             <a href="#" @click="toggleDropdown">Perfil</a>
             <ul class="dropdown-menu" v-if="dropdownVisible">
               <li>
-                <router-link to="/perfil">Mi Perfil</router-link>
+                <router-link :to="`/perfil/${clienteId}`">Mi Perfil</router-link>
               </li>
               <li>
                 <a href="#" @click="cerrarSesion">Cerrar Sesión</a>
@@ -43,6 +49,8 @@ export default {
   data() {
     return {
       dropdownVisible: false, // Controla la visibilidad del menú desplegable
+      userType: '',
+      clienteId: Number(localStorage.getItem("userId"))
     };
   },
   computed: {
@@ -64,6 +72,9 @@ export default {
       setToken(null); // Actualiza el token y elimina de localStorage
       this.$router.push("/"); // Redirige al inicio
     },
+  },
+  mounted() {
+    this.userType = localStorage.getItem('userType');
   },
 };
 </script>

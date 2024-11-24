@@ -10,6 +10,7 @@ import java.util.Map;
 public interface ClienteRepository {
     ClienteEntity findById(Long id);
     ClienteEntity findClienteByUsername(String username);
+    List<ClienteEntity> findAll();
     void save(ClienteEntity cliente);
     void update(ClienteEntity cliente);
     void delete(ClienteEntity cliente);

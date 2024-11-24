@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
@@ -34,7 +35,7 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body("ClienteEntity created successfully");
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<String> updateClienteEntity(@RequestBody ClienteEntity user) {
         clienteService.updateCliente(user);
         return ResponseEntity.ok("ClienteEntity updated successfully");
@@ -62,4 +63,9 @@ public class ClienteController {
         return ResponseEntity.ok(topClientes);
     }
 
+    @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ClienteEntity>> getAllClientes(){
+        return ResponseEntity.ok(clienteService.findAll());
+    }
 }

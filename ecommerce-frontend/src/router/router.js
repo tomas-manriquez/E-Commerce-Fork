@@ -11,24 +11,24 @@ const router = createRouter({
             meta: { requiresAuth: false }, // No requiere autenticación
         },
         {
-            path: '/clientes',
-            name: 'clientes',
+            path: '/add/cliente',
+            name: '/add/cliente',
             component: () => import('../vistas/ManejoClienteView.vue'),
-            alias: '/Cliente',
+            alias: '/add/Cliente',
             meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
-            path: '/ordenes',
-            name: 'ordenes',
+            path: '/add/ordenes',
+            name: 'add/ordenes',
             component: () => import('../vistas/ManejoOrdenView.vue'),
-            alias: '/Orden',
+            alias: '/add/Orden',
             meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
-            path: '/productos',
-            name: 'productos',
+            path: '/add/productos',
+            name: 'add/productos',
             component: () => import('../vistas/ManejoProductoView.vue'),
-            alias: '/Productos',
+            alias: '/add/Productos',
             meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
@@ -36,7 +36,7 @@ const router = createRouter({
             name: 'productosAll',
             component:() => import('../vistas/ListaProducto.vue'),
             alias: '/ProductosAll',
-            meta: { requiresAuth: true }, // Requiere autenticación
+            meta: { requiresAuth: false },
         },
         {
             path: '/login',
@@ -53,6 +53,21 @@ const router = createRouter({
             name: 'top5clientes',
             component: () => import('../vistas/Query48View.vue'),
             meta: { requiresAuth: false},
+        },{
+            path: '/clientes',
+            name: 'clientes',
+            component: () => import('../vistas/ClientesListView.vue'),
+            meta: { requiresAuth: false},
+        },{
+            path: '/perfil/:id',
+            name: 'perfil',
+            component: () => import('../vistas/ProfileClienteView.vue'),
+            meta: { requiresAuth: true},
+        },{
+            path: '/perfil/editar/:id',
+            name: 'perfil/editar',
+            component: () => import('../vistas/EditClienteView.vue'),
+            meta: { requiresAuth: true},
         }
     ],
 });
