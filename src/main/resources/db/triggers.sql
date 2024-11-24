@@ -68,7 +68,6 @@ CREATE TRIGGER trigger_auditoria_ordenes
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
 
--- Tabla: detalleordenes
 CREATE TRIGGER trigger_auditoria_detalleordenes
     AFTER INSERT OR UPDATE OR DELETE ON detalleordenes
     FOR EACH ROW
