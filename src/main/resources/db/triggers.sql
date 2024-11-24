@@ -10,18 +10,36 @@ CREATE TABLE IF NOT EXISTS public.auditoria
     )
     TABLESPACE pg_default;
 
+ALTER TABLE public.auditoria
+    ADD COLUMN user_id BIGINT;
+
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.auditoria
     OWNER TO postgres;
 
--- Función genérica para auditoría
+-- Crear la tabla sesion
+CREATE TABLE IF NOT EXISTS public.sesion
+(
+    user_id BIGINT NOT NULL DEFAULT 0 -- Contendrá el ID del usuario conectado
+);
+
+-- Insertar valor inicial en la tabla sesion
+INSERT INTO public.sesion (user_id)
+VALUES (0)
+    ON CONFLICT DO NOTHING; -- Evita errores si la tabla ya tiene un valor
+
+-- Modificar la función de auditoría para obtener el user_id desde la tabla sesion
 CREATE OR REPLACE FUNCTION registrar_auditoria()
 RETURNS TRIGGER AS $$
 DECLARE
 operacion_texto TEXT;
+    usuario_actual BIGINT;
 BEGIN
-    -- Construir la descripción de la operación según el tipo de acción
-    IF TG_OP = 'INSERT' THEN
+    -- Obtener el user_id desde la tabla sesion
+SELECT user_id INTO usuario_actual FROM public.sesion LIMIT 1;
+
+-- Construir la descripción de la operación según el tipo de acción
+IF TG_OP = 'INSERT' THEN
         operacion_texto := 'INSERT realizado. Datos nuevos: ' || row_to_json(NEW)::TEXT;
     ELSIF TG_OP = 'UPDATE' THEN
         operacion_texto := 'UPDATE realizado. Datos anteriores: ' || row_to_json(OLD)::TEXT ||
@@ -31,8 +49,8 @@ BEGIN
 END IF;
 
     -- Insertar registro en la tabla de auditoría
-INSERT INTO auditoria (tabla, operacion, consulta)
-VALUES (TG_TABLE_NAME, TG_OP, operacion_texto);
+INSERT INTO auditoria (tabla, operacion, consulta, user_id)
+VALUES (TG_TABLE_NAME, TG_OP, operacion_texto, usuario_actual);
 
 -- Retornar el registro adecuado
 IF TG_OP = 'DELETE' THEN
@@ -42,6 +60,8 @@ ELSE
 END IF;
 END;
 $$ LANGUAGE plpgsql;
+
+
 
 -- Crear triggers para todas las tablas relevantes
 -- Tabla: clientes

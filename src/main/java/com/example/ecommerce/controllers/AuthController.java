@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,30 +29,42 @@ public class AuthController {
     private final ClienteService userService;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, ClienteService userService,
-                          PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
+                          PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService,
+                          JdbcTemplate jdbcTemplate) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginDto loginDto) {
-        try { // Intentar autenticar al usuario
+        try {
+            // Intentar autenticar al usuario
             UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
             Authentication authentication = authenticationManager.authenticate(login);
 
             // Si la autenticación fue exitosa, crear un JWT y devolverlo en el header
             String jwt = this.jwtUtil.create(loginDto.getUsername());
 
-            ClienteEntity user = userService.getUserByUsername(loginDto.getUsername()); // Asume que el usuario es una instancia de org.springframework.security.core.userdetails.User
+            ClienteEntity user = userService.getUserByUsername(loginDto.getUsername());
             Long userid = user.getIdCliente();
             String rol = user.getRol();
 
+            System.out.println("Configurando ID de usuario en la tabla 'sesion': " + userid);
+
+            // Actualizar el user_id en la tabla sesion
+            jdbcTemplate.execute("UPDATE public.sesion SET user_id = " + userid);
+
+            System.out.println("Tabla 'sesion' actualizada exitosamente");
+
+            // Respuesta
             Map<String, Object> response = new HashMap<>();
             response.put("userId", userid);
             response.put("rol", rol);
