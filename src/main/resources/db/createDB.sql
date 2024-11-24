@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public.ordenes
     estado character varying(50),       -- Estado de la orden ("pendiente","pagada","enviada")
     idcliente BIGINT,                   -- Cliente que realizó la orden
     total DECIMAL(10,2),                -- Total a pagar por la orden
-    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente)
+    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE SET NULL
     )
     TABLESPACE pg_default;
 

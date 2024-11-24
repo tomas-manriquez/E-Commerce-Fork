@@ -10,13 +10,13 @@ export default {
   },
   methods: {
     ordenes() {
-      this.$router.push("/ordenes");
+      this.$router.push("/add/ordenes");
     },
     clientes() {
-      this.$router.push("/clientes");
+      this.$router.push("/add/cliente");
     },
     productos() {
-      this.$router.push("/productos");
+      this.$router.push("/add/productos");
     }
   }
 }
@@ -26,13 +26,13 @@ export default {
   <section class="main-section">
     <div class="overlay">
       <div class="container" @click="ordenes">
-        Ordenes
+        Agregar Ordenes
       </div>
       <div v-if="userType === 'ADMIN'" class="container" @click="clientes">
-        Clientes
+        Agregar Clientes
       </div>
       <div v-if="userType === 'ADMIN'" class="container" @click="productos">
-        Productos
+        Agregar Productos
       </div>
     </div>
   </section>

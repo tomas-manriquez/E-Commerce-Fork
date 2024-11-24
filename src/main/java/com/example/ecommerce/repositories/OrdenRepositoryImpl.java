@@ -22,6 +22,16 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     }
 
     @Override
+    public List<OrdenEntity> findByIdCliente(Long idCliente) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM ordenes WHERE idcliente = :idCliente")
+                    .addParameter("idCliente", idCliente)
+                    .executeAndFetch(OrdenEntity.class);
+        }
+    }
+
+
+    @Override
     public List<OrdenEntity> findAll() {
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM ordenes")
@@ -52,21 +62,39 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     @Override
     public void update(OrdenEntity orden) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("UPDATE ordenes SET "+
-                            "fechaorden = :fechaorden, " +
-                            "estado = :estado, " +
-                            "idcliente = :idcliente, " +
-                            "total = :total " +
-                            "WHERE idorden = :idorden")
-                    .addParameter("fechaorden", orden.getFechaOrden())
-                    .addParameter("estado", orden.getEstado())
-                    .addParameter("idcliente", orden.getIdCliente())
-                    .addParameter("total", orden.getTotal())
-                    .executeUpdate();
+            // Actualizar solo si el estado no es "pendiente"
+            if (!"pendiente".equalsIgnoreCase(orden.getEstado())) {
+                con.createQuery("UPDATE ordenes SET " +
+                                "fechaorden = :fechaorden, " +
+                                "estado = :estado, " +
+                                "idcliente = NULL, " +  // Establecer idcliente a NULL
+                                "total = :total " +
+                                "WHERE idorden = :idorden")
+                        .addParameter("fechaorden", orden.getFechaOrden())
+                        .addParameter("estado", orden.getEstado())
+                        .addParameter("total", orden.getTotal())
+                        .addParameter("idorden", orden.getIdOrden())
+                        .executeUpdate();
+            } else {
+                // Solo actualizar el estado y otros campos si el estado es "pendiente"
+                con.createQuery("UPDATE ordenes SET " +
+                                "fechaorden = :fechaorden, " +
+                                "estado = :estado, " +
+                                "idcliente = :idcliente, " +
+                                "total = :total " +
+                                "WHERE idorden = :idorden")
+                        .addParameter("fechaorden", orden.getFechaOrden())
+                        .addParameter("estado", orden.getEstado())
+                        .addParameter("idcliente", orden.getIdCliente())
+                        .addParameter("total", orden.getTotal())
+                        .addParameter("idorden", orden.getIdOrden())
+                        .executeUpdate();
+            }
         } catch (Exception ex) {
-            throw new RuntimeException("Error al actualizar el producto", ex);
+            throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
         }
     }
+
 
     @Override
     public void delete(OrdenEntity orden) {
@@ -85,6 +113,19 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                     .executeUpdate();
         }
     }
+
+    @Override
+    public void deletePendings(OrdenEntity orden) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            // Eliminar solo las órdenes con estado "pendiente"
+            con.createQuery("DELETE FROM ordenes WHERE idorden = :id AND estado = 'pendiente'")
+                    .addParameter("id", orden.getIdOrden())
+                    .executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar la orden con ID: " + orden.getIdOrden(), e);
+        }
+    }
+
 
     @Override
     public void updateTotal(Long idOrden) {

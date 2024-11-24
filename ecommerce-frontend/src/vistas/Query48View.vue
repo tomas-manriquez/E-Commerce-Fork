@@ -19,7 +19,6 @@ export default {
           },
           withCredentials: false,
         });
-        console.log("Headers enviados:", response.config.headers);
         this.topClientes = response.data;
       } catch (error) {
         if (error.response && error.response.status === 431) {
@@ -29,7 +28,7 @@ export default {
         }
         console.error('Error fetching query:', error);
       } finally {
-        this.isLoading = false; // Termina el estado de carga
+        this.isLoading = false;
       }
     },
 
@@ -115,16 +114,11 @@ export default {
   font-size: 1.2rem;
   color: #ffffff;
   margin: 1rem;
-  transition: transform 0.3s ease;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container:hover {
-  transform: scale(1.1);
-}
 table {
   width: 100%;
   border-collapse: collapse;

@@ -60,55 +60,39 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public void update(ClienteEntity cliente) {
-        StringBuilder queryBuilder = new StringBuilder("UPDATE clientes SET ");
-        Map<String, Object> parameters = new HashMap<>();
-        if (cliente.getNombre() != null && !cliente.getNombre().isBlank()) {
-            queryBuilder.append("nombre = :nombre, ");
-            parameters.put("nombre", cliente.getNombre());
-        }
-        if (cliente.getDireccion() != null && !cliente.getDireccion().isBlank()) {
-            queryBuilder.append("direccion = :direccion, ");
-            parameters.put("direccion", cliente.getDireccion());
-        }
-        if (cliente.getEmail() != null && !cliente.getEmail().isBlank()) {
-            queryBuilder.append("email = :email, ");
-            parameters.put("email", cliente.getEmail());
-        }
-        if (cliente.getTelefono() != null && !cliente.getTelefono().isBlank()) {
-            queryBuilder.append("telefono = :telefono, ");
-            parameters.put("telefono", cliente.getTelefono());
-        }
-        if (cliente.getPassword() != null && !cliente.getPassword().isBlank()) {
-            queryBuilder.append("password = :password, ");
-            parameters.put("password", cliente.getPassword());
-        }
-        if (cliente.getUsername() != null && !cliente.getUsername().isBlank()) {
-            queryBuilder.append("username = :username, ");
-            parameters.put("username", cliente.getUsername());
-        }
-        if (parameters.isEmpty()) {
-            throw new IllegalArgumentException("No hay campos para actualizar.");
-        }
-        queryBuilder.setLength(queryBuilder.length() - 2);
-        queryBuilder.append(" WHERE idcliente = :idCliente");
-        parameters.put("idCliente", cliente.getIdCliente());
+        String sql = "UPDATE clientes SET nombre = :nombre, direccion = :direccion, email = :email, " +
+                "telefono = :telefono, password = :password, username = :username " +
+                "WHERE idcliente = :idCliente";
+
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery(queryBuilder.toString())
-                    .withParams(parameters)
+            con.createQuery(sql)
+                    .addParameter("nombre", cliente.getNombre())
+                    .addParameter("direccion", cliente.getDireccion())
+                    .addParameter("email", cliente.getEmail())
+                    .addParameter("telefono", cliente.getTelefono())
+                    .addParameter("password", cliente.getPassword())
+                    .addParameter("username", cliente.getUsername())
+                    .addParameter("idCliente", cliente.getIdCliente())
                     .executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar el cliente", e);
         }
     }
 
+
+
     @Override
     public void delete(ClienteEntity cliente) {
-        try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM clientes WHERE idcliente = :idCliente")
+        String sql = "DELETE FROM clientes WHERE idcliente = :idCliente";
+
+        try (org.sql2o.Connection con = sql2o.beginTransaction()) { // Inicia una transacción
+            con.createQuery(sql)
                     .addParameter("idCliente", cliente.getIdCliente())
                     .executeUpdate();
+
+            con.commit(); // Confirma la transacción
         } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar el cliente", e);
+            throw new RuntimeException("Error eliminando el cliente con ID: " + cliente.getIdCliente(), e);
         }
     }
 
@@ -142,6 +126,16 @@ public class ClienteRepositoryImpl implements ClienteRepository {
             throw new RuntimeException("Error al obtener los 5 clientes " +
                     "que más dinero han gastado en órdenes con productos de la " +
                     "categoría Tecnología durante el último año", e);
+        }
+    }
+
+    @Override
+    public List<ClienteEntity> findAll(){
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM clientes")
+                    .executeAndFetch(ClienteEntity.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al conseguir todos los clientes ", e);
         }
     }
 }
