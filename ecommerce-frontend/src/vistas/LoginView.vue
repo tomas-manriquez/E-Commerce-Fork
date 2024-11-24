@@ -11,6 +11,7 @@
                 v-model="loginData.username"
                 required
             />
+            <div class="underline"></div>
             <label for="username">Nombre de Usuario</label>
           </div>
           <div class="input-data">
@@ -20,6 +21,7 @@
                 v-model="loginData.password"
                 required
             />
+            <div class="underline"></div>
             <label for="password">Contraseña</label>
           </div>
         </div>
@@ -62,9 +64,6 @@ export default {
         const token = response.headers.authorization; // Obtener el token del header
         const userId = response.data.userId; // Obtener el ID del usuario
         const userType = response.data.rol; // Obtener el rol del usuario
-        console.log("Este es el token: ", token);
-        console.log("Este es el userid: ", userId);
-        console.log("Este es el usertype: ", userType);
         // Guardar datos en localStorage
         setToken(token);
         localStorage.setItem("userId", userId);
@@ -172,14 +171,21 @@ form .form-row .input-data:last-child {
   transition: all 0.3s ease;
 }
 
-.input-data .underline {
+.input-data {
   position: absolute;
   bottom: 0;
   height: 2px;
   width: 100%;
 }
 
-.input-data .underline:before {
+.input-data .underline{
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+}
+
+.input-data .underline:before{
   position: absolute;
   content: "";
   height: 2px;
@@ -191,7 +197,7 @@ form .form-row .input-data:last-child {
 }
 
 .input-data input:focus ~ .underline:before,
-.input-data input:valid ~ .underline:before {
+.input-data input:valid ~ .underline:before{
   transform: scale(1);
 }
 
