@@ -1,8 +1,7 @@
 -- initDB.sql
 \i createDB.sql
-\i populateDB.sql
---\i auditProductos.sql
 \i triggers.sql
+\i populateDB.sql
 \i storedProcedures.sql
 
 
