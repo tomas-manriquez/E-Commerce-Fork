@@ -11,7 +11,13 @@ import javax.sql.DataSource;
 public class DatabaseContext {
     @Bean
     public Sql2o sql2o() {
-        return new Sql2o("jdbc:postgresql://localhost:5432/ecommerce", "postgres", "B7a742114");
+        String dbUsername = System.getProperty("DB_USERNAME");
+        String dbPass = System.getProperty("DB_PASSWORD");
+        String dbName = System.getProperty("DB_NAME");
+        String dbPort = System.getProperty("DB_PORT");
+        String dbHost = System.getProperty("DB_HOST");
+        String dbUrl = "jdbc:postgresql://" + dbHost + ":" + dbPort + "/" + dbName;
+        return new Sql2o(dbUrl, dbUsername, dbPass);
     }
 
     @Bean
