@@ -57,7 +57,6 @@ export default {
           withCredentials: false,
         });
         console.log(response);
-        console.log(this.newCategory)
         // Agregar la nueva categoría a la lista y seleccionarla automáticamente
         this.categories.unshift(this.newCategory);
         this.product.idCategoria = this.newCategory;
@@ -78,10 +77,10 @@ export default {
     // Enviar producto al backend
     async addProduct() {
       try {
-        console.log("producto: ", this.product);
         const response = await api.post('/api/v1/productos/create', this.product);
         console.log('Producto agregado:', response.data);
-        this.$router.push('/productos'); // Redirigir después de guardar
+        alert("Producto agregado con exito");
+        this.$router.push('/'); // Redirigir después de guardar
       } catch (error) {
         console.error('Error adding product:', error);
       }
