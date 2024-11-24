@@ -73,6 +73,13 @@
 			<artifactId>java-jwt</artifactId>
 			<version>4.2.1</version> <!-- Usa la última versión disponible -->
 		</dependency>
+		<!-- Para Maven -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -15,12 +15,12 @@ public class JwtUtil {
     // En un ambiente de producción, este valor debe ser guardado en un lugar seguro
     private static String SECRET = "yo";
     private static Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
-
+    private static String dbName = System.getenv("DB_NAME");
     // Este metodo crea un JWT con el nombre de usuario
     public String create(String username) {
         return JWT.create()
                 .withSubject(username)
-                .withIssuer("ecommerce")
+                .withIssuer(dbName)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(60)) // Modifica este valor para cambiar la duración del token
                 ).sign(ALGORITHM);

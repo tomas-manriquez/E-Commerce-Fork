@@ -1,4 +1,18 @@
 -- createDB.sql
+
+-- Verifica si la base de datos existe. Si no existe, la crea.
+DO
+$$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'ecommerce') THEN
+            EXECUTE 'CREATE DATABASE ecommerce';
+        END IF;
+    END
+$$;
+
+-- Conectar a la base de datos
+\connect ecommerce
+
 -- Table: public.clientes
 
 -- Eliminar la tabla si ya existe (para evitar errores)

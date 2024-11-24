@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS public.auditoria_productos
     TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.auditoria_productos
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 -- Función para auditoría de INSERT
 CREATE OR REPLACE FUNCTION registrar_auditoria_insert()
