@@ -1,79 +1,145 @@
 <script>
+import api from "@/services/api";
+
+
 export default {
   data() {
     return {
       purchase: {
-        customerId: '',
-        productId: ''
+        customerId: Number(localStorage.getItem("userId")),
+        compras: [], // Lista de compras dinámicas
       },
-      customers: [],
-      products: []
+      products: [],
     };
   },
   mounted() {
-    this.fetchCustomers();
     this.fetchProducts();
   },
   methods: {
-    async fetchCustomers() {
-      // Aquí puedes agregar el código para obtener los clientes del servidor
-      console.log('Fetching customers...');
-      // Ejemplo de datos ficticios
-      this.customers = [
-        { id: 1, name: 'Cliente A' },
-        { id: 2, name: 'Cliente B' }
-      ];
-    },
     async fetchProducts() {
-      // Aquí puedes agregar el código para obtener los productos del servidor
-      console.log('Fetching products...');
-      // Ejemplo de datos ficticios
-      this.products = [
-        { id: 1, name: 'Producto A', price: 10.99 },
-        { id: 2, name: 'Producto B', price: 15.49 }
-      ];
+      const response = await api.get("/api/v1/productos/all");
+      this.products = response.data;
     },
-    buy() {
-      // Aquí puedes agregar el código para enviar los datos de la compra al servidor
-      console.log('Compra realizada:', this.purchase);
-      this.$router.push('/purchases');
-    }
-  }
+    addPurchase() {
+      // Agregar una nueva compra a la lista
+      this.purchase.compras.push({
+        productId: "", // ID del producto seleccionado
+        nombreProducto: "", // Nombre del producto (opcional para mostrar)
+        cantidad: 0,
+        stock: 0, // Stock del producto seleccionado
+      });
+    },
+    removePurchase(index) {
+      // Eliminar una compra de la lista
+      this.purchase.compras.splice(index, 1);
+    },
+    updateStock(index) {
+      // Actualizar el stock basado en el producto seleccionado
+      const selectedProduct = this.products.find(
+          (product) => product.idProducto === this.purchase.compras[index].productId
+      );
+      if (selectedProduct) {
+        this.purchase.compras[index].stock = selectedProduct.stock;
+        this.purchase.compras[index].nombreProducto = selectedProduct.nombre;
+      } else {
+        this.purchase.compras[index].stock = 0;
+        this.purchase.compras[index].nombreProducto = "";
+      }
+    },
+    async buy() {
+      // Preparar los detalles para el envío
+      const detalles = this.purchase.compras.map((compra) => ({
+        idProducto: compra.productId,
+        cantidad: compra.cantidad,
+      }));
+      const response = await api.post("/api/v1/ordenes/create", {
+        idCliente: this.purchase.customerId,
+        detalles,
+      }, {
+        headers: {
+          'Accept': 'application/json',
+        },
+        withCredentials: false,
+      });
+      console.log("Compra realizada:", response);
+      alert("Orden creada exitosamente");
+    },
+  },
 };
 </script>
 
 <template>
   <body>
-    <div class="container">
-      <div class="text">Ingresar Compra</div>
-      <form @submit.prevent="buy">
-        <div class="form-row">
-          <div class="input-data">
-            <select id="customer" v-model="purchase.customerId" required>
-              <option disabled value="">Selecciona un cliente</option>
-              <option v-for="customer in customers" :key="customer.id" :value="customer.id">
-                {{ customer.name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="input-data">
-            <select id="product" v-model="purchase.productId" required>
-              <option disabled value="">Selecciona un producto</option>
-              <option v-for="product in products" :key="product.id" :value="product.id">
-                {{ product.name }} - ${{ product.price }}
-              </option>
-            </select>
+  <div class="container">
+    <div class="text">Ingresar Compra</div>
+    <form @submit.prevent="buy">
+      <div
+          v-for="(compra, index) in purchase.compras"
+          :key="index"
+          class="form-row"
+      >
+        <!-- Selección del producto -->
+        <div class="input-data">
+          <select
+              v-model="compra.productId"
+              @change="updateStock(index)"
+              required
+          >
+            <option disabled value="">Selecciona un producto</option>
+            <option
+                v-for="product in products"
+                :key="product.idProducto"
+                :value="product.idProducto"
+            >
+              {{ product.nombre }} - ${{ product.precio }}
+            </option>
+          </select>
+        </div>
+        <!-- Stock -->
+        <div class="input-data">
+          <input type="number" :value="compra.stock" disabled />
+          <div class="underline always-active-underline"></div>
+          <label class="always-active">Stock</label>
+        </div>
+        <!-- Cantidad -->
+        <div class="input-data">
+          <input
+              type="number"
+              v-model.number="compra.cantidad"
+              :max="compra.stock"
+              required
+          />
+          <div class="underline"></div>
+          <label for="cantidad">Cantidad</label>
+        </div>
+        <!-- Botón de borrar -->
+        <div class="erase-button">
+          <div class="submit-btn">
+            <div class="input-data">
+              <div class="inner"></div>
+              <input type="button" value="Borrar" @click="removePurchase(index)" />
+            </div>
           </div>
         </div>
-        <div class="form-row submit-btn">
+      </div>
+      <!-- Botón para agregar más productos -->
+      <div class="add-button">
+        <div class="submit-btn">
           <div class="input-data">
             <div class="inner"></div>
-            <input type="submit" value="comprar">
+            <input type="button" value="Agregar producto" @click="addPurchase" />
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <!-- Botón para enviar la compra -->
+      <div class="form-row submit-btn">
+        <div class="input-data">
+          <div class="inner"></div>
+          <input type="submit" value="Comprar" />
+        </div>
+      </div>
+    </form>
+  </div>
   </body>
 </template>
 
@@ -125,9 +191,6 @@ form .form-row .input-data{
   margin: 0 20px;
   position: relative;
 }
-form .form-row .textarea{
-  height: 70px;
-}
 .input-data input,
 .textarea textarea{
   display: block;
@@ -137,15 +200,11 @@ form .form-row .textarea{
   font-size: 17px;
   border-bottom: 2px solid rgba(0,0,0, 0.12);
 }
-.input-data input:focus ~ label, .textarea textarea:focus ~ label,
-.input-data input:valid ~ label, .textarea textarea:valid ~ label{
+.input-data input:focus ~ label,
+.input-data input:valid ~ label{
   transform: translateY(-20px);
   font-size: 14px;
   color: #FF7E5F;
-}
-.textarea textarea{
-  resize: none;
-  padding-top: 10px;
 }
 .input-data label{
   position: absolute;
@@ -153,12 +212,19 @@ form .form-row .textarea{
   bottom: 10px;
   font-size: 16px;
   transition: all 0.3s ease;
+  pointer-events: none; /* Para que el label no interfiera con el clic en el input */
 }
-.textarea label{
-  width: 100%;
-  bottom: 40px;
-  background: #fff;
+
+.input-data .always-active {
+  top: -10px;  /* Mueve el label hacia arriba de forma permanente */
+  font-size: 12px;
+  color: #FF7E5F; /* Cambia el color del label cuando está activo */
 }
+
+.input-data .always-active-underline {
+  background-color: #FF7E5F; /* El underline de Stock siempre será visible en color activo */
+}
+
 .input-data .underline{
   position: absolute;
   bottom: 0;
@@ -257,4 +323,47 @@ form .form-row .textarea{
   transform-origin: center;
   transition: transform 0.3s ease;
 }
+
+.add-button .submit-btn .input-data {
+  margin-left: 20px;
+  height: 25px; /* Compacto */
+  width: 170px; /* Tamaño ajustado */
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.add-button .submit-btn .input-data .inner {
+  width: 300%;
+  left: -100%;
+}
+
+.add-button .submit-btn .input-data:hover .inner {
+  left: 0;
+}
+
+.add-button .submit-btn .input-data input {
+  font-size: 10px; /* Ajustar texto al tamaño */
+  color: #130912;
+}
+
+.erase-button .submit-btn .input-data {
+  height: 25px; /* Compacto */
+  width: 70px; /* Tamaño ajustado */
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.erase-button .submit-btn .input-data .inner {
+  width: 300%;
+  left: -100%;
+}
+
+.erase-button .submit-btn .input-data:hover .inner {
+  left: 0;
+}
+
+.erase-button .submit-btn .input-data input {
+  font-size: 10px; /* Ajustar texto al tamaño */
+}
+
 </style>
