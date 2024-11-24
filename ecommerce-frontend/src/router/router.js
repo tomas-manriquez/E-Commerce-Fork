@@ -32,6 +32,13 @@ const router = createRouter({
             meta: { requiresAuth: true }, // Requiere autenticación
         },
         {
+            path: '/productos/all',
+            name: 'productosAll',
+            component:() => import('../vistas/ListaProducto.vue'),
+            alias: '/ProductosAll',
+            meta: { requiresAuth: true }, // Requiere autenticación
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import('../vistas/LoginView.vue'),
