@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="clients-container">
     <h1>Lista de Clientes</h1>
     <table>
       <thead>
@@ -69,6 +69,11 @@ export default {
 </script>
 
 <style scoped>
+
+.clients-container {
+  padding: 20px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
