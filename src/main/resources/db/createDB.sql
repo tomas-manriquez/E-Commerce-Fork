@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes
     cantidad int,                           -- Cantidad de producto en la orden
     preciounitario DECIMAL(10,2),            -- Precio unitario del producto
     CONSTRAINT fk_orden FOREIGN KEY (idorden) REFERENCES public.ordenes (idorden),
-    CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto)
+    CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto) ON DELETE SET NULL
     )
     TABLESPACE pg_default;
 

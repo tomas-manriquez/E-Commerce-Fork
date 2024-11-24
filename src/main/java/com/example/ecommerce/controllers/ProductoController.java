@@ -41,7 +41,7 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body("ProductoEntity created successfully");
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<String> updateProducto(@RequestBody ProductoEntity prod) {
         productoService.updateProducto(prod);
         return ResponseEntity.ok("ProductoEntity updated successfully");
