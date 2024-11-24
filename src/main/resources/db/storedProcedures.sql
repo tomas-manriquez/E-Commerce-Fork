@@ -2,12 +2,12 @@
 
 -- Procedimiento ID 17 Reporte de usuarios con más queries
 /*
-CREATE OR REPLACE PROCEDURE reporte_auditoria_productos()
+CREATE OR REPLACE PROCEDURE reporte_auditoria()
 LANGUAGE plpgsql
 AS $$
 BEGIN
     SELECT idusuario, operacion, COUNT(*) AS cantidad
-    FROM auditoria_productos
+    FROM auditoria
     GROUP BY idusuario, operacion
     ORDER BY cantidad DESC;
 END;
