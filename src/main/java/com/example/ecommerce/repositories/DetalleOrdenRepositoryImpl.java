@@ -25,13 +25,25 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     }
 
     @Override
-    public List<DetalleOrdenEntity> findByOrdenId(Long ordenId) {
+    public List<DetalleOrdenEntity> findByOrdenId(Long ordenId, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM detalleordenes WHERE idorden = :id")
+            return con.createQuery("SELECT * FROM detalleordenes WHERE idorden = :id LIMIT :limit OFFSET :offset")
                     .addParameter("id", ordenId)
+                    .addParameter("limit", pageSize)
+                    .addParameter("offset", offset)
                     .executeAndFetch(DetalleOrdenEntity.class);
         } catch (Exception e) {
             throw new RuntimeException("No se encontraron los detalles de la orden", e);
+        }
+    }
+
+    @Override
+    public int count(Long ordenId) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT count(*) FROM detalleordenes WHERE idorden = :id")
+                    .addParameter("id", ordenId)
+                    .executeScalar(Integer.class);
         }
     }
 
