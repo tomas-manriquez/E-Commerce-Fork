@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS public.productos
     stock int,                          -- Cantidad disponible del producto
     estado character varying(50),       -- Estado del producto ("disponible", "agotado")
     idcategoria BIGINT,                 -- Categoría del producto
-    CONSTRAINT fk_categoria FOREIGN KEY (idcategoria) REFERENCES public.categorias (idcategoria)
+    CONSTRAINT fk_categoria FOREIGN KEY (idcategoria) REFERENCES public.categorias (idcategoria) ON DELETE SET NULL
     )
     TABLESPACE pg_default;
 
