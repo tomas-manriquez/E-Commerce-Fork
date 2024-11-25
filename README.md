@@ -87,7 +87,7 @@ Una vez que hayas configurado la base de datos, puedes proceder a ejecutar el ba
 Este comando descargará las dependencias y compilará el proyecto. Después, para ejecutar la aplicación:
    
    ```bash
-   mvn springboot:run
+   mvn spring-boot:run
    ```
 Esto iniciará el backend y podrás acceder a la aplicación en la URL configurada.
 
