@@ -28,6 +28,14 @@ public class OrdenService {
         return orden;
     }
 
+    public List<OrdenEntity> getOrdenByClienteId(Long id) {
+        List<OrdenEntity> ordenes  = ordenRepository.findByClienteId(id);
+        if (ordenes == null) {
+            throw new RuntimeException("No existe la orden según el id del cliente");
+        }
+        return ordenes;
+    }
+
     public List<OrdenEntity> getAllOrdenes() {
         return ordenRepository.findAll();
     }

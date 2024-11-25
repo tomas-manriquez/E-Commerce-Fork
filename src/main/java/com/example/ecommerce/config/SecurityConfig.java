@@ -32,6 +32,7 @@ public class SecurityConfig {
                         //.requestMatchers("/api/v1/**").hasAnyRole("ADMIN") // Solo los ADMIN pueden acceder
                         //.requestMatchers("/api/v1/tasks/").hasAnyRole("USER", "ADMIN", "MOD")
                         .requestMatchers("/api/v1/productos/all").permitAll()
+                        .requestMatchers(("/api/v1/productos/byId/**")).permitAll()
                         .requestMatchers("/api/v1/productos/**").hasAnyRole("ADMIN")
                         .requestMatchers("/api/v1/clientes/byId/**").permitAll()
                         .requestMatchers("/api/v1/clientes/update/**").permitAll()
@@ -40,6 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/v1/ordenes/create").authenticated()
+                        .requestMatchers("/api/v1/ordenes/byClientId/**").authenticated()
+                        .requestMatchers("/api/v1/detalle/byOrdenId/**").authenticated()
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .sessionManagement(session -> session // Configura la política de creación de sesiones

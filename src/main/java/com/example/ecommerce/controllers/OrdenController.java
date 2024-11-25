@@ -26,6 +26,16 @@ public class OrdenController {
         }
     }
 
+    @GetMapping("/byClientId/{clientId}")
+    public ResponseEntity<List<OrdenEntity>> getOrdenByClienteId(@PathVariable Long clientId) {
+        List<OrdenEntity> ordenes = ordenService.getOrdenByClienteId(clientId);
+        if (ordenes != null) {
+            return ResponseEntity.ok(ordenes);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<OrdenEntity>> getAllOrdenes() {
         List<OrdenEntity> ord = ordenService.getAllOrdenes();

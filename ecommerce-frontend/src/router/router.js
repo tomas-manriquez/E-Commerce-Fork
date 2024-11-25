@@ -68,6 +68,16 @@ const router = createRouter({
             name: 'perfil/editar',
             component: () => import('../vistas/EditClienteView.vue'),
             meta: { requiresAuth: true},
+        },{
+            path: '/ordenes/:id',
+            name: '/ordenes',
+            component: () => import('../vistas/OrdenesView.vue'),
+            meta: { requiresAuth: true},
+        },{
+            path: '/ordenes/detalle/:id',
+            name: '/ordenes/detalle',
+            component: () => import('../vistas/DetalleOrdenesView.vue'),
+            meta: { requiresAuth: true},
         }
     ],
 });

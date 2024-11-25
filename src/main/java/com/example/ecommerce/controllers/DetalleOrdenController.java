@@ -35,6 +35,16 @@ public class DetalleOrdenController {
         }
     }
 
+    @GetMapping("/byOrdenId/{ordenId}")
+    public ResponseEntity<List<DetalleOrdenEntity>> getDetallesByOdenId(@PathVariable Long ordenId) {
+        List<DetalleOrdenEntity> detalles = detalleOrdenService.getDetalleByOrdenId(ordenId);
+        if (detalles != null) {
+            return ResponseEntity.ok(detalles);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> saveDetalle(@RequestBody DetalleOrdenEntity det) {
         detalleOrdenService.saveDetalle(det);
