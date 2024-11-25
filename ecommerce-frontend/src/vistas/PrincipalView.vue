@@ -12,9 +12,6 @@ export default {
     ordenes() {
       this.$router.push("/add/ordenes");
     },
-    clientes() {
-      this.$router.push("/add/cliente");
-    },
     productos() {
       this.$router.push("/add/productos");
     }
@@ -27,9 +24,6 @@ export default {
     <div class="overlay">
       <div class="container" @click="ordenes">
         Agregar Ordenes
-      </div>
-      <div v-if="userType === 'ADMIN'" class="container" @click="clientes">
-        Agregar Clientes
       </div>
       <div v-if="userType === 'ADMIN'" class="container" @click="productos">
         Agregar Productos

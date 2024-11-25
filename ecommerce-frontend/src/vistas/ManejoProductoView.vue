@@ -100,8 +100,11 @@ export default {
             <div class="underline"></div>
             <label for="nombre">Nombre</label>
           </div>
-          <div class="input-data">
-            <input type="text" id="status" v-model="product.estado" required :disabled="showModal" />
+          <div class="input-data" id="status">
+            <select v-model="product.estado" required>
+              <option value="disponible">Disponible</option>
+              <option value="agotado">Agotado</option>
+            </select>
             <div class="underline"></div>
             <label for="status">Estado</label>
           </div>
@@ -126,6 +129,7 @@ export default {
               </option>
             </select>
             <div class="underline"></div>
+            <label for="categoria">Categoría</label>
           </div>
         </div>
         <div class="form-row">
