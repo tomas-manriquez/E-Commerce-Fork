@@ -1,6 +1,7 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entities.ClienteEntity;
+import com.example.ecommerce.entities.ProductoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
@@ -136,6 +137,26 @@ public class ClienteRepositoryImpl implements ClienteRepository {
                     .executeAndFetch(ClienteEntity.class);
         } catch (Exception e) {
             throw new RuntimeException("Error al conseguir todos los clientes ", e);
+        }
+    }
+
+    @Override
+    public List<ClienteEntity> findPaginated(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM clientes " +
+                            "ORDER BY idcliente LIMIT :limit OFFSET :offset")
+                    .addParameter("limit", pageSize)
+                    .addParameter("offset", offset)
+                    .executeAndFetch(ClienteEntity.class);
+        }
+    }
+
+    @Override
+    public int count() {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT count(*) FROM clientes")
+                    .executeScalar(Integer.class);
         }
     }
 }

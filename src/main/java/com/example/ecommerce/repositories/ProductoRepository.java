@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductoRepository {
     ProductoEntity findById(Long id);
     List<ProductoEntity> findAll();
+    List<ProductoEntity> findPaginated(int page, int pageSize);
+    int count();
     void save(ProductoEntity producto);
     void update(ProductoEntity producto);
     void delete(ProductoEntity producto);

@@ -1,6 +1,13 @@
 <template>
   <div class="clients-container">
     <h1>Lista de Clientes</h1>
+
+    <!-- Error state -->
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+
+    <!-- Clientes table -->
     <table>
       <thead>
       <tr>
@@ -27,6 +34,21 @@
       </tr>
       </tbody>
     </table>
+
+    <!-- Empty state -->
+    <div v-if="!loading && !error && !clientes.length">No hay clientes disponibles.</div>
+
+    <!-- Pagination controls -->
+    <div v-if="pagination.totalPages > 1">
+      <button :disabled="pagination.currentPage === 1" @click="goToPage(pagination.currentPage - 1)">
+        Anterior
+      </button>
+      <span>Página {{ pagination.currentPage }} de {{ pagination.totalPages }}</span>
+      <button :disabled="pagination.currentPage === pagination.totalPages" @click="goToPage(pagination.currentPage + 1)">
+        Siguiente
+      </button>
+    </div>
+
   </div>
 </template>
 
@@ -37,13 +59,31 @@ export default {
   data() {
     return {
       clientes: [],
+      loading: false,
+      error: null,
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+      },
     };
   },
   methods: {
-    async fetchClientes() {
+    async fetchClientes(page = 1, size = 10) {
       try {
-        const response = await api.get("/api/v1/clientes/");
-        this.clientes = response.data;
+        this.loading = true;
+        this.error = null;
+        const response = await api.get("/api/v1/clientes/page", {
+          params: { page, size },
+        });
+        
+        this.clientes = response.data.content;
+        this.pagination = {
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalItems: response.data.totalElements,
+        };        
+
       } catch (error) {
         console.error("Error al obtener los clientes:", error);
       }
@@ -61,6 +101,13 @@ export default {
         }
       }
     },
+
+    async goToPage(page) {
+      if (page > 0 && page <= this.pagination.totalPages) {
+        await this.fetchClientes(page, 10); // Cambiar de página
+      }
+    },
+
   },
   mounted() {
     this.fetchClientes();
@@ -111,4 +158,19 @@ button:last-child {
 button:last-child:hover {
   background-color: #c82333;
 }
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.error {
+  color: red;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+
 </style>

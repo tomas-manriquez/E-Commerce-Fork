@@ -1,7 +1,9 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ClienteEntity;
 import com.example.ecommerce.entities.OrdenEntity;
+import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.ClienteRepository;
 import com.example.ecommerce.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,12 @@ public class ClienteService {
 
     public void createCliente(ClienteEntity cliente) {
         clienteRepository.save(cliente);
+    }
+
+    public PageResponse<ClienteEntity> getClientesPaginated(int page, int size) {
+        List<ClienteEntity> productos = clienteRepository.findPaginated(page, size);
+        int total = clienteRepository.count();
+        return new PageResponse<>(productos, page, size, total);
     }
 
     public void removeCliente(ClienteEntity cliente) {

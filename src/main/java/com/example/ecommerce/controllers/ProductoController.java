@@ -1,5 +1,6 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.services.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class ProductoController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageResponse<ProductoEntity>> getProductos(@RequestParam int page, @RequestParam int size) {
+        return ResponseEntity.ok(productoService.getProductosPaginated(page, size));
     }
 
     @PostMapping("/create")
