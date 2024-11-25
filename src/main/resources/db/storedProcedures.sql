@@ -1,52 +1,75 @@
 -- storedProcedures.sql
 
 -- Procedimiento ID 17 Reporte de usuarios con más queries
-/*
 CREATE OR REPLACE PROCEDURE reporte_auditoria()
 LANGUAGE plpgsql
 AS $$
+DECLARE
+    record_audit RECORD;
 BEGIN
-    SELECT idusuario, operacion, COUNT(*) AS cantidad
-    FROM auditoria
-    GROUP BY idusuario, operacion
-    ORDER BY cantidad DESC;
+    -- Iterar sobre los resultados de la consulta
+    FOR record_audit IN
+        SELECT user_id, operacion, COUNT(*) AS cantidad
+        FROM auditoria
+        GROUP BY user_id, operacion
+        ORDER BY cantidad DESC
+    LOOP
+        -- Mostrar los resultados en la consola
+        RAISE NOTICE 'Usuario: %, Operación: %, Cantidad: %',
+                     record_audit.user_id,
+                     record_audit.operacion,
+                     record_audit.cantidad;
+    END LOOP;
 END;
 $$;
-*/
 
 -- Procedimiento ID 18
 CREATE OR REPLACE PROCEDURE registrar_orden(
     p_idcliente BIGINT,
     p_estado VARCHAR(50),
-    p_total DECIMAL(10, 2),
     p_productos JSON
 )
 LANGUAGE plpgsql
 AS $$
 DECLARE
-v_idorden BIGINT; -- Variable para almacenar el ID de la nueva orden
+    v_idorden BIGINT; -- Variable para almacenar el ID de la nueva orden
     v_producto RECORD; -- Variable para iterar sobre los productos
+    v_preciounitario DECIMAL(10,2); -- Precio unitario del producto
 BEGIN
-    INSERT INTO ordenes (fechaorden, estado, idcliente, total) -- Inserta la nueva orden
-    VALUES (CURRENT_TIMESTAMP, p_estado, p_idcliente, p_total)
-        RETURNING idorden INTO v_idorden;
+    -- Crear la orden inicialmente con un total de 0
+    INSERT INTO ordenes (fechaorden, estado, idcliente, total)
+    VALUES (CURRENT_TIMESTAMP, p_estado, p_idcliente, 0)
+    RETURNING idorden INTO v_idorden;
 
-    FOR v_producto IN SELECT * FROM json_to_recordset(p_productos) AS ( -- Recorre el JSON de productos seleccionados y registrar el detalle en detalleordenes
+-- Iterar sobre el JSON de productos
+    FOR v_producto IN SELECT * FROM json_to_recordset(p_productos) AS (
             idproducto BIGINT,
-            cantidad INT,
-            preciounitario DECIMAL(10,2)
+            cantidad INT
         ) LOOP
-                  INSERT INTO detalleordenes (idorden, idproducto, cantidad, preciounitario) -- Insertar cada detalle de la orden
-                  VALUES (v_idorden, v_producto.idproducto, v_producto.cantidad, v_producto.preciounitario);
+        -- Obtener el precio unitario del producto
+        SELECT precio INTO v_preciounitario
+        FROM productos
+        WHERE idproducto = v_producto.idproducto;
 
-        UPDATE productos -- Actualiza el stock del producto
+        -- Insertar el detalle de la orden
+        INSERT INTO detalleordenes (idorden, idproducto, cantidad, preciounitario)
+        VALUES (v_idorden, v_producto.idproducto, v_producto.cantidad, v_preciounitario);
+
+        -- Actualizar el stock del producto
+        UPDATE productos
         SET stock = stock - v_producto.cantidad
         WHERE idproducto = v_producto.idproducto;
 
-        IF (SELECT stock FROM productos WHERE idproducto = v_producto.idproducto) < 0 THEN -- Verifica que el stock no sea negativo
-                RAISE EXCEPTION 'Stock insuficiente para el producto con ID %', v_producto.idproducto;
+        -- Verificar que el stock no sea negativo
+        IF (SELECT stock FROM productos WHERE idproducto = v_producto.idproducto) < 0 THEN
+            RAISE EXCEPTION 'Stock insuficiente para el producto con ID %', v_producto.idproducto;
         END IF;
     END LOOP;
+
+    -- Calcular el total de la orden
+    UPDATE ordenes
+    SET total = (SELECT SUM(cantidad * preciounitario) FROM detalleordenes WHERE idorden = v_idorden)
+    WHERE idorden = v_idorden;
 END;
 $$;
 
