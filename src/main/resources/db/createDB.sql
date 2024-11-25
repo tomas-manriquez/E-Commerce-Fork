@@ -4,14 +4,14 @@
 DO
 $$
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'ecommerce') THEN
-            EXECUTE 'CREATE DATABASE ecommerce';
+        IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}') THEN
+            EXECUTE 'CREATE DATABASE ${DB_NAME}';
         END IF;
     END
 $$;
 
 -- Conectar a la base de datos
-\connect ecommerce
+\connect ${DB_NAME}
 
 -- Table: public.clientes
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.clientes
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.clientes
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 -- Table: public.categorias
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS public.categorias
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.categorias
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 -- Table: public.productos
 
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS public.productos
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.productos
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 -- Table: public.ordenes
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS public.ordenes
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.ordenes
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 
 -- Table: public.detalleordenes
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.detalleordenes
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 /*
  -- Table: public.detalleordenes
@@ -146,5 +146,5 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.detalleordenes
-    OWNER to postgres;
+    OWNER to ${DB_USERNAME};
  */
