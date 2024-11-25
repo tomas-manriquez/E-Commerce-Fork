@@ -1,5 +1,6 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ public class ProductoService {
 
     public List<ProductoEntity> getAllProductos() {
         return productoRepository.findAll();
+    }
+
+    public PageResponse<ProductoEntity> getProductosPaginated(int page, int size) {
+        List<ProductoEntity> productos = productoRepository.findPaginated(page, size);
+        int total = productoRepository.count();
+        return new PageResponse<>(productos, page, size, total);
     }
 
     public void saveProducto(ProductoEntity producto) {
