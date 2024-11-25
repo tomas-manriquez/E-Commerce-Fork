@@ -1,6 +1,9 @@
 <template>
   <div class="ordenes-container">
     <h1>Detalles de la Orden</h1>
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
     <table>
       <thead>
       <tr>
@@ -21,6 +24,18 @@
       </tr>
       </tbody>
     </table>
+    <!-- Empty state -->
+    <div v-if="!loading && !error && !detalles.length">No hay detalles disponibles.</div>
+    <!-- Pagination controls -->
+    <div v-if="pagination.totalPages > 1">
+      <button :disabled="pagination.currentPage === 1" @click="goToPage(pagination.currentPage - 1)" class="button">
+        Anterior
+      </button>
+      <span>Página {{ pagination.currentPage }} de {{ pagination.totalPages }}</span>
+      <button :disabled="pagination.currentPage === pagination.totalPages" @click="goToPage(pagination.currentPage + 1)" class="button">
+        Siguiente
+      </button>
+    </div>
   </div>
 </template>
 
@@ -31,20 +46,37 @@ export default {
   data() {
     return {
       detalles: [],
-      productos: {}, // Objeto reactivo para almacenar los productos
+      productos: {},
       idOrden: null,
+      loading: false,
+      error: null,
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+      },
     };
   },
   methods: {
-    async fetchDetalles(id) {
+    async fetchDetalles(id, page =1, size = 10) {
       try {
-        const response = await api.get("/api/v1/detalles/byOrdenId/" + id);
-        this.detalles = response.data;
+        this.loading = true;
+        this.error = null;
+        const response = await api.get(`/api/v1/detalles/byOrdenId/pag/${id}`,{
+          params: { page, size },
+        });
+        this.detalles = response.data.content;
+        this.pagination = {
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalItems: response.data.totalElements,
+        };
 
         // Extraer IDs únicos de productos para precargar sus nombres
         const productoIds = [...new Set(this.detalles.map(d => d.idProducto))];
         await this.precargarProductos(productoIds); // Esperar a que se carguen los productos
       } catch (error) {
+        this.error = "Error al obtener los detalles de la orden.";
         console.error("Error al obtener los detalles de la orden:", error);
       }
     },
@@ -68,6 +100,11 @@ export default {
         return this.productos[idProducto].nombre;
       }
       return "Cargando..."; // Si aún no se ha cargado, mostrar "Cargando..."
+    },
+    async goToPage(page) {
+      if (page > 0 && page <= this.pagination.totalPages) {
+        await this.fetchDetalles(this.idOrden,page,10); // Cambiar de página
+      }
     },
   },
   mounted() {
@@ -97,5 +134,31 @@ thead th {
 tbody td {
   padding: 10px;
   text-align: center;
+}
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+.error {
+  color: red;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+.button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  color: white;
+  background-color: #ff7300;
+  cursor: pointer;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #cf6100;
 }
 </style>

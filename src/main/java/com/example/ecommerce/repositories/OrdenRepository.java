@@ -9,6 +9,8 @@ import java.util.List;
 public interface OrdenRepository {
     OrdenEntity findById(Long id);
     List<OrdenEntity> findByClienteId(Long idCliente);
+    List<OrdenEntity> findByClienteIdPaginated(Long idCliente, int page, int size);
+    int count (Long clienteId);
     List<OrdenEntity> findAll();
     Long save(OrdenEntity orden);
     void update(OrdenEntity orden);

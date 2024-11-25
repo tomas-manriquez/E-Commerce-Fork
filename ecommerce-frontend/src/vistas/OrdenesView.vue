@@ -1,6 +1,12 @@
 <template>
   <div class="ordenes-container">
     <h1>Lista de Ordenes</h1>
+
+    <!-- Error state -->
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+
     <table>
       <thead>
       <tr>
@@ -23,6 +29,18 @@
       </tr>
       </tbody>
     </table>
+    <!-- Empty state -->
+    <div v-if="!loading && !error && !ordenes.length">No hay ordenes disponibles.</div>
+    <!-- Pagination controls -->
+    <div v-if="pagination.totalPages > 1">
+      <button :disabled="pagination.currentPage === 1" @click="goToPage(pagination.currentPage - 1)" class="button">
+        Anterior
+      </button>
+      <span>Página {{ pagination.currentPage }} de {{ pagination.totalPages }}</span>
+      <button :disabled="pagination.currentPage === pagination.totalPages" @click="goToPage(pagination.currentPage + 1)" class="button">
+        Siguiente
+      </button>
+    </div>
   </div>
 </template>
 
@@ -33,16 +51,37 @@ export default {
   data() {
     return {
       ordenes: [],
-      idCliente: null
+      idCliente: null,
+      loading: false,
+      error: null,
+      pagination: {
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+      },
     };
   },
   methods: {
-    async fetchOrdenes(id) {
+    async fetchOrdenes(id, page=1, size=10) {
       try {
-        const response = await api.get("/api/v1/ordenes/byClientId/" + id);
-        this.ordenes = response.data;
+        this.loading = true;
+        this.error = null;
+        const response = await api.get("/api/v1/ordenes/byClientId/pag/" + id, {
+          params: { page, size },
+        });
+        this.ordenes = response.data.content;
+        this.pagination = {
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          totalItems: response.data.totalElements,
+        }
       } catch (error) {
         console.error("Error al obtener las orden:", error);
+      }
+    },
+    async goToPage(page) {
+      if (page > 0 && page <= this.pagination.totalPages) {
+        await this.fetchOrdenes(this.idOrden,page, 10); // Cambiar de página
       }
     },
   },
@@ -90,5 +129,16 @@ tbody td {
 .button:hover {
   background-color: #cf6100;
 }
-
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+.error {
+  color: red;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
 </style>

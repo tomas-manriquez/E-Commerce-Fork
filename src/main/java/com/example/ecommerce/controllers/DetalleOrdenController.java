@@ -2,6 +2,7 @@ package com.example.ecommerce.controllers;
 
 import com.example.ecommerce.entities.DetalleOrdenEntity;
 import com.example.ecommerce.services.DetalleOrdenService;
+import com.example.ecommerce.dto.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class DetalleOrdenController {
         }
     }
 
-    @GetMapping("/byOrdenId/{ordenId}")
-    public ResponseEntity<List<DetalleOrdenEntity>> getDetallesByOdenId(@PathVariable Long ordenId) {
-        List<DetalleOrdenEntity> detalles = detalleOrdenService.getDetalleByOrdenId(ordenId);
+    @GetMapping("/byOrdenId/pag/{ordenId}")
+    public ResponseEntity<PageResponse<DetalleOrdenEntity>> getDetallesByOdenIdPag(@PathVariable Long ordenId, @RequestParam int page, @RequestParam int size) {
+        PageResponse<DetalleOrdenEntity> detalles = detalleOrdenService.getDetalleByOrdenId(ordenId, page, size);
         if (detalles != null) {
             return ResponseEntity.ok(detalles);
         } else {

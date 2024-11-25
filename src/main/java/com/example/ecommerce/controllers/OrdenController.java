@@ -1,6 +1,7 @@
 package com.example.ecommerce.controllers;
 
 import com.example.ecommerce.dto.OrdenRequest;
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.services.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class OrdenController {
         }
     }
 
-    @GetMapping("/byClientId/{clientId}")
-    public ResponseEntity<List<OrdenEntity>> getOrdenByClienteId(@PathVariable Long clientId) {
-        List<OrdenEntity> ordenes = ordenService.getOrdenByClienteId(clientId);
+    @GetMapping("/byClientId/pag/{clientId}")
+    public ResponseEntity<PageResponse<OrdenEntity>> getOrdenByClienteIdPag(@PathVariable Long clientId, @RequestParam int page, @RequestParam int size) {
+        PageResponse<OrdenEntity> ordenes = ordenService.getOrdenByClienteIdPag(clientId, page ,size);
         if (ordenes != null) {
             return ResponseEntity.ok(ordenes);
         } else {

@@ -1,6 +1,7 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.dto.DetalleOrdenRequest;
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
@@ -28,12 +29,12 @@ public class OrdenService {
         return orden;
     }
 
-    public List<OrdenEntity> getOrdenByClienteId(Long id) {
-        List<OrdenEntity> ordenes  = ordenRepository.findByClienteId(id);
+    public PageResponse<OrdenEntity> getOrdenByClienteIdPag(Long id, int page, int size) {
+        List<OrdenEntity> ordenes  = ordenRepository.findByClienteIdPaginated(id, page, size);
         if (ordenes == null) {
             throw new RuntimeException("No existe la orden según el id del cliente");
         }
-        return ordenes;
+        return new PageResponse<>(ordenes,page,size,ordenRepository.count(id));
     }
 
     public List<OrdenEntity> getAllOrdenes() {
