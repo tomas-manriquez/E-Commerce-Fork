@@ -1,6 +1,7 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entities.DetalleOrdenEntity;
+import com.example.ecommerce.entities.OrdenEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
@@ -13,13 +14,24 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     Sql2o sql2o;
 
     @Override
-    public DetalleOrdenEntity findById(long id) {
+    public DetalleOrdenEntity findById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM detalleordenes WHERE idorden = :id")
+            return con.createQuery("SELECT * FROM detalleordenes WHERE iddetalle = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(DetalleOrdenEntity.class);
         } catch (Exception e) {
             throw new RuntimeException("No se encontró detalle de la orden", e);
+        }
+    }
+
+    @Override
+    public List<DetalleOrdenEntity> findByOrdenId(Long ordenId) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM detalleordenes WHERE idorden = :id")
+                    .addParameter("id", ordenId)
+                    .executeAndFetch(DetalleOrdenEntity.class);
+        } catch (Exception e) {
+            throw new RuntimeException("No se encontraron los detalles de la orden", e);
         }
     }
 
@@ -74,16 +86,16 @@ public class DetalleOrdenRepositoryImpl implements DetalleOrdenRepository {
     @Override
     public void delete(DetalleOrdenEntity detalleOrden) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM detalleordenes WHERE idorden = :id")
+            con.createQuery("DELETE FROM detalleordenes WHERE iddetalle = :id")
                     .addParameter("id", detalleOrden.getIdOrden())
                     .executeUpdate();
         }
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM detalleordenes WHERE idorden = :id")
+            con.createQuery("DELETE FROM detalleordenes WHERE iddetalle = :id")
                     .addParameter("id", id)
                     .executeUpdate();
         }

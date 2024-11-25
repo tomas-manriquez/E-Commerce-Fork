@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface OrdenRepository {
     OrdenEntity findById(Long id);
-    List<OrdenEntity> findByIdCliente(Long idCliente);
+    List<OrdenEntity> findByClienteId(Long idCliente);
     List<OrdenEntity> findAll();
     Long save(OrdenEntity orden);
     void update(OrdenEntity orden);

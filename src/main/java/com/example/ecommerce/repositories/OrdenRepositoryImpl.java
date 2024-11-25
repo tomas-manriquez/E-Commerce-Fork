@@ -22,7 +22,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     }
 
     @Override
-    public List<OrdenEntity> findByIdCliente(Long idCliente) {
+    public List<OrdenEntity> findByClienteId(Long idCliente) {
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM ordenes WHERE idcliente = :idCliente")
                     .addParameter("idCliente", idCliente)

@@ -12,6 +12,9 @@
         <li>
           <router-link to="/productos/all">Ver Productos</router-link>
         </li>
+        <li>
+          <router-link :to="`/ordenes/${clienteId}`">Mis ordenes</router-link>
+        </li>
         <li v-if="userType === 'ADMIN'">
           <router-link to="/clientes">Ver lista de Clientes</router-link>
         </li>

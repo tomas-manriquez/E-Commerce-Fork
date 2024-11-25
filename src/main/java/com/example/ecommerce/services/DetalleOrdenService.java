@@ -25,6 +25,10 @@ public class DetalleOrdenService {
         return detalleOrdenRepository.findById(id);
     }
 
+    public List<DetalleOrdenEntity> getDetalleByOrdenId(Long ordenId){
+        return detalleOrdenRepository.findByOrdenId(ordenId);
+    }
+
     public void saveDetalle(DetalleOrdenEntity detalle) {
         detalleOrdenRepository.save(detalle);
     }

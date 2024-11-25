@@ -32,7 +32,7 @@ public class ClienteService {
         }
 
         // Buscar las órdenes asociadas al cliente
-        List<OrdenEntity> ordenes = ordenRepository.findByIdCliente(cliente.getIdCliente());
+        List<OrdenEntity> ordenes = ordenRepository.findByClienteId(cliente.getIdCliente());
 
         // Procesar las órdenes
         for (OrdenEntity orden : ordenes) {

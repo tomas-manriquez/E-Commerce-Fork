@@ -7,10 +7,11 @@ import java.util.List;
 
 @Repository
 public interface DetalleOrdenRepository {
-    DetalleOrdenEntity findById(long id);
+    DetalleOrdenEntity findById(Long id);
+    List<DetalleOrdenEntity> findByOrdenId(Long ordenId);
     List<DetalleOrdenEntity> findAll();
     void save(DetalleOrdenEntity detalleOrden);
     void update(DetalleOrdenEntity detalleOrden);
     void delete(DetalleOrdenEntity detalleOrden);
-    void deleteById(long id);
+    void deleteById(Long id);
 }
