@@ -15,7 +15,7 @@ ALTER TABLE public.auditoria
 
 -- Establecer el propietario de la tabla
 ALTER TABLE IF EXISTS public.auditoria
-    OWNER TO postgres;
+    OWNER TO ${DB_USERNAME};
 
 -- Crear la tabla sesion
 CREATE TABLE IF NOT EXISTS public.sesion
