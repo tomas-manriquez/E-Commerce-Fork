@@ -14,6 +14,7 @@ public interface OrdenRepository {
     List<OrdenEntity> findAll();
     Long save(OrdenEntity orden);
     void update(OrdenEntity orden);
+    void updateNormal(OrdenEntity orden);
     void delete(OrdenEntity orden);
     void deleteById(Long id);
     void deletePendings(OrdenEntity orden);

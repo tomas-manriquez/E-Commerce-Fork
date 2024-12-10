@@ -25,6 +25,14 @@
         <td>$ {{ orden.total }}</td>
         <td>
           <router-link :to="`/ordenes/detalle/${orden.idOrden}`" class="button">Ver detalles</router-link>
+          <div v-if="orden.estado!=='pagada'">
+            <button class="button" @click="marcarComoPagada(orden)" :disabled="orden.estado === 'pagada'">
+              Marcar como Pagada
+            </button>
+            <button class="button cancel-button" @click="confirmarCancelacion(orden.idOrden)">
+              Cancelar Orden
+            </button>
+          </div>
         </td>
       </tr>
       </tbody>
@@ -84,6 +92,38 @@ export default {
         await this.fetchOrdenes(this.idOrden,page, 10); // Cambiar de página
       }
     },
+    async marcarComoPagada(orden) {
+      try {
+        const ordenActualizada = orden;
+        ordenActualizada.estado = 'pagada';
+        await api.post("/api/v1/ordenes/update", ordenActualizada);
+        await this.fetchOrdenes(this.idCliente); // Refrescar lista de órdenes
+        alert("Orden marcada como pagada exitosamente.");
+      } catch (error) {
+        console.error("Error al marcar la orden como pagada:", error);
+        alert("Hubo un error al actualizar la orden.");
+      }
+    },
+
+    confirmarCancelacion(idOrden) {
+      if (confirm("¿Estás seguro de que deseas cancelar esta orden? Esta acción no se puede deshacer.")) {
+        this.cancelarOrden(idOrden);
+      }
+    },
+
+    async cancelarOrden(idOrden) {
+      try {
+
+        // Eliminar la orden
+        await api.delete(`/api/v1/ordenes/cancel/${idOrden}`);
+
+        this.fetchOrdenes(this.idCliente); // Refrescar lista de órdenes
+        alert("Orden cancelada y eliminada exitosamente.");
+      } catch (error) {
+        console.error("Error al cancelar la orden:", error);
+        alert("Hubo un error al cancelar la orden.");
+      }
+    }
   },
   mounted() {
     const idcliente = Number(localStorage.getItem("userId"));
@@ -141,4 +181,12 @@ tbody td {
   background-color: #ffebee;
   border-radius: 4px;
 }
+.cancel-button {
+  background-color: #e53935;
+}
+
+.cancel-button:hover {
+  background-color: #c62828;
+}
+
 </style>

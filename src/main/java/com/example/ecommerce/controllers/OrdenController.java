@@ -58,7 +58,7 @@ public class OrdenController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateOrden(@RequestBody OrdenEntity ord) {
-        ordenService.updateOrden(ord);
+        ordenService.updateOrdenNormal(ord);
         return ResponseEntity.ok("OrdenEntity updated successfully");
     }
 
@@ -83,6 +83,16 @@ public class OrdenController {
             return ResponseEntity.ok("OrdenEntity deleted successfully");
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/cancel/{id}")
+    public ResponseEntity<String> cancelarOrden(@PathVariable Long id) {
+        try {
+            ordenService.cancelarOrden(id);
+            return ResponseEntity.ok("Orden y sus detalles cancelados y eliminados exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cancelar la orden: " + e.getMessage());
         }
     }
 }
