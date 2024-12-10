@@ -85,6 +85,10 @@ public class OrdenService {
         ordenRepository.update(orden);
     }
 
+    public void updateOrdenNormal(OrdenEntity orden) {
+        ordenRepository.updateNormal(orden);
+    }
+
     public void deleteOrdenById(Long id) {
         OrdenEntity orden = ordenRepository.findById(id);
         if (orden == null) {
@@ -101,4 +105,22 @@ public class OrdenService {
         ordenRepository.delete(orden);
     }
 
+    public void cancelarOrden(Long idOrden) {
+        OrdenEntity orden = ordenRepository.findById(idOrden);
+        if (orden == null) {
+            throw new RuntimeException("No existe la orden con el ID proporcionado.");
+        }
+
+        // Obtener detalles de la orden
+        List<DetalleOrdenEntity> detalles = detalleOrdenService.getDetallesByOrdenId(idOrden);
+
+        // Actualizar stock de los productos asociados
+        for (DetalleOrdenEntity detalle : detalles) {
+            productoService.actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
+            detalleOrdenService.deleteDetalle(detalle);
+        }
+
+        // Eliminar la orden
+        ordenRepository.deleteById(idOrden);
+    }
 }

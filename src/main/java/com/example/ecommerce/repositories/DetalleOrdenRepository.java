@@ -15,4 +15,5 @@ public interface DetalleOrdenRepository {
     void update(DetalleOrdenEntity detalleOrden);
     void delete(DetalleOrdenEntity detalleOrden);
     void deleteById(Long id);
+    List<DetalleOrdenEntity> findByOrdenIdNormal(Long ordenId);
 }

@@ -80,4 +80,7 @@ public class DetalleOrdenService {
         detalleOrdenRepository.deleteById(id);
     }
 
+    public List<DetalleOrdenEntity> getDetallesByOrdenId(Long idOrden) {
+        return detalleOrdenRepository.findByOrdenIdNormal(idOrden);
+    }
 }

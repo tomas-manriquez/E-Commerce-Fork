@@ -88,4 +88,14 @@ public class ProductoService {
         productoRepository.delete(producto);
     }
 
+    public void actualizarStock(Long idProducto, int cantidad) {
+        ProductoEntity producto = productoRepository.findById(idProducto);
+        if (producto != null) {
+            producto.setStock(producto.getStock() + cantidad);
+            productoRepository.update(producto);
+        } else {
+            throw new RuntimeException("Producto no encontrado para actualizar stock.");
+        }
+    }
+
 }
