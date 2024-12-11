@@ -122,11 +122,15 @@ SELECT setval('public.productos_idproducto_seq', (SELECT MAX(idproducto) FROM pu
 INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, password, username, rol) VALUES
 (1, 'nombre', 'direccion', 'admin@ecommerce.cl', 'telefono', '$2a$10$dZVr6KP5UyftVBA48HHbve4NHsD3CPzkjcu3dJBuwJuykEC2zoEIS', 'admin', 'ADMIN'),
 (2, 'Juan Perez', 'Av. Siempre Viva 123', 'juan.perez@example.com', '987654321', '$2a$10$VVf/yAaV7YWAqLnTn3f3weO7uB/g4i0TZKedKPJvtEr87VE6yhIZm', 'juan123', 'USER'),
-(3, 'María Lopez', 'Calle Falsa 456', 'maria.lopez@example.com', '987654322', '$2a$10$lkU792clrkZm8crs6jpQbu9DXqyuG4caZ6zIip34T3Q.LJvrB9shS', 'maria234', 'USER'),
-(4, 'Carlos González', 'Pje. Los Alamos 789', 'carlos.gonzalez@example.com', '987654323', '$2a$10$3/e6BmfT11nd.La4FGHrF.LfBA2z0ZQhEaPelbNqxG52VlEEnrkZO', 'carlos345', 'USER'),
-(5, 'Ana Ramírez', 'Calle Primavera 101', 'ana.ramirez@example.com', '987654324', '$2a$10$M9szaYukFgTQPjIMCtfV6OHRY56gL61qWt0izMsOeng9S4TJSVC/S', 'ana456', 'USER'),
+(3, 'Maria Lopez', 'Calle Falsa 456', 'maria.lopez@example.com', '987654322', '$2a$10$lkU792clrkZm8crs6jpQbu9DXqyuG4caZ6zIip34T3Q.LJvrB9shS', 'maria234', 'USER'),
+(4, 'Carlos Gonzalez', 'Pje. Los Alamos 789', 'carlos.gonzalez@example.com', '987654323', '$2a$10$3/e6BmfT11nd.La4FGHrF.LfBA2z0ZQhEaPelbNqxG52VlEEnrkZO', 'carlos345', 'USER'),
+(5, 'Ana Ramirez', 'Calle Primavera 101', 'ana.ramirez@example.com', '987654324', '$2a$10$M9szaYukFgTQPjIMCtfV6OHRY56gL61qWt0izMsOeng9S4TJSVC/S', 'ana456', 'USER'),
 (6, 'Pedro Soto', 'Av. El Bosque 202', 'pedro.soto@example.com', '987654325', '$2a$10$IqEV840R.55a1/oFFZDMiOFRNDXj1szi5mH6veL1H7.H.7QUD42cq', 'pedro567', 'USER'),
-(7, 'Lucia Herrera', 'Pje. Las Rosas 303', 'lucia.herrera@example.com', '987654326', '$2a$10$UnyuFqlCgPwnyTpgpwjfru4CprAopmgc7E.2BYzGahCp.HT2ushEq', 'lucia678', 'USER');
+(7, 'Lucia Herrera', 'Pje. Las Rosas 303', 'lucia.herrera@example.com', '987654326', '$2a$10$UnyuFqlCgPwnyTpgpwjfru4CprAopmgc7E.2BYzGahCp.HT2ushEq', 'lucia678', 'USER'),
+(8, 'Nicolas Sepulveda', 'Monjitas 1234', 'nico@example.com', '976654433', '$2a$10$kEoJ9FnJsL9Ya0lyHTDR8OXsv5.bHdl88TAsN6f/iQE.ru0wiPrEa', 'nico123', 'USER'),
+(9, 'Marcelo Lagos', 'Catedral 3152', 'marcelo@example.com', '976695322', '$2a$10$c8stIC0H3t2Uo9KAv/OtXu8Y5V/1b.fzDWhZ6cooF8klg5W41nocW', 'marcelo234', 'USER'),
+(10, 'Ana Gallardo', 'Valdes 264', 'anita@example.com', '983240799', '$2a$10$APELHg72GaeSaYXJdu0jVuHOGNFjFc60KDG9yu0xpwisptGAzj57u', 'anita345', 'USER'),
+(11, 'nombre2', 'direccion2', 'admin2@ecommerce.cl', 'telefono2', '$2a$10$DH4v8vPla7OnZ3Z9Fvqt4ergzgRa8bh5PSpDzGroyxvdnj5EQ6aky', 'admin2', 'ADMIN');
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
 --Datos iniciales para ordenes de compra

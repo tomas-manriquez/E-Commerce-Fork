@@ -31,6 +31,26 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     }
 
     @Override
+    public List<ProductoEntity> findPaginated(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM productos " +
+                    "ORDER BY idproducto LIMIT :limit OFFSET :offset")
+                    .addParameter("limit", pageSize)
+                    .addParameter("offset", offset)
+                    .executeAndFetch(ProductoEntity.class);
+        }
+    }
+
+    @Override
+    public int count(){
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT count(*) FROM productos")
+                    .executeScalar(Integer.class);
+        }
+    }
+
+    @Override
     public void save(ProductoEntity producto) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
             con.createQuery("INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria)"+

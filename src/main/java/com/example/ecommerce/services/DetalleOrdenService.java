@@ -6,8 +6,8 @@ import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.DetalleOrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.ecommerce.dto.PageResponse;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -23,6 +23,12 @@ public class DetalleOrdenService {
 
     public DetalleOrdenEntity getDetalleById(Long id) {
         return detalleOrdenRepository.findById(id);
+    }
+
+    public PageResponse<DetalleOrdenEntity> getDetalleByOrdenId(Long ordenId, int page, int size){
+        List<DetalleOrdenEntity> detalles = detalleOrdenRepository.findByOrdenId(ordenId, page, size);
+        int total = detalleOrdenRepository.count(ordenId);
+        return new PageResponse<>(detalles, page, size, total);
     }
 
     public void saveDetalle(DetalleOrdenEntity detalle) {
@@ -74,4 +80,7 @@ public class DetalleOrdenService {
         detalleOrdenRepository.deleteById(id);
     }
 
+    public List<DetalleOrdenEntity> getDetallesByOrdenId(Long idOrden) {
+        return detalleOrdenRepository.findByOrdenIdNormal(idOrden);
+    }
 }

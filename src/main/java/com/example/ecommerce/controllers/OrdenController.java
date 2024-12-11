@@ -1,6 +1,7 @@
 package com.example.ecommerce.controllers;
 
 import com.example.ecommerce.dto.OrdenRequest;
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.services.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,16 @@ public class OrdenController {
         OrdenEntity ord = ordenService.getOrdenById(id);
         if (ord != null) {
             return ResponseEntity.ok(ord);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/byClientId/pag/{clientId}")
+    public ResponseEntity<PageResponse<OrdenEntity>> getOrdenByClienteIdPag(@PathVariable Long clientId, @RequestParam int page, @RequestParam int size) {
+        PageResponse<OrdenEntity> ordenes = ordenService.getOrdenByClienteIdPag(clientId, page ,size);
+        if (ordenes != null) {
+            return ResponseEntity.ok(ordenes);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -47,7 +58,7 @@ public class OrdenController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateOrden(@RequestBody OrdenEntity ord) {
-        ordenService.updateOrden(ord);
+        ordenService.updateOrdenNormal(ord);
         return ResponseEntity.ok("OrdenEntity updated successfully");
     }
 
@@ -72,6 +83,16 @@ public class OrdenController {
             return ResponseEntity.ok("OrdenEntity deleted successfully");
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/cancel/{id}")
+    public ResponseEntity<String> cancelarOrden(@PathVariable Long id) {
+        try {
+            ordenService.cancelarOrden(id);
+            return ResponseEntity.ok("Orden y sus detalles cancelados y eliminados exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cancelar la orden: " + e.getMessage());
         }
     }
 }

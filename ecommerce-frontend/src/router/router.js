@@ -11,13 +11,6 @@ const router = createRouter({
             meta: { requiresAuth: false }, // No requiere autenticación
         },
         {
-            path: '/add/cliente',
-            name: '/add/cliente',
-            component: () => import('../vistas/ManejoClienteView.vue'),
-            alias: '/add/Cliente',
-            meta: { requiresAuth: true }, // Requiere autenticación
-        },
-        {
             path: '/add/ordenes',
             name: 'add/ordenes',
             component: () => import('../vistas/ManejoOrdenView.vue'),
@@ -67,6 +60,16 @@ const router = createRouter({
             path: '/perfil/editar/:id',
             name: 'perfil/editar',
             component: () => import('../vistas/EditClienteView.vue'),
+            meta: { requiresAuth: true},
+        },{
+            path: '/ordenes/:id',
+            name: '/ordenes',
+            component: () => import('../vistas/OrdenesView.vue'),
+            meta: { requiresAuth: true},
+        },{
+            path: '/ordenes/detalle/:id',
+            name: '/ordenes/detalle',
+            component: () => import('../vistas/DetalleOrdenesView.vue'),
             meta: { requiresAuth: true},
         }
     ],
