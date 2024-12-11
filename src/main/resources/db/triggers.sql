@@ -1,4 +1,5 @@
--- triggers.sql
+-- triggers.sql adaptado
+
 -- Crear tabla única de auditoría
 CREATE TABLE IF NOT EXISTS public.auditoria
 (
@@ -6,16 +7,9 @@ CREATE TABLE IF NOT EXISTS public.auditoria
     tabla VARCHAR(255) NOT NULL,            -- Nombre de la tabla donde ocurrió el cambio
     operacion VARCHAR(10) NOT NULL,         -- Tipo de operación: 'INSERT', 'UPDATE', 'DELETE'
     consulta TEXT,                          -- Descripción detallada de la operación
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Fecha y hora exacta de la operación
-    )
-    TABLESPACE pg_default;
-
-ALTER TABLE public.auditoria
-    ADD COLUMN user_id BIGINT;
-
--- Establecer el propietario de la tabla
-ALTER TABLE IF EXISTS public.auditoria
-    OWNER TO postgres;
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha y hora exacta de la operación
+    user_id BIGINT                          -- ID del usuario que realizó la operación
+    );
 
 -- Crear la tabla sesion
 CREATE TABLE IF NOT EXISTS public.sesion
@@ -61,8 +55,6 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-
-
 -- Crear triggers para todas las tablas relevantes
 -- Tabla: clientes
 CREATE TRIGGER trigger_auditoria_clientes
@@ -88,7 +80,26 @@ CREATE TRIGGER trigger_auditoria_ordenes
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
 
+-- Tabla: detalleordenes
 CREATE TRIGGER trigger_auditoria_detalleordenes
     AFTER INSERT OR UPDATE OR DELETE ON detalleordenes
+    FOR EACH ROW
+    EXECUTE FUNCTION registrar_auditoria();
+
+-- Tabla: tienda
+CREATE TRIGGER trigger_auditoria_tienda
+    AFTER INSERT OR UPDATE OR DELETE ON tienda
+    FOR EACH ROW
+    EXECUTE FUNCTION registrar_auditoria();
+
+-- Tabla: repartidor
+CREATE TRIGGER trigger_auditoria_repartidor
+    AFTER INSERT OR UPDATE OR DELETE ON repartidor
+    FOR EACH ROW
+    EXECUTE FUNCTION registrar_auditoria();
+
+-- Tabla: zona
+CREATE TRIGGER trigger_auditoria_zona
+    AFTER INSERT OR UPDATE OR DELETE ON zona
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
