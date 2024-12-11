@@ -48,6 +48,17 @@
       No hay productos disponibles.
     </div>
 
+    <!-- Pagination controls -->
+    <div v-if="pagination && pagination.totalPages > 1" class="pagination">
+      <button :disabled="pagination.currentPage === 1" @click="goToPage(pagination.currentPage - 1)">
+        Anterior
+      </button>
+      <span>Página {{ pagination.currentPage }} de {{ pagination.totalPages }}</span>
+      <button :disabled="pagination.currentPage === pagination.totalPages" @click="goToPage(pagination.currentPage + 1)">
+        Siguiente
+      </button>
+    </div>
+
     <!-- Edit Modal -->
     <div v-if="productoEditando" class="modal">
       <div class="modal-content">
@@ -104,18 +115,41 @@ export default {
 
     const isAdmin = ref(false);
 
-    const fetchProducts = async () => {
+    const fetchProducts = async (page = 1, size = 10) => {
       try {
         loading.value = true;
         error.value = null;
-        const response = await api.get("/api/v1/productos/all");
-        products.value = response.data;
+
+        const response = await api.get(`/api/v1/productos/page`, {
+          params: { page, size },
+        });
+
+        products.value = response.data.content;
+        pagination.value = {
+          currentPage: response.data.currentPage,
+          pageSize: response.data.pageSize,
+          totalPages: response.data.totalPages,
+          totalItems: response.data.totalElements,
+        };
+
       } catch (err) {
         error.value =
             "Error al cargar los productos: " +
             (err.response?.data?.message || err.message);
       } finally {
         loading.value = false;
+      }
+    };
+
+    const pagination = ref({
+      currentPage: 1,
+      totalPages: 1,
+      totalItems: 0,
+    });
+
+    const goToPage = async (page) => {
+      if (page > 0 && page <= pagination.value.totalPages) {
+        await fetchProducts(page, 10); 
       }
     };
 
@@ -173,6 +207,8 @@ export default {
 
     return {
       products,
+      pagination,
+      goToPage,
       loading,
       error,
       productoEditando,

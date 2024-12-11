@@ -1,7 +1,9 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ClienteEntity;
 import com.example.ecommerce.entities.OrdenEntity;
+import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.ClienteRepository;
 import com.example.ecommerce.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,19 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
+    public PageResponse<ClienteEntity> getClientesPaginated(int page, int size) {
+        List<ClienteEntity> productos = clienteRepository.findPaginated(page, size);
+        int total = clienteRepository.count();
+        return new PageResponse<>(productos, page, size, total);
+    }
+
     public void removeCliente(ClienteEntity cliente) {
         if (cliente == null || cliente.getIdCliente() == null) {
             throw new IllegalArgumentException("El cliente o su ID no puede ser nulo para eliminar.");
         }
 
         // Buscar las órdenes asociadas al cliente
-        List<OrdenEntity> ordenes = ordenRepository.findByIdCliente(cliente.getIdCliente());
+        List<OrdenEntity> ordenes = ordenRepository.findByClienteId(cliente.getIdCliente());
 
         // Procesar las órdenes
         for (OrdenEntity orden : ordenes) {

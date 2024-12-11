@@ -1,6 +1,7 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.dto.DetalleOrdenRequest;
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
@@ -26,6 +27,14 @@ public class OrdenService {
             throw new RuntimeException("No existe la orden");
         }
         return orden;
+    }
+
+    public PageResponse<OrdenEntity> getOrdenByClienteIdPag(Long id, int page, int size) {
+        List<OrdenEntity> ordenes  = ordenRepository.findByClienteIdPaginated(id, page, size);
+        if (ordenes == null) {
+            throw new RuntimeException("No existe la orden según el id del cliente");
+        }
+        return new PageResponse<>(ordenes,page,size,ordenRepository.count(id));
     }
 
     public List<OrdenEntity> getAllOrdenes() {
@@ -76,6 +85,10 @@ public class OrdenService {
         ordenRepository.update(orden);
     }
 
+    public void updateOrdenNormal(OrdenEntity orden) {
+        ordenRepository.updateNormal(orden);
+    }
+
     public void deleteOrdenById(Long id) {
         OrdenEntity orden = ordenRepository.findById(id);
         if (orden == null) {
@@ -92,4 +105,22 @@ public class OrdenService {
         ordenRepository.delete(orden);
     }
 
+    public void cancelarOrden(Long idOrden) {
+        OrdenEntity orden = ordenRepository.findById(idOrden);
+        if (orden == null) {
+            throw new RuntimeException("No existe la orden con el ID proporcionado.");
+        }
+
+        // Obtener detalles de la orden
+        List<DetalleOrdenEntity> detalles = detalleOrdenService.getDetallesByOrdenId(idOrden);
+
+        // Actualizar stock de los productos asociados
+        for (DetalleOrdenEntity detalle : detalles) {
+            productoService.actualizarStock(detalle.getIdProducto(), detalle.getCantidad());
+            detalleOrdenService.deleteDetalle(detalle);
+        }
+
+        // Eliminar la orden
+        ordenRepository.deleteById(idOrden);
+    }
 }

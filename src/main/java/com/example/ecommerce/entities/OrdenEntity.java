@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class OrdenEntity {
     private Long idOrden;
     private LocalDateTime fechaOrden;
+    // Estado de la orden pendiente, pagada, enviada
     private String estado;
     private Long idCliente;
     private BigDecimal total;

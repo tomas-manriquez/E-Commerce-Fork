@@ -65,7 +65,6 @@ Las variables de entorno necesarias son:
     $env:PGPASSWORD = $env:DB_PASSWORD
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d postgres -c "CREATE DATABASE $env:DB_NAME;"
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d $env:DB_NAME -f initDB.sql
-
   ```
 * ### Ejecución en Linux/MacOS
 * Abre el terminal dentro de la carpeta 'db'. (Puedes acceder a esta abriendo terminal en el directorio raiz y ejecutar el comando `cd src\main\resources\db`)

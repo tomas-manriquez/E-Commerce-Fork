@@ -1,6 +1,8 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ClienteEntity;
+import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.services.ClienteService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class ClienteController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/page")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PageResponse<ClienteEntity>> getProductos(@RequestParam int page, @RequestParam int size) {
+        return ResponseEntity.ok(clienteService.getClientesPaginated(page, size));
     }
 
     @PostMapping("/create")

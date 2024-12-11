@@ -59,7 +59,6 @@ export default {
   mounted() {
     const clienteId = this.$route.params.id;
     this.idCliente = clienteId;
-    console.log(clienteId);
     this.getCliente(clienteId);
   },
   methods: {

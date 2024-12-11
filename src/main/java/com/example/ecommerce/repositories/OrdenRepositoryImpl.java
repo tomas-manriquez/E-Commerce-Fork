@@ -22,7 +22,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     }
 
     @Override
-    public List<OrdenEntity> findByIdCliente(Long idCliente) {
+    public List<OrdenEntity> findByClienteId(Long idCliente) {
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM ordenes WHERE idcliente = :idCliente")
                     .addParameter("idCliente", idCliente)
@@ -30,6 +30,28 @@ public class OrdenRepositoryImpl implements OrdenRepository {
         }
     }
 
+    @Override
+    public List<OrdenEntity> findByClienteIdPaginated(Long idCliente, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM ordenes WHERE idcliente = :idCliente LIMIT :limit OFFSET :offset")
+                    .addParameter("idCliente", idCliente)
+                    .addParameter("limit", pageSize)
+                    .addParameter("offset", offset)
+                    .executeAndFetch(OrdenEntity.class);
+        } catch (Exception e) {
+            throw new RuntimeException("No se encontraron los detalles de la orden", e);
+        }
+    }
+
+    @Override
+    public int count(Long clienteId) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT count(*) FROM ordenes WHERE idcliente = :id")
+                    .addParameter("id", clienteId)
+                    .executeScalar(Integer.class);
+        }
+    }
 
     @Override
     public List<OrdenEntity> findAll() {
@@ -90,6 +112,26 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                         .addParameter("idorden", orden.getIdOrden())
                         .executeUpdate();
             }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
+        }
+    }
+    @Override
+    public void updateNormal(OrdenEntity orden) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            con.createQuery("UPDATE ordenes SET " +
+                            "fechaorden = :fechaorden, " +
+                            "estado = :estado, " +
+                            "idcliente = :idcliente, " +
+                            "total = :total " +
+                            "WHERE idorden = :idorden")
+                    .addParameter("fechaorden", orden.getFechaOrden())
+                    .addParameter("estado", orden.getEstado())
+                    .addParameter("idcliente", orden.getIdCliente())
+                    .addParameter("total", orden.getTotal())
+                    .addParameter("idorden", orden.getIdOrden())
+                    .executeUpdate();
+
         } catch (Exception ex) {
             throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
         }
