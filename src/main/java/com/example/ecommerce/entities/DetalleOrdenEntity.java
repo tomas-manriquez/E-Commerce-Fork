@@ -15,4 +15,5 @@ public class DetalleOrdenEntity {
     private Long idProducto;
     private Integer cantidad;
     private BigDecimal precioUnitario;
+
 }
