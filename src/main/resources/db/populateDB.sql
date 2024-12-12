@@ -134,43 +134,43 @@ INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, pass
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
 --Datos iniciales para ordenes de compra
-INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total) VALUES
-(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00),
-(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00),
-(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00),
-(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00),
-(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00),
-(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00),
-(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00),
-(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00);
+INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total, lugar_entrega) VALUES
+(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
+(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0));
 SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
 
 -- Detalles correspondientes con las ordenes anteriores (agregando lugar_entrega)
-INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario, lugar_entrega) VALUES
-(1, 1, 1, 2, 450000.00, ST_SetSRID(ST_MakePoint(-70.6483, -33.4489), 0)),  -- Zona 1
-(2, 1, 2, 1, 499000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),  -- Zona 1
-(3, 2, 1, 4, 450000.00, ST_SetSRID(ST_MakePoint(-70.6503, -33.4479), 0)),  -- Zona 1
-(4, 2, 2, 3, 499000.00, ST_SetSRID(ST_MakePoint(-70.6453, -33.4509), 0)),  -- Zona 1
-(5, 3, 11, 1, 120000.00, ST_SetSRID(ST_MakePoint(-70.6463, -33.4483), 0)),  -- Zona 1
-(6, 3, 14, 2, 60000.00, ST_SetSRID(ST_MakePoint(-70.6473, -33.4493), 0)),  -- Zona 1
-(7, 3, 17, 2, 130000.00, ST_SetSRID(ST_MakePoint(-70.6487, -33.4473), 0)),  -- Zona 1
-(8, 4, 20, 10, 120000.00, ST_SetSRID(ST_MakePoint(-70.6497, -33.4491), 0)),  -- Zona 1
+INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario) VALUES
+(1, 1, 1, 2, 450000.00),  -- Zona 1
+(2, 1, 2, 1, 499000.00),  -- Zona 1
+(3, 2, 1, 4, 450000.00),  -- Zona 1
+(4, 2, 2, 3, 499000.00),  -- Zona 1
+(5, 3, 11, 1, 120000.00),  -- Zona 1
+(6, 3, 14, 2, 60000.00),  -- Zona 1
+(7, 3, 17, 2, 130000.00),  -- Zona 1
+(8, 4, 20, 10, 120000.00),  -- Zona 1
 
-(9, 4, 29, 5, 80000.00, ST_SetSRID(ST_MakePoint(-70.6517, -33.4547), 0)),  -- Zona 2
-(10, 4, 30, 1, 150000.00, ST_SetSRID(ST_MakePoint(-70.6527, -33.4537), 0)), -- Zona 2
-(11, 5, 2, 5, 499000.00, ST_SetSRID(ST_MakePoint(-70.6537, -33.4557), 0)),  -- Zona 2
-(12, 5, 6, 8, 500000.00, ST_SetSRID(ST_MakePoint(-70.6547, -33.4527), 0)),  -- Zona 2
-(13, 5, 7, 5, 620000.00, ST_SetSRID(ST_MakePoint(-70.6557, -33.4517), 0)),  -- Zona 2
-(14, 5, 8, 10, 550000.00, ST_SetSRID(ST_MakePoint(-70.6567, -33.4543), 0)), -- Zona 2
-(15, 6, 3, 4, 220000.00, ST_SetSRID(ST_MakePoint(-70.6577, -33.4533), 0)),  -- Zona 2
-(16, 6, 1, 10, 450000.00, ST_SetSRID(ST_MakePoint(-70.6587, -33.4523), 0)), -- Zona 2
+(9, 4, 29, 5, 80000.00),  -- Zona 2
+(10, 4, 30, 1, 150000.00), -- Zona 2
+(11, 5, 2, 5, 499000.00),  -- Zona 2
+(12, 5, 6, 8, 500000.00),  -- Zona 2
+(13, 5, 7, 5, 620000.00),  -- Zona 2
+(14, 5, 8, 10, 550000.00), -- Zona 2
+(15, 6, 3, 4, 220000.00),  -- Zona 2
+(16, 6, 1, 10, 450000.00), -- Zona 2
 
-(17, 6, 8, 10, 550000.00, ST_SetSRID(ST_MakePoint(-70.6597, -33.4513), 0)),  -- Región Metropolitana
-(18, 7, 4, 4, 180000.00, ST_SetSRID(ST_MakePoint(-70.6607, -33.4503), 0)),  -- Región Metropolitana
-(19, 7, 12, 4, 95000.00, ST_SetSRID(ST_MakePoint(-70.6617, -33.4493), 0)),  -- Región Metropolitana
-(20, 7, 21, 7, 95000.00, ST_SetSRID(ST_MakePoint(-70.6627, -33.4483), 0)),  -- Región Metropolitana
-(21, 8, 4, 7, 180000.00, ST_SetSRID(ST_MakePoint(-70.6637, -33.4473), 0)),  -- Región Metropolitana
-(22, 8, 15, 6, 45000.00, ST_SetSRID(ST_MakePoint(-70.6647, -33.4463), 0)); -- Región Metropolitana
+(17, 6, 8, 10, 550000.00),  -- Región Metropolitana
+(18, 7, 4, 4, 180000.00),  -- Región Metropolitana
+(19, 7, 12, 4, 95000.00),  -- Región Metropolitana
+(20, 7, 21, 7, 95000.00),  -- Región Metropolitana
+(21, 8, 4, 7, 180000.00),  -- Región Metropolitana
+(22, 8, 15, 6, 45000.00); -- Región Metropolitana
 
 -- Ajustar secuencia de detalleordenes
 SELECT setval('public.detalleordenes_iddetalle_seq', (SELECT MAX(iddetalle) FROM public.detalleordenes), true);
