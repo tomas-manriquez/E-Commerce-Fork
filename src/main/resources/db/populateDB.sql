@@ -9,42 +9,43 @@ VALUES (
        );
 
 -- Insertar tiendas
-INSERT INTO public.tienda (id_tienda,nombre) VALUES
+INSERT INTO public.tienda (idtienda,nombre) VALUES
      (1,'MiniMaxMarket'),
      (2,'Touhou Project LostWord');
 
 -- Insertar las zonas de reparto con las subzonas generadas para Tienda 1
-INSERT INTO public.zona (id_tienda, nombre_zona, geom)
+INSERT INTO public.zona (idtienda, nombrezona, geom)
 SELECT
     1,  -- Tienda 1
     'zona de reparto tienda 1',
     (ST_Dump(ST_Subdivide(
-            (SELECT geom FROM public.zona WHERE nombre_zona = 'Región Metropolitana'), 5
+            (SELECT geom FROM public.zona WHERE nombrezona = 'Región Metropolitana'), 5
              ))).geom  -- Primera subzona
 LIMIT 1;  -- Seleccionamos la primera subzona
 
 -- Insertar las zonas de reparto con las subzonas generadas para Tienda 2
-INSERT INTO public.zona (id_tienda, nombre_zona, geom)
+INSERT INTO public.zona (idtienda, nombrezona, geom)
 SELECT
     2,  -- Tienda 2
     'zona de reparto tienda 2',
     (ST_Dump(ST_Subdivide(
-            (SELECT geom FROM public.zona WHERE nombre_zona = 'Región Metropolitana'), 5
+            (SELECT geom FROM public.zona WHERE nombrezona = 'Región Metropolitana'), 5
              ))).geom  -- Segunda subzona
 LIMIT 1 OFFSET 1;  -- Seleccionamos la segunda subzona
 
 
 -- Insertar repartidores para tienda 1
-INSERT INTO public.repartidor (nombre, apellido, id_tienda) VALUES
+INSERT INTO public.repartidor (nombre, apellido, idtienda) VALUES
 ('Matías', 'Montaño', 1),
 ('Josue', 'Quileñan', 1),
 ('Patricio', 'Manríquez', 1);
 
 -- Insertar repartidores para tienda 2
-INSERT INTO public.repartidor (nombre, apellido, id_tienda) VALUES
+INSERT INTO public.repartidores (nombre, apellido, idtienda) VALUES
 ('Nicolás', 'Sepulveda', 2),
 ('Tomás', 'Manríquez', 2);
 
+-- Insertar categorias
 insert into categorias (nombre) values ('Tecnologia');
 insert into categorias (nombre) values ('Cocina');
 insert into categorias (nombre) values ('Limpieza');
@@ -53,7 +54,7 @@ SELECT setval('public.categorias_idcategoria_seq', (SELECT MAX(idcategoria) FROM
 
 
 -- Datos iniciales para la tabla productos
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, id_tienda) VALUES
+INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 ('Smartphone Samsung Galaxy S21', 'Celular Samsung Galaxy S21, pantalla AMOLED de 6.2 pulgadas', 450000.00, 30, 'disponible', 1, 1),
 ('Smartphone iPhone 12', 'Celular Apple iPhone 12 con 128GB de almacenamiento', 499000.00, 25, 'disponible', 1, 2),
 ('Smartphone Xiaomi Redmi Note 11', 'Celular Xiaomi Redmi Note 11, cámara de 50MP', 220000.00, 40, 'disponible', 1,1),
@@ -67,7 +68,7 @@ INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, 
 
 
 -- Datos iniciales para la categoría de cocina (idcategoria = 2)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, id_tienda) VALUES
+INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Microondas
 ('Microondas Samsung MG23K3513CK', 'Microondas Samsung con grill y capacidad de 23L', 120000.00, 30, 'disponible', 2, 1),
 ('Microondas LG MH6535GIB', 'Microondas LG con tecnología Smart Inverter y 25L', 95000.00, 25, 'disponible', 2, 2),
@@ -83,7 +84,7 @@ INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, 
 
 
 -- Datos iniciales para la categoría de limpieza (idcategoria = 3)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, id_tienda) VALUES
+INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Aspiradoras
 ('Aspiradora LG CordZero A9', 'Aspiradora LG inalámbrica con motor Smart Inverter y 200W', 120000.00, 20, 'disponible', 3, 2),
 ('Aspiradora Philips FC9352/01', 'Aspiradora Philips compacta sin bolsa y filtro HEPA', 95000.00, 25, 'disponible', 3, 1),
@@ -100,7 +101,7 @@ INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, 
 
 
 -- Datos iniciales para la categoría de jardín (idcategoria = 4)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, id_tienda) VALUES
+INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Cortadoras de pasto
 ('Cortadora de Pasto Black+Decker BEMW451BH', 'Cortadora de pasto eléctrica Black+Decker con motor de 1200W', 150000.00, 10, 'disponible', 4, 2),
 ('Cortadora de Pasto Hyundai LM3301', 'Cortadora de pasto manual Hyundai con ancho de corte de 33 cm', 80000.00, 8, 'disponible', 4, 1),
@@ -134,43 +135,51 @@ INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, pass
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
 --Datos iniciales para ordenes de compra
-INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total, lugar_entrega) VALUES
-(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0)),
-(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0));
+INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total, identrega) VALUES
+(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00, 1),   -- Zona 1
+(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00, 2),   -- Zona 1
+(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00, 3),    -- Zona 1
+(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00, 4),   -- Zona 2
+(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00, 5),  -- Zona 2
+(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00, 6),  -- Zona 2
+(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00, 7),   -- Región Metropolitana
+(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00, 8);   -- Región Metropolitana
 SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
 
 -- Detalles correspondientes con las ordenes anteriores (agregando lugar_entrega)
 INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario) VALUES
-(1, 1, 1, 2, 450000.00),  -- Zona 1
-(2, 1, 2, 1, 499000.00),  -- Zona 1
-(3, 2, 1, 4, 450000.00),  -- Zona 1
-(4, 2, 2, 3, 499000.00),  -- Zona 1
-(5, 3, 11, 1, 120000.00),  -- Zona 1
-(6, 3, 14, 2, 60000.00),  -- Zona 1
-(7, 3, 17, 2, 130000.00),  -- Zona 1
-(8, 4, 20, 10, 120000.00),  -- Zona 1
-
-(9, 4, 29, 5, 80000.00),  -- Zona 2
-(10, 4, 30, 1, 150000.00), -- Zona 2
-(11, 5, 2, 5, 499000.00),  -- Zona 2
-(12, 5, 6, 8, 500000.00),  -- Zona 2
-(13, 5, 7, 5, 620000.00),  -- Zona 2
-(14, 5, 8, 10, 550000.00), -- Zona 2
-(15, 6, 3, 4, 220000.00),  -- Zona 2
-(16, 6, 1, 10, 450000.00), -- Zona 2
-
-(17, 6, 8, 10, 550000.00),  -- Región Metropolitana
-(18, 7, 4, 4, 180000.00),  -- Región Metropolitana
-(19, 7, 12, 4, 95000.00),  -- Región Metropolitana
-(20, 7, 21, 7, 95000.00),  -- Región Metropolitana
-(21, 8, 4, 7, 180000.00),  -- Región Metropolitana
-(22, 8, 15, 6, 45000.00); -- Región Metropolitana
+(1, 1, 1, 2, 450000.00),
+(2, 1, 2, 1, 499000.00),
+(3, 2, 1, 4, 450000.00),
+(4, 2, 2, 3, 499000.00),
+(5, 3, 11, 1, 120000.00),
+(6, 3, 14, 2, 60000.00),
+(7, 3, 17, 2, 130000.00),
+(8, 4, 20, 10, 120000.00),
+(9, 4, 29, 5, 80000.00),
+(10, 4, 30, 1, 150000.00),
+(11, 5, 2, 5, 499000.00),
+(12, 5, 6, 8, 500000.00),
+(13, 5, 7, 5, 620000.00),
+(14, 5, 8, 10, 550000.00),
+(15, 6, 3, 4, 220000.00),
+(16, 6, 1, 10, 450000.00),
+(17, 6, 8, 10, 550000.00),
+(18, 7, 4, 4, 180000.00),
+(19, 7, 12, 4, 95000.00),
+(20, 7, 21, 7, 95000.00),
+(21, 8, 4, 7, 180000.00),
+(22, 8, 15, 6, 45000.00);
 
 -- Ajustar secuencia de detalleordenes
 SELECT setval('public.detalleordenes_iddetalle_seq', (SELECT MAX(iddetalle) FROM public.detalleordenes), true);
+
+INSERT INTO public.entregas (idrepartidor, idorden, lugarentrega, fechaentrega) VALUES
+(1, 1, ST_SetSRID(ST_MakePoint(-70.6483, -33.448), 0), '2024-12-23 12:00:00'),  -- Zona 1
+(2, 2, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0), '2024-11-25 12:00:00'), -- Zona 1
+(3, 3, ST_SetSRID(ST_MakePoint(-70.6503, -33.4479), 0), '2024-11-27 12:00:00'), -- Zona 1
+(4, 4, ST_SetSRID(ST_MakePoint(-70.6517, -33.4547), 0), '2024-11-29 12:00:00'), -- Zona 2
+(5, 5, ST_SetSRID(ST_MakePoint(-70.6527, -33.4537), 0), '2024-11-30 12:00:00'), -- Zona 2
+(1, 6, ST_SetSRID(ST_MakePoint(-70.6537, -33.4559), 0), '2024-12-23 12:00:00'), -- Zona 2
+(2, 7, ST_SetSRID(ST_MakePoint(-70.6597, -33.4513), 0), '2024-12-25 12:00:00'), -- Región Metropolitana
+(3, 8, ST_SetSRID(ST_MakePoint(-70.6607, -33.4503), 0), '2024-12-27 12:00:00'); -- Región Metropolitana
