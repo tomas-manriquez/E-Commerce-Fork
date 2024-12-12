@@ -3,6 +3,7 @@ package com.example.ecommerce.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,4 +18,5 @@ public class OrdenEntity {
     private String estado;
     private Long idCliente;
     private BigDecimal total;
+    private Long idEntrega;
 }
