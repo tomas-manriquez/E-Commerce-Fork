@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS public.repartidores (
     idrepartidor BIGSERIAL PRIMARY KEY, -- ID autoincremental
     nombre VARCHAR(255) NOT NULL,       -- Nombre del repartidor
     apellido VARCHAR(255) NOT NULL,     -- Apellido del repartidor
-    idtienda INT REFERENCES public.tienda (idtienda) -- Relación con la tienda
+    idtienda BIGINT REFERENCES public.tienda (idtienda) -- Relación con la tienda
     );
 
 -- Crear la tabla ordenes con relación a clientes
