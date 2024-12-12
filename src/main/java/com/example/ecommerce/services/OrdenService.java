@@ -1,5 +1,6 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.dto.DetalleOrdenRequest;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
@@ -20,6 +21,8 @@ public class OrdenService {
     DetalleOrdenService detalleOrdenService;
     @Autowired
     ProductoService productoService;
+    @Autowired
+    EntregaService entregaService;
 
     public OrdenEntity getOrdenById(Long id) {
         OrdenEntity orden  = ordenRepository.findById(id);
@@ -41,7 +44,7 @@ public class OrdenService {
         return ordenRepository.findAll();
     }
 
-    public void placeOrden(Long idCliente, List<DetalleOrdenRequest> detalles) {
+    public void placeOrden(Long idCliente, List<DetalleOrdenRequest> detalles, Coordenadas coordenadas) {
         //Crear y guardar Orden
         OrdenEntity orden = createOrden(idCliente);
         Long idOrden = ordenRepository.save(orden);
@@ -71,6 +74,7 @@ public class OrdenService {
 
         //Tras guardar todos los detalles, actualizar Orden con cálculo del total
         ordenRepository.updateTotal(idOrden);
+        entregaService.create(orden, coordenadas);
     }
 
     public OrdenEntity createOrden(Long idCliente) {

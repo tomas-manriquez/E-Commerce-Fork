@@ -4,6 +4,7 @@ import com.example.ecommerce.dto.OrdenRequest;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.services.OrdenService;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class OrdenController {
         if (request.getIdCliente() == null || request.getDetalles() == null || request.getDetalles().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del cliente y los detalles de la orden son obligatorios.");
         }
-        ordenService.placeOrden(request.getIdCliente(), request.getDetalles());
+        ordenService.placeOrden(request.getIdCliente(), request.getDetalles(), request.getCoordenadas());
         return ResponseEntity.status(HttpStatus.CREATED).body("Orden creada exitosamente.");
     }
 
