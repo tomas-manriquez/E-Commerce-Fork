@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS public.ordenes (
       estado character varying(50),       -- Estado de la orden ("pendiente","pagada","enviada")
       idcliente BIGINT,                   -- Cliente que realizó la orden
       total DECIMAL(10,2),                -- Total a pagar por la orden
+      lugar_entrega GEOMETRY(POINT, 0),   -- Punto de entrega (coordenadas geográficas)
       CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE SET NULL
     );
 
@@ -84,7 +85,6 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes (
      idproducto BIGINT,                  -- Referencia al producto
      cantidad int,                       -- Cantidad de producto en la orden
      preciounitario DECIMAL(10,2),       -- Precio unitario del producto
-     lugar_entrega GEOMETRY(POINT, 0),   -- Punto de entrega (coordenadas geográficas)
      CONSTRAINT fk_orden FOREIGN KEY (idorden) REFERENCES public.ordenes (idorden),
      CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto) ON DELETE SET NULL
     );
