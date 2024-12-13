@@ -17,4 +17,5 @@ public class ProductoEntity {
     private Integer stock;
     private String estado;
     private Long idCategoria;
+    private Long idTienda;
 }

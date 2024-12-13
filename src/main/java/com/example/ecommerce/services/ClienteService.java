@@ -3,9 +3,7 @@ package com.example.ecommerce.services;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.ClienteEntity;
 import com.example.ecommerce.entities.OrdenEntity;
-import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.ClienteRepository;
-import com.example.ecommerce.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     @Autowired
-    OrdenRepository ordenRepository;
+    private OrdenService ordenService;
 
     public ClienteEntity getClienteById(Long id) {
         return clienteRepository.findById(id);
@@ -40,17 +38,17 @@ public class ClienteService {
         }
 
         // Buscar las órdenes asociadas al cliente
-        List<OrdenEntity> ordenes = ordenRepository.findByClienteId(cliente.getIdCliente());
+        List<OrdenEntity> ordenes = ordenService.getOrdenByClientId(cliente.getIdCliente());
 
         // Procesar las órdenes
         for (OrdenEntity orden : ordenes) {
             if ("pendiente".equalsIgnoreCase(orden.getEstado())) {
                 // Eliminar las órdenes con estado "pendiente"
-                ordenRepository.deletePendings(orden);
+                ordenService.deleteOrden(orden);
             } else {
                 // Actualizar idCliente a NULL para las órdenes con otros estados
                 orden.setIdCliente(null);
-                ordenRepository.update(orden);
+                ordenService.updateOrdenNormal(orden);
             }
         }
 

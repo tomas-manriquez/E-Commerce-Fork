@@ -1,6 +1,5 @@
 package com.example.ecommerce.repositories;
 
-import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.RepartidorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,18 +37,9 @@ public class RepartidorRepositoryImpl implements RepartidorRepository {
     @Override
     public void delete(RepartidorEntity repartidor) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM repartidores WHERE idorden = :id")
+            con.createQuery("DELETE FROM repartidores WHERE idrepartidor = :id")
                     .addParameter("id", repartidor.getIdRepartidor())
                     .executeUpdate();
-        }
-    }
-
-    @Override
-    public List<RepartidorEntity> findByZonaId(Long idzona) {
-        try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM repartidores WHERE idzona = :idzona")
-                    .addParameter("idzona", idzona)
-                    .executeAndFetch(RepartidorEntity.class);
         }
     }
 

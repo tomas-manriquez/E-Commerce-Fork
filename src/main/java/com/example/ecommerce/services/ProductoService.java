@@ -54,6 +54,9 @@ public class ProductoService {
         if (producto.getIdCategoria() == null){
             producto.setIdCategoria(existingProducto.getIdCategoria());
         }
+        if (producto.getIdTienda() == null){
+            producto.setIdTienda(existingProducto.getIdTienda());
+        }
         productoRepository.update(producto);
     }
 

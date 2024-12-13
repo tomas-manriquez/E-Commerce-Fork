@@ -1,7 +1,6 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entities.DetalleOrdenEntity;
-import com.example.ecommerce.entities.OrdenEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
