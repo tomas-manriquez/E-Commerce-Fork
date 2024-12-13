@@ -33,7 +33,6 @@ SELECT
              ))).geom  -- Segunda subzona
 LIMIT 1 OFFSET 1;  -- Seleccionamos la segunda subzona
 
-
 -- Insertar repartidores para tienda 1
 INSERT INTO public.repartidores (idrepartidor, nombre, apellido, idtienda) VALUES
 (1,'Matías', 'Montaño', 1),
@@ -149,14 +148,14 @@ INSERT INTO public.ordenes (idorden,fechaorden, estado, idcliente, total) VALUES
 (8,'2024-12-29 17:00:00', 'pagada', 3, 500.00);
 
 INSERT INTO public.entregas (identrega, idrepartidor, idorden, lugarentrega, fechaentrega) VALUES
-(1,1, 1, ST_SetSRID(ST_MakePoint(-70.6483, -33.448), 0), '2024-12-23 12:00:00'),
-(2,2, 2, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0), '2024-11-25 12:00:00'),
-(3,3, 3, ST_SetSRID(ST_MakePoint(-70.6503, -33.4479), 0), '2024-11-27 12:00:00'),
-(4,4, 4, ST_SetSRID(ST_MakePoint(-70.6517, -33.4547), 0), '2024-11-29 12:00:00'),
-(5,5, 5, ST_SetSRID(ST_MakePoint(-70.6527, -33.4537), 0), '2024-11-30 12:00:00'),
-(6,1, 6, ST_SetSRID(ST_MakePoint(-70.6537, -33.4559), 0), '2024-12-23 12:00:00'),
-(7,2, 7, ST_SetSRID(ST_MakePoint(-70.6597, -33.4513), 0), '2024-12-25 12:00:00'),
-(8,3, 8, ST_SetSRID(ST_MakePoint(-70.6607, -33.4503), 0), '2024-12-27 12:00:00');
+(1,1, 1, ST_SetSRID(ST_MakePoint(-7903933.409478473, -4022029.7084031934), 0), '2024-12-23 12:00:00'),
+(2,2, 2, ST_SetSRID(ST_MakePoint(-7819845.074453828, -3976926.839255565), 0), '2024-11-25 12:00:00'),
+(3,3, 3, ST_SetSRID(ST_MakePoint(-7863418.840900226, -4004144.4729038887), 0), '2024-11-27 12:00:00'),
+(4,4, 4, ST_SetSRID(ST_MakePoint(-7947471.422701777, -4007330.085204547), 0), '2024-11-29 12:00:00'),
+(5,5, 5, ST_SetSRID(ST_MakePoint(-7828524.541421073, -4020304.1780283344), 0), '2024-11-30 12:00:00'),
+(6,1, 6, ST_SetSRID(ST_MakePoint(-7871061.267824172, -3923955.0218278514), 0), '2024-12-23 12:00:00'),
+(7,2, 7, ST_SetSRID(ST_MakePoint(-7783263.864502415, -4052558.5597056677), 0), '2024-12-25 12:00:00'),
+(8,3, 8, ST_SetSRID(ST_MakePoint(-7786449.350640302, -3957491.5681165485), 0), '2024-12-27 12:00:00');
 
 -- Actualizaciones de identrega en la tabla ordenes
 UPDATE public.ordenes SET identrega = 1 WHERE idorden = 1;
