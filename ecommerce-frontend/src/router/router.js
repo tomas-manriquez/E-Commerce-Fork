@@ -71,7 +71,13 @@ const router = createRouter({
             name: '/ordenes/detalle',
             component: () => import('../vistas/DetalleOrdenesView.vue'),
             meta: { requiresAuth: true},
+        },{
+            path: '/mapa',
+            name: '/mapa',
+            component: () => import('../vistas/MapView.vue'),
+            meta: { requiresAuth: true},
         }
+
     ],
 });
 

@@ -10,8 +10,7 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ZonaService {
@@ -31,6 +30,20 @@ public class ZonaService {
     public ZonaEntity getByUbicacion(Coordenadas ubicacion) {
         // Validar si ubicación es válida primero??
         return zonaRepository.findByUbicacion(ubicacion);
+    }
+
+    public List<Map<String, Object>> getAllZonasWithGeoJSON() {
+        return zonaRepository.findAllWithGeoJSON();
+    }
+
+    public Optional<Map<String, Object>> getZonaWithGeoJSONById(Long id) {
+        return zonaRepository.findByOptionalId(id).map(zona -> {
+            Map<String, Object> zonaMap = new HashMap<>();
+            zonaMap.put("id", zona.getIdZona());
+            zonaMap.put("nombre", zona.getNombrezona());
+            zonaMap.put("geojson", zona.getGeom());
+            return zonaMap;
+        });
     }
 
     public boolean pointInZona(Geometry zona, Point ubicacion) {
