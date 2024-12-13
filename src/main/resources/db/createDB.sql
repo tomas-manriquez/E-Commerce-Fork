@@ -22,7 +22,7 @@ $$;
 CREATE EXTENSION IF NOT EXISTS postgis;
 
 -- Crear la tabla tienda (necesaria para los productos y repartidores)
-CREATE TABLE IF NOT EXISTS public.tienda (
+CREATE TABLE IF NOT EXISTS public.tiendas (
     idtienda BIGSERIAL PRIMARY KEY,     -- ID autoincremental
     nombre VARCHAR(255) NOT NULL        -- Nombre de la tienda
 );
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS public.productos (
     idcategoria BIGINT,                 -- Categoría del producto
     idtienda BIGINT,                       -- Relación con la tienda
     CONSTRAINT fk_categoria FOREIGN KEY (idcategoria) REFERENCES public.categorias (idcategoria),
-    CONSTRAINT fk_tienda FOREIGN KEY (idtienda) REFERENCES public.tienda (idtienda)
+    CONSTRAINT fk_tienda FOREIGN KEY (idtienda) REFERENCES public.tiendas (idtienda)
     );
 
 -- Crear la tabla repartidor con relación a tienda
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS public.repartidores (
     idrepartidor BIGSERIAL PRIMARY KEY, -- ID autoincremental
     nombre VARCHAR(255) NOT NULL,       -- Nombre del repartidor
     apellido VARCHAR(255) NOT NULL,     -- Apellido del repartidor
-    idtienda BIGINT REFERENCES public.tienda (idtienda) -- Relación con la tienda
+    idtienda BIGINT REFERENCES public.tiendas (idtienda) -- Relación con la tienda
     );
 
 -- Crear la tabla ordenes con relación a clientes
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes (
 -- Crear la tabla zona con geometría
 CREATE TABLE IF NOT EXISTS public.zonas (
     idzona BIGSERIAL PRIMARY KEY,         -- Identificador único de la zona
-    idtienda BIGINT REFERENCES public.tienda (idtienda), -- Relación opcional con la tienda
+    idtienda BIGINT REFERENCES public.tiendas (idtienda), -- Relación opcional con la tienda
     nombrezona VARCHAR(255) NOT NULL,  -- Nombre de la zona
     geom GEOMETRY(POLYGON, 0)          -- Geometría de la zona (SRID 4326)
     );
