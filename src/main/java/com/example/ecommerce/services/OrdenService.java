@@ -4,11 +4,13 @@ import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.dto.DetalleOrdenRequest;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
+import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sql2o.Sql2o;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +25,8 @@ public class OrdenService {
     ProductoService productoService;
     @Autowired
     EntregaService entregaService;
+    @Autowired
+    Sql2o sql2o;
 
     public OrdenEntity getOrdenById(Long id) {
         OrdenEntity orden  = ordenRepository.findById(id);
@@ -45,11 +49,38 @@ public class OrdenService {
     }
 
     public void placeOrden(Long idCliente, List<DetalleOrdenRequest> detalles, Coordenadas coordenadas) {
-        //Crear y guardar Orden
-        OrdenEntity orden = createOrden(idCliente);
-        Long idOrden = ordenRepository.save(orden);
+        try (org.sql2o.Connection con = sql2o.beginTransaction()) {
+            //Crear y guardar Orden
+            OrdenEntity orden = createOrden(idCliente);
+            Long idOrden = ordenRepository.save(orden);
 
-        //Primero verificar disponibilidad de Stock de los productos
+            //Primero verificar disponibilidad de Stock de los productos
+            validateStock(detalles);
+
+            //Si hay stock de todos los productos:
+            // Crear detalles, asignarles orden, actualizar stocks y guardar detalles
+            processDetalles(detalles, idOrden);
+
+            //Tras guardar todos los detalles, actualizar Orden con cálculo del total
+            ordenRepository.setTotal(idOrden);
+
+            //Asociar entrega a la orden
+            associateEntrega(orden, idOrden, coordenadas);
+
+            con.commit();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al procesar la orden", e);
+        }
+    }
+
+
+    private void associateEntrega(OrdenEntity orden, Long idOrden, Coordenadas coordenadas) {
+        EntregaEntity entrega = entregaService.create(orden, coordenadas);
+        orden.setIdEntrega(entrega.getIdEntrega());
+        ordenRepository.updateNormal(orden);
+    }
+
+    private void validateStock(List<DetalleOrdenRequest> detalles){
         for (DetalleOrdenRequest detalleRequest : detalles) {
             ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
             Integer cantidad = detalleRequest.getCantidad();
@@ -60,24 +91,22 @@ public class OrdenService {
                 throw new RuntimeException("Producto no tiene stock suficiente");
             }
         }
+    }
 
-        //Si hay stock de todos los productos:
-        // Crear detalles, asignarles orden, actualizar stocks y guardar detalles
+    private void processDetalles(List<DetalleOrdenRequest> detalles, Long idOrden) {
         for (DetalleOrdenRequest detalleRequest : detalles) {
             ProductoEntity producto = productoService.getProductoById(detalleRequest.getIdProducto());
             Integer cantidad = detalleRequest.getCantidad();
+
             DetalleOrdenEntity detalle = detalleOrdenService.createDetalle(detalleRequest);
             detalle.setIdOrden(idOrden);
+
             productoService.reduceStock(producto, cantidad);
             detalleOrdenService.saveDetalle(detalle);
         }
-
-        //Tras guardar todos los detalles, actualizar Orden con cálculo del total
-        ordenRepository.updateTotal(idOrden);
-        entregaService.create(orden, coordenadas);
     }
 
-    public OrdenEntity createOrden(Long idCliente) {
+    private OrdenEntity createOrden(Long idCliente) {
         OrdenEntity orden = new OrdenEntity();
         orden.setFechaOrden(LocalDateTime.now());
         orden.setEstado("pendiente");

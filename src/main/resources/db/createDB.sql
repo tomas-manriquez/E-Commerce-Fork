@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes (
     );
 
 -- Crear la tabla zona con geometría
-CREATE TABLE IF NOT EXISTS public.zona (
+CREATE TABLE IF NOT EXISTS public.zonas (
     idzona BIGSERIAL PRIMARY KEY,         -- Identificador único de la zona
     idtienda BIGINT REFERENCES public.tienda (idtienda), -- Relación opcional con la tienda
     nombrezona VARCHAR(255) NOT NULL,  -- Nombre de la zona
