@@ -35,86 +35,89 @@ LIMIT 1 OFFSET 1;  -- Seleccionamos la segunda subzona
 
 
 -- Insertar repartidores para tienda 1
-INSERT INTO public.repartidor (nombre, apellido, idtienda) VALUES
-('Matías', 'Montaño', 1),
-('Josue', 'Quileñan', 1),
-('Patricio', 'Manríquez', 1);
+INSERT INTO public.repartidores (idrepartidor, nombre, apellido, idtienda) VALUES
+(1,'Matías', 'Montaño', 1),
+(2,'Josue', 'Quileñan', 1),
+(3,'Patricio', 'Manríquez', 1);
 
 -- Insertar repartidores para tienda 2
-INSERT INTO public.repartidores (nombre, apellido, idtienda) VALUES
-('Nicolás', 'Sepulveda', 2),
-('Tomás', 'Manríquez', 2);
+INSERT INTO public.repartidores (idrepartidor, nombre, apellido, idtienda) VALUES
+(4,'Nicolás', 'Sepulveda', 2),
+(5,'Tomás', 'Manríquez', 2);
 
--- Insertar categorias
-insert into categorias (nombre) values ('Tecnologia');
-insert into categorias (nombre) values ('Cocina');
-insert into categorias (nombre) values ('Limpieza');
-insert into categorias (nombre) values ('Jardin');
+-- Insertar categorias con IDs explícitos
+INSERT INTO categorias (idcategoria, nombre) VALUES (1, 'Tecnologia');
+INSERT INTO categorias (idcategoria, nombre) VALUES (2, 'Cocina');
+INSERT INTO categorias (idcategoria, nombre) VALUES (3, 'Limpieza');
+INSERT INTO categorias (idcategoria, nombre) VALUES (4, 'Jardin');
+
+-- Ajustar la secuencia del autoincremental
 SELECT setval('public.categorias_idcategoria_seq', (SELECT MAX(idcategoria) FROM public.categorias), true);
 
 
+
 -- Datos iniciales para la tabla productos
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
-('Smartphone Samsung Galaxy S21', 'Celular Samsung Galaxy S21, pantalla AMOLED de 6.2 pulgadas', 450000.00, 30, 'disponible', 1, 1),
-('Smartphone iPhone 12', 'Celular Apple iPhone 12 con 128GB de almacenamiento', 499000.00, 25, 'disponible', 1, 2),
-('Smartphone Xiaomi Redmi Note 11', 'Celular Xiaomi Redmi Note 11, cámara de 50MP', 220000.00, 40, 'disponible', 1,1),
-('Smartphone Motorola Moto G Power', 'Motorola Moto G Power, batería de 5000mAh', 180000.00, 35, 'disponible', 1, 2),
-('Smartphone Huawei P40 Lite', 'Huawei P40 Lite, procesador Kirin y 6GB de RAM', 310000.00, 28, 'disponible', 1, 1),
-('Notebook HP Pavilion 15', 'Notebook HP Pavilion 15, procesador Intel i5, 8GB RAM', 500000.00, 22, 'disponible', 1, 2),
-('Notebook Dell Inspiron 3501', 'Notebook Dell Inspiron 3501, pantalla Full HD, SSD 256GB', 620000.00, 20, 'disponible', 1, 1),
-('Notebook Acer Aspire 5', 'Notebook Acer Aspire 5, AMD Ryzen 5, 16GB RAM', 550000.00, 25, 'disponible', 1, 2),
-('Notebook Lenovo IdeaPad 3', 'Notebook Lenovo IdeaPad 3, procesador AMD Ryzen 7', 680000.00, 30, 'disponible', 1, 1),
-('Notebook Asus VivoBook 14', 'Notebook Asus VivoBook 14, pantalla NanoEdge, 512GB SSD', 800000.00, 23, 'disponible', 1, 2);
+INSERT INTO productos (idproducto, nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
+(1,'Smartphone Samsung Galaxy S21', 'Celular Samsung Galaxy S21, pantalla AMOLED de 6.2 pulgadas', 450000.00, 30, 'disponible', 1, 1),
+(2,'Smartphone iPhone 12', 'Celular Apple iPhone 12 con 128GB de almacenamiento', 499000.00, 25, 'disponible', 1, 2),
+(3,'Smartphone Xiaomi Redmi Note 11', 'Celular Xiaomi Redmi Note 11, cámara de 50MP', 220000.00, 40, 'disponible', 1,1),
+(4,'Smartphone Motorola Moto G Power', 'Motorola Moto G Power, batería de 5000mAh', 180000.00, 35, 'disponible', 1, 2),
+(5,'Smartphone Huawei P40 Lite', 'Huawei P40 Lite, procesador Kirin y 6GB de RAM', 310000.00, 28, 'disponible', 1, 1),
+(6,'Notebook HP Pavilion 15', 'Notebook HP Pavilion 15, procesador Intel i5, 8GB RAM', 500000.00, 22, 'disponible', 1, 2),
+(7,'Notebook Dell Inspiron 3501', 'Notebook Dell Inspiron 3501, pantalla Full HD, SSD 256GB', 620000.00, 20, 'disponible', 1, 1),
+(8,'Notebook Acer Aspire 5', 'Notebook Acer Aspire 5, AMD Ryzen 5, 16GB RAM', 550000.00, 25, 'disponible', 1, 2),
+(9,'Notebook Lenovo IdeaPad 3', 'Notebook Lenovo IdeaPad 3, procesador AMD Ryzen 7', 680000.00, 30, 'disponible', 1, 1),
+(10,'Notebook Asus VivoBook 14', 'Notebook Asus VivoBook 14, pantalla NanoEdge, 512GB SSD', 800000.00, 23, 'disponible', 1, 2);
 
 
 -- Datos iniciales para la categoría de cocina (idcategoria = 2)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
+INSERT INTO productos (idproducto, nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Microondas
-('Microondas Samsung MG23K3513CK', 'Microondas Samsung con grill y capacidad de 23L', 120000.00, 30, 'disponible', 2, 1),
-('Microondas LG MH6535GIB', 'Microondas LG con tecnología Smart Inverter y 25L', 95000.00, 25, 'disponible', 2, 2),
-('Microondas Daewoo KOR-660', 'Microondas Daewoo compacto de 20L', 50000.00, 40, 'disponible', 2, 1),
+(11,'Microondas Samsung MG23K3513CK', 'Microondas Samsung con grill y capacidad de 23L', 120000.00, 30, 'disponible', 2, 1),
+(12,'Microondas LG MH6535GIB', 'Microondas LG con tecnología Smart Inverter y 25L', 95000.00, 25, 'disponible', 2, 2),
+(13,'Microondas Daewoo KOR-660', 'Microondas Daewoo compacto de 20L', 50000.00, 40, 'disponible', 2, 1),
 -- Hornos eléctricos
-('Horno eléctrico Oster TSSTTVDFL2', 'Horno eléctrico Oster con capacidad de 22L', 60000.00, 20, 'disponible', 2, 2),
-('Horno eléctrico Black+Decker TO1760S', 'Horno eléctrico compacto de 14L', 45000.00, 35, 'disponible', 2, 1),
-('Horno eléctrico Ursus Trotter UT-HS25', 'Horno eléctrico con 25L y temporizador', 20000.00, 28, 'disponible', 2, 2),
+(14,'Horno eléctrico Oster TSSTTVDFL2', 'Horno eléctrico Oster con capacidad de 22L', 60000.00, 20, 'disponible', 2, 2),
+(15,'Horno eléctrico Black+Decker TO1760S', 'Horno eléctrico compacto de 14L', 45000.00, 35, 'disponible', 2, 1),
+(16,'Horno eléctrico Ursus Trotter UT-HS25', 'Horno eléctrico con 25L y temporizador', 20000.00, 28, 'disponible', 2, 2),
 -- Panificadoras
-('Panificadora Imaco PB860', 'Panificadora Imaco con 12 programas y capacidad de 1kg', 130000.00, 15, 'disponible', 2, 1),
-('Panificadora Oster CKSTBRTW20', 'Panificadora Oster con control de tostado', 100000.00, 25, 'disponible', 2, 2),
-('Panificadora Moulinex OW210130', 'Panificadora Moulinex para pan y masas', 60000.00, 18, 'disponible', 2, 1);
+(17,'Panificadora Imaco PB860', 'Panificadora Imaco con 12 programas y capacidad de 1kg', 130000.00, 15, 'disponible', 2, 1),
+(18,'Panificadora Oster CKSTBRTW20', 'Panificadora Oster con control de tostado', 100000.00, 25, 'disponible', 2, 2),
+(19,'Panificadora Moulinex OW210130', 'Panificadora Moulinex para pan y masas', 60000.00, 18, 'disponible', 2, 1);
 
 
 -- Datos iniciales para la categoría de limpieza (idcategoria = 3)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
+INSERT INTO productos (idproducto, nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Aspiradoras
-('Aspiradora LG CordZero A9', 'Aspiradora LG inalámbrica con motor Smart Inverter y 200W', 120000.00, 20, 'disponible', 3, 2),
-('Aspiradora Philips FC9352/01', 'Aspiradora Philips compacta sin bolsa y filtro HEPA', 95000.00, 25, 'disponible', 3, 1),
-('Aspiradora Samsung Jet 60', 'Aspiradora Samsung portátil y liviana con batería de larga duración', 80000.00, 18, 'disponible', 3, 2),
-('Aspiradora Thomas Aqua+', 'Aspiradora Thomas con sistema de filtrado por agua', 100000.00, 30, 'disponible', 3, 1),
-('Aspiradora Electrolux Ease C9', 'Aspiradora Electrolux con boquilla turbo para pelos de mascota', 50000.00, 15, 'disponible', 3, 2),
+(20,'Aspiradora LG CordZero A9', 'Aspiradora LG inalámbrica con motor Smart Inverter y 200W', 120000.00, 20, 'disponible', 3, 2),
+(21,'Aspiradora Philips FC9352/01', 'Aspiradora Philips compacta sin bolsa y filtro HEPA', 95000.00, 25, 'disponible', 3, 1),
+(22,'Aspiradora Samsung Jet 60', 'Aspiradora Samsung portátil y liviana con batería de larga duración', 80000.00, 18, 'disponible', 3, 2),
+(23,'Aspiradora Thomas Aqua+', 'Aspiradora Thomas con sistema de filtrado por agua', 100000.00, 30, 'disponible', 3, 1),
+(24,'Aspiradora Electrolux Ease C9', 'Aspiradora Electrolux con boquilla turbo para pelos de mascota', 50000.00, 15, 'disponible', 3, 2),
 -- Fregadoras inalámbricas
-('Fregadora Xiaomi Mi Electric Mop', 'Fregadora inalámbrica Xiaomi con doble rotación y tanque de agua', 110000.00, 12, 'disponible', 3, 1),
-('Fregadora Kärcher FC 7', 'Fregadora inalámbrica Kärcher para pisos duros con batería recargable', 150000.00, 10, 'disponible', 3, 2),
+(25,'Fregadora Xiaomi Mi Electric Mop', 'Fregadora inalámbrica Xiaomi con doble rotación y tanque de agua', 110000.00, 12, 'disponible', 3, 1),
+(26,'Fregadora Kärcher FC 7', 'Fregadora inalámbrica Kärcher para pisos duros con batería recargable', 150000.00, 10, 'disponible', 3, 2),
 -- Aspiradoras robot
-('Robot Aspiradora iRobot Roomba 692', 'Robot aspiradora iRobot con sistema de navegación inteligente', 200000.00, 15, 'disponible', 3, 1),
-('Robot Aspiradora Xiaomi Mi Robot Vacuum', 'Robot aspiradora Xiaomi con sensor láser y control desde app', 120000.00, 18, 'disponible', 3, 2),
-('Robot Aspiradora Cecotec Conga 1790', 'Robot aspiradora Cecotec con mapeo y función fregado', 80000.00, 20, 'disponible', 3, 1);
+(27,'Robot Aspiradora iRobot Roomba 692', 'Robot aspiradora iRobot con sistema de navegación inteligente', 200000.00, 15, 'disponible', 3, 1),
+(28,'Robot Aspiradora Xiaomi Mi Robot Vacuum', 'Robot aspiradora Xiaomi con sensor láser y control desde app', 120000.00, 18, 'disponible', 3, 2),
+(29,'Robot Aspiradora Cecotec Conga 1790', 'Robot aspiradora Cecotec con mapeo y función fregado', 80000.00, 20, 'disponible', 3, 1);
 
 
 -- Datos iniciales para la categoría de jardín (idcategoria = 4)
-INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
+INSERT INTO productos (idproducto, nombre, descripcion, precio, stock, estado, idcategoria, idtienda) VALUES
 -- Cortadoras de pasto
-('Cortadora de Pasto Black+Decker BEMW451BH', 'Cortadora de pasto eléctrica Black+Decker con motor de 1200W', 150000.00, 10, 'disponible', 4, 2),
-('Cortadora de Pasto Hyundai LM3301', 'Cortadora de pasto manual Hyundai con ancho de corte de 33 cm', 80000.00, 8, 'disponible', 4, 1),
-('Cortadora de Pasto Einhell GC-EM 1030', 'Cortadora de pasto Einhell con sistema de ajuste de altura', 90000.00, 6, 'disponible', 4, 2),
-('Cortadora de Pasto Makita DLM460PT2', 'Cortadora de pasto a batería Makita con doble cuchilla', 320000.00, 5, 'disponible', 4, 1),
-('Cortadora de Pasto Gamma G1838', 'Cortadora de pasto Gamma compacta con motor de 1000W', 60000.00, 7, 'disponible', 4, 2),
+(30,'Cortadora de Pasto Black+Decker BEMW451BH', 'Cortadora de pasto eléctrica Black+Decker con motor de 1200W', 150000.00, 10, 'disponible', 4, 2),
+(31,'Cortadora de Pasto Hyundai LM3301', 'Cortadora de pasto manual Hyundai con ancho de corte de 33 cm', 80000.00, 8, 'disponible', 4, 1),
+(32,'Cortadora de Pasto Einhell GC-EM 1030', 'Cortadora de pasto Einhell con sistema de ajuste de altura', 90000.00, 6, 'disponible', 4, 2),
+(33,'Cortadora de Pasto Makita DLM460PT2', 'Cortadora de pasto a batería Makita con doble cuchilla', 320000.00, 5, 'disponible', 4, 1),
+(34,'Cortadora de Pasto Gamma G1838', 'Cortadora de pasto Gamma compacta con motor de 1000W', 60000.00, 7, 'disponible', 4, 2),
 -- Pulverizadores
-('Pulverizador Matabi Super Agro 16L', 'Pulverizador manual Matabi con capacidad de 16 litros', 40000.00, 8, 'disponible', 4, 1),
-('Pulverizador Stihl SG 31', 'Pulverizador de presión previa Stihl con capacidad de 5 litros', 65000.00, 5, 'disponible', 4, 2),
-('Pulverizador a Motor Husqvarna 321S25', 'Pulverizador Husqvarna a motor con capacidad de 25 litros', 210000.00, 5, 'disponible', 4, 1),
+(35,'Pulverizador Matabi Super Agro 16L', 'Pulverizador manual Matabi con capacidad de 16 litros', 40000.00, 8, 'disponible', 4, 1),
+(36,'Pulverizador Stihl SG 31', 'Pulverizador de presión previa Stihl con capacidad de 5 litros', 65000.00, 5, 'disponible', 4, 2),
+(37,'Pulverizador a Motor Husqvarna 321S25', 'Pulverizador Husqvarna a motor con capacidad de 25 litros', 210000.00, 5, 'disponible', 4, 1),
 -- Orilladoras
-('Orilladora Black+Decker GL260', 'Orilladora eléctrica Black+Decker con motor de 350W', 50000.00, 7, 'disponible', 4, 2),
-('Orilladora Stihl FS 55', 'Orilladora Stihl a gasolina para uso intensivo', 220000.00, 5, 'disponible', 4, 1);
+(38,'Orilladora Black+Decker GL260', 'Orilladora eléctrica Black+Decker con motor de 350W', 50000.00, 7, 'disponible', 4, 2),
+(39,'Orilladora Stihl FS 55', 'Orilladora Stihl a gasolina para uso intensivo', 220000.00, 5, 'disponible', 4, 1);
 SELECT setval('public.productos_idproducto_seq', (SELECT MAX(idproducto) FROM public.productos), true);
 
 
@@ -134,52 +137,61 @@ INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, pass
 (11, 'nombre2', 'direccion2', 'admin2@ecommerce.cl', 'telefono2', '$2a$10$DH4v8vPla7OnZ3Z9Fvqt4ergzgRa8bh5PSpDzGroyxvdnj5EQ6aky', 'admin2', 'ADMIN');
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
---Datos iniciales para ordenes de compra
-INSERT INTO public.ordenes (idorden, fechaorden, estado, idcliente, total, identrega) VALUES
-(1, '2024-11-23 12:00:00', 'pendiente', 1, 1399000.00, 1),   -- Zona 1
-(2, '2024-11-23 12:10:00', 'pendiente', 1, 3297000.00, 2),   -- Zona 1
-(3, '2024-11-23 12:20:00', 'pendiente', 2, 500000.00, 3),    -- Zona 1
-(4, '2024-05-23 12:30:00', 'pendiente', 3, 1750000.00, 4),   -- Zona 2
-(5, '2024-08-23 12:40:00', 'pendiente', 4, 15095000.00, 5),  -- Zona 2
-(6, '2024-09-23 12:50:00', 'pendiente', 5, 10880000.00, 6),  -- Zona 2
-(7, '2024-10-23 13:00:00', 'pendiente', 6, 1765000.00, 7),   -- Región Metropolitana
-(8, '2024-11-23 13:10:00', 'pendiente', 1, 1530000.00, 8);   -- Región Metropolitana
-SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
+-- Inserciones en la tabla ordenes
+INSERT INTO public.ordenes (idorden,fechaorden, estado, idcliente, total) VALUES
+(1,'2024-12-22 10:00:00', 'pendiente', 1, 100.00),
+(2,'2024-12-23 11:00:00', 'pagada', 2, 200.00),
+(3,'2024-12-24 12:00:00', 'enviada', 3, 150.00),
+(4,'2024-12-25 13:00:00', 'pendiente', 4, 250.00),
+(5,'2024-12-26 14:00:00', 'pagada', 5, 300.00),
+(6,'2024-12-27 15:00:00', 'enviada', 1, 100.00),
+(7,'2024-12-28 16:00:00', 'pendiente', 2, 400.00),
+(8,'2024-12-29 17:00:00', 'pagada', 3, 500.00);
 
--- Detalles correspondientes con las ordenes anteriores (agregando lugar_entrega)
+INSERT INTO public.entregas (identrega, idrepartidor, idorden, lugarentrega, fechaentrega) VALUES
+(1,1, 1, ST_SetSRID(ST_MakePoint(-70.6483, -33.448), 0), '2024-12-23 12:00:00'),
+(2,2, 2, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0), '2024-11-25 12:00:00'),
+(3,3, 3, ST_SetSRID(ST_MakePoint(-70.6503, -33.4479), 0), '2024-11-27 12:00:00'),
+(4,4, 4, ST_SetSRID(ST_MakePoint(-70.6517, -33.4547), 0), '2024-11-29 12:00:00'),
+(5,5, 5, ST_SetSRID(ST_MakePoint(-70.6527, -33.4537), 0), '2024-11-30 12:00:00'),
+(6,1, 6, ST_SetSRID(ST_MakePoint(-70.6537, -33.4559), 0), '2024-12-23 12:00:00'),
+(7,2, 7, ST_SetSRID(ST_MakePoint(-70.6597, -33.4513), 0), '2024-12-25 12:00:00'),
+(8,3, 8, ST_SetSRID(ST_MakePoint(-70.6607, -33.4503), 0), '2024-12-27 12:00:00');
+
+-- Actualizaciones de identrega en la tabla ordenes
+UPDATE public.ordenes SET identrega = 1 WHERE idorden = 1;
+UPDATE public.ordenes SET identrega = 2 WHERE idorden = 2;
+UPDATE public.ordenes SET identrega = 3 WHERE idorden = 3;
+UPDATE public.ordenes SET identrega = 4 WHERE idorden = 4;
+UPDATE public.ordenes SET identrega = 5 WHERE idorden = 5;
+UPDATE public.ordenes SET identrega = 6 WHERE idorden = 6;
+UPDATE public.ordenes SET identrega = 7 WHERE idorden = 7;
+UPDATE public.ordenes SET identrega = 8 WHERE idorden = 8;
+
+-- Inserción en la tabla detalleordenes (después de las actualizaciones en ordenes)
 INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario) VALUES
-(1, 1, 1, 2, 450000.00),
-(2, 1, 2, 1, 499000.00),
-(3, 2, 1, 4, 450000.00),
-(4, 2, 2, 3, 499000.00),
-(5, 3, 11, 1, 120000.00),
-(6, 3, 14, 2, 60000.00),
-(7, 3, 17, 2, 130000.00),
-(8, 4, 20, 10, 120000.00),
-(9, 4, 29, 5, 80000.00),
-(10, 4, 30, 1, 150000.00),
-(11, 5, 2, 5, 499000.00),
-(12, 5, 6, 8, 500000.00),
-(13, 5, 7, 5, 620000.00),
-(14, 5, 8, 10, 550000.00),
-(15, 6, 3, 4, 220000.00),
-(16, 6, 1, 10, 450000.00),
-(17, 6, 8, 10, 550000.00),
-(18, 7, 4, 4, 180000.00),
-(19, 7, 12, 4, 95000.00),
-(20, 7, 21, 7, 95000.00),
-(21, 8, 4, 7, 180000.00),
-(22, 8, 15, 6, 45000.00);
+ (1, 1, 1, 2, 450000.00),
+ (2, 1, 2, 1, 499000.00),
+ (3, 2, 1, 4, 450000.00),
+ (4, 2, 2, 3, 499000.00),
+ (5, 3, 11, 1, 120000.00),
+ (6, 3, 14, 2, 60000.00),
+ (7, 3, 17, 2, 130000.00),
+ (8, 4, 20, 10, 120000.00),
+ (9, 4, 29, 5, 80000.00),
+ (10, 4, 30, 1, 150000.00),
+ (11, 5, 2, 5, 499000.00),
+ (12, 5, 6, 8, 500000.00),
+ (13, 5, 7, 5, 620000.00),
+ (14, 5, 8, 10, 550000.00),
+ (15, 6, 3, 4, 220000.00),
+ (16, 6, 1, 10, 450000.00),
+ (17, 6, 8, 10, 550000.00),
+ (18, 7, 4, 4, 180000.00),
+ (19, 7, 12, 4, 95000.00),
+ (20, 7, 21, 7, 95000.00),
+ (21, 8, 4, 7, 180000.00),
+ (22, 8, 15, 6, 45000.00);
 
 -- Ajustar secuencia de detalleordenes
 SELECT setval('public.detalleordenes_iddetalle_seq', (SELECT MAX(iddetalle) FROM public.detalleordenes), true);
-
-INSERT INTO public.entregas (idrepartidor, idorden, lugarentrega, fechaentrega) VALUES
-(1, 1, ST_SetSRID(ST_MakePoint(-70.6483, -33.448), 0), '2024-12-23 12:00:00'),  -- Zona 1
-(2, 2, ST_SetSRID(ST_MakePoint(-70.6493, -33.4499), 0), '2024-11-25 12:00:00'), -- Zona 1
-(3, 3, ST_SetSRID(ST_MakePoint(-70.6503, -33.4479), 0), '2024-11-27 12:00:00'), -- Zona 1
-(4, 4, ST_SetSRID(ST_MakePoint(-70.6517, -33.4547), 0), '2024-11-29 12:00:00'), -- Zona 2
-(5, 5, ST_SetSRID(ST_MakePoint(-70.6527, -33.4537), 0), '2024-11-30 12:00:00'), -- Zona 2
-(1, 6, ST_SetSRID(ST_MakePoint(-70.6537, -33.4559), 0), '2024-12-23 12:00:00'), -- Zona 2
-(2, 7, ST_SetSRID(ST_MakePoint(-70.6597, -33.4513), 0), '2024-12-25 12:00:00'), -- Región Metropolitana
-(3, 8, ST_SetSRID(ST_MakePoint(-70.6607, -33.4503), 0), '2024-12-27 12:00:00'); -- Región Metropolitana

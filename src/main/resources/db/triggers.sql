@@ -86,20 +86,20 @@ CREATE TRIGGER trigger_auditoria_detalleordenes
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
 
--- Tabla: tienda
-CREATE TRIGGER trigger_auditoria_tienda
-    AFTER INSERT OR UPDATE OR DELETE ON tienda
+-- Tabla: tiendas
+CREATE TRIGGER trigger_auditoria_tiendas
+    AFTER INSERT OR UPDATE OR DELETE ON tiendas
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
 
 -- Tabla: repartidor
 CREATE TRIGGER trigger_auditoria_repartidor
-    AFTER INSERT OR UPDATE OR DELETE ON repartidor
+    AFTER INSERT OR UPDATE OR DELETE ON repartidores
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
 
 -- Tabla: zona
 CREATE TRIGGER trigger_auditoria_zona
-    AFTER INSERT OR UPDATE OR DELETE ON zona
+    AFTER INSERT OR UPDATE OR DELETE ON zonas
     FOR EACH ROW
     EXECUTE FUNCTION registrar_auditoria();
