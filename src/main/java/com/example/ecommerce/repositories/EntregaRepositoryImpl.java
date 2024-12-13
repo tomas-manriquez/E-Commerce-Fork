@@ -1,6 +1,7 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entities.EntregaEntity;
+import com.example.ecommerce.entities.OrdenEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
@@ -8,7 +9,7 @@ import org.sql2o.Sql2o;
 import java.util.List;
 
 @Repository
-public class EntregaRepositoryImpl implements EntregaRepositoy{
+public class EntregaRepositoryImpl implements EntregaRepository {
     @Autowired
     Sql2o sql2o;
 
@@ -33,7 +34,11 @@ public class EntregaRepositoryImpl implements EntregaRepositoy{
     }
 
     @Override
-    public List<EntregaEntity> findByRepartidorId(Long repartidorId) {
-        return List.of();
+    public List<EntregaEntity> findByRepartidorId(Long idRepartidor) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM repartidores WHERE idrepartidor = :idRepartidor")
+                    .addParameter("idrepartidor", idRepartidor)
+                    .executeAndFetch(EntregaEntity.class);
+        }
     }
 }

@@ -18,5 +18,5 @@ public interface OrdenRepository {
     void delete(OrdenEntity orden);
     void deleteById(Long id);
     void deletePendings(OrdenEntity orden);
-    void updateTotal(Long id);
+    void setTotal(Long id);
 }

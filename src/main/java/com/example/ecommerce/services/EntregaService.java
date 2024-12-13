@@ -3,32 +3,51 @@ package com.example.ecommerce.services;
 import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
-import com.example.ecommerce.repositories.EntregaRepositoy;
-import org.locationtech.jts.geom.Point;
+import com.example.ecommerce.entities.RepartidorEntity;
+import com.example.ecommerce.repositories.EntregaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class EntregaService {
     @Autowired
     RepartidorService repartidorService;
     @Autowired
-    EntregaRepositoy entregaRepositoy;
+    EntregaRepository entregaRepository;
 
     public EntregaEntity save(EntregaEntity entrega) {
-        return entregaRepositoy.save(entrega);
+        return entregaRepository.save(entrega);
     }
 
-    public void create(OrdenEntity orden, Coordenadas coordenadas) {
+    public EntregaEntity create(OrdenEntity orden, Coordenadas coordenadas) {
+        if (orden == null || orden.getIdOrden() == null) {
+            throw new IllegalArgumentException("La orden es inválida o no contiene un ID.");
+        }
+        if (coordenadas == null || coordenadas.getPoint() == null) {
+            throw new IllegalArgumentException("Las coordenadas son inválidas o no contienen un punto.");
+        }
+
         EntregaEntity entrega = new EntregaEntity();
         entrega.setIdOrden(orden.getIdOrden());
-        entrega.setFechaEntrega(LocalDate.from(orden.getFechaOrden().plusDays(2)));
-        entrega.setIdRepartidor(repartidorService.getRandomRepartidor().getIdRepartidor());
-        Point lugarentrega = coordenadas.getPoint();
-        entrega.setLugarentrega(lugarentrega);
-        save(entrega);
+        entrega.setFechaEntrega(orden.getFechaOrden().plusDays(2).toLocalDate());
+        entrega.setLugarentrega(coordenadas.getPoint());
+
+        RepartidorEntity repartidor = repartidorService.getRandom();
+        if (repartidor == null) {
+            throw new RuntimeException("No hay repartidores disponibles.");
+        }
+        entrega.setIdRepartidor(repartidor.getIdRepartidor());
+
+        return save(entrega);
+    }
+
+    public List<EntregaEntity> findByRepartidor(RepartidorEntity repartidor) {
+        if (repartidor == null || repartidor.getIdRepartidor() == null) {
+            throw new IllegalArgumentException("El repartidor no existe o no contiene un ID");
+        }
+        return entregaRepository.findByRepartidorId(repartidor.getIdRepartidor());
     }
 
 }

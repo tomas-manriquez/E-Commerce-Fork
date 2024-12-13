@@ -91,11 +91,13 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                                 "estado = :estado, " +
                                 "idcliente = NULL, " +  // Establecer idcliente a NULL
                                 "total = :total " +
+                                "identrega = :identrega" +
                                 "WHERE idorden = :idorden")
                         .addParameter("fechaorden", orden.getFechaOrden())
                         .addParameter("estado", orden.getEstado())
                         .addParameter("total", orden.getTotal())
                         .addParameter("idorden", orden.getIdOrden())
+                        .addParameter("identrega", orden.getIdEntrega())
                         .executeUpdate();
             } else {
                 // Solo actualizar el estado y otros campos si el estado es "pendiente"
@@ -104,18 +106,21 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                                 "estado = :estado, " +
                                 "idcliente = :idcliente, " +
                                 "total = :total " +
+                                "identrega = :identrega" +
                                 "WHERE idorden = :idorden")
                         .addParameter("fechaorden", orden.getFechaOrden())
                         .addParameter("estado", orden.getEstado())
                         .addParameter("idcliente", orden.getIdCliente())
                         .addParameter("total", orden.getTotal())
                         .addParameter("idorden", orden.getIdOrden())
+                        .addParameter("identrega", orden.getIdEntrega())
                         .executeUpdate();
             }
         } catch (Exception ex) {
             throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
         }
     }
+
     @Override
     public void updateNormal(OrdenEntity orden) {
         try (org.sql2o.Connection con = sql2o.open()) {
@@ -124,14 +129,15 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                             "estado = :estado, " +
                             "idcliente = :idcliente, " +
                             "total = :total " +
+                            "identrega = : identrega" +
                             "WHERE idorden = :idorden")
                     .addParameter("fechaorden", orden.getFechaOrden())
                     .addParameter("estado", orden.getEstado())
                     .addParameter("idcliente", orden.getIdCliente())
                     .addParameter("total", orden.getTotal())
                     .addParameter("idorden", orden.getIdOrden())
+                    .addParameter("identrega", orden.getIdEntrega())
                     .executeUpdate();
-
         } catch (Exception ex) {
             throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
         }
@@ -170,7 +176,7 @@ public class OrdenRepositoryImpl implements OrdenRepository {
 
 
     @Override
-    public void updateTotal(Long idOrden) {
+    public void setTotal(Long idOrden) {
         try (org.sql2o.Connection con = sql2o.open())  {
             con.createQuery("UPDATE ordenes SET total = (SELECT SUM(cantidad * preciounitario)" +
                             " FROM detalleordenes WHERE idorden = :idOrden) WHERE idorden = :idOrden")

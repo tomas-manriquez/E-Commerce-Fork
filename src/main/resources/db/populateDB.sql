@@ -1,7 +1,7 @@
 -- populateDB.sql
 
 -- Insertar la Región Metropolitana en la tabla zona
-INSERT INTO zona (id_tienda, nombre_zona, geom)
+INSERT INTO zonas (idtienda, nombrezona, geom)
 VALUES (
            NULL, -- Sin tienda asociada
            'Región Metropolitana',
