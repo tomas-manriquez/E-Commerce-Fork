@@ -2,6 +2,7 @@ package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
+import com.example.ecommerce.entities.ZonaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
@@ -39,6 +40,32 @@ public class EntregaRepositoryImpl implements EntregaRepository {
             return con.createQuery("SELECT * FROM repartidores WHERE idrepartidor = :idRepartidor")
                     .addParameter("idrepartidor", idRepartidor)
                     .executeAndFetch(EntregaEntity.class);
+        }
+    }
+
+    @Override
+    public List<EntregaEntity> findAll() {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM entregas")
+                    .executeAndFetch(EntregaEntity.class);
+        }
+    }
+
+    @Override
+    public EntregaEntity findById(Long idrepartidor) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM entregas WHERE idrepartidor = :idrepartidor")
+                    .addParameter("idrepartidor", idrepartidor)
+                    .executeAndFetchFirst(EntregaEntity.class);
+        }
+    }
+
+    @Override
+    public EntregaEntity findByOrdenId(Long idorden) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM entregas WHERE idorden = :idorden")
+                    .addParameter("idorden", idorden)
+                    .executeAndFetchFirst(EntregaEntity.class);
         }
     }
 }
