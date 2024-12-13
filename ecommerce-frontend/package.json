@@ -11,6 +11,7 @@
     "axios": "^1.7.7",
     "core-js": "^3.8.3",
     "leaflet": "^1.9.4",
+    "proj4": "^2.15.0",
     "react-leaflet": "^4.2.1",
     "vue": "^3.2.13",
     "vue-router": "^4.4.3",

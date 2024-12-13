@@ -7,11 +7,15 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public interface ZonaRepository {
     ZonaEntity findById(Long id);
+    Optional<ZonaEntity> findByOptionalId(Long id);
     List<ZonaEntity> findAll();
     ZonaEntity findByUbicacion(Coordenadas ubicacion);
     Boolean pointInZona(Point point, Geometry zona);
+    List<Map<String, Object>> findAllWithGeoJSON();
 }
