@@ -156,4 +156,8 @@ public class OrdenService {
         // Eliminar la orden
         ordenRepository.deleteById(idOrden);
     }
+
+    public List<OrdenEntity> getOrdenByClientId(Long idCliente) {
+        return ordenRepository.findByClienteId(idCliente);
+    }
 }

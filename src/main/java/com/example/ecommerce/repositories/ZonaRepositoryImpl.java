@@ -1,7 +1,6 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.dto.Coordenadas;
-import com.example.ecommerce.entities.RepartidorEntity;
 import com.example.ecommerce.entities.ZonaEntity;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
@@ -50,4 +49,6 @@ public class ZonaRepositoryImpl implements ZonaRepository {
             throw new RuntimeException("Error al verificar si el punto está dentro de la zona", e);
         }
     }
+
+
 }

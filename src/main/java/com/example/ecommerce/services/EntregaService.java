@@ -4,14 +4,10 @@ import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.RepartidorEntity;
-import com.example.ecommerce.entities.ZonaEntity;
 import com.example.ecommerce.repositories.EntregaRepository;
-import com.example.ecommerce.repositories.ZonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,10 +16,6 @@ public class EntregaService {
     RepartidorService repartidorService;
     @Autowired
     EntregaRepository entregaRepository;
-    @Autowired
-    OrdenService ordenService;
-    @Autowired
-    private ZonaRepository zonaRepository;
 
     public List<EntregaEntity> getAll() {
         return entregaRepository.findAll();
@@ -62,28 +54,7 @@ public class EntregaService {
         return entregaRepository.findByRepartidorId(repartidor.getIdRepartidor());
     }
 
-    public List<EntregaEntity> findByZona(ZonaEntity zona) {
-        List<EntregaEntity> entregas = new ArrayList<>();
-        for (EntregaEntity entrega : entregaRepository.findAll()) {
-            if (entregaInZona(zona, entrega)) {
-                entregas.add(entrega);
-            }
-        }
-        return entregas;
-    }
-
-    private boolean entregaInZona(ZonaEntity zona, EntregaEntity entrega) {
-        if (zona == null || entrega == null) {
-            throw new IllegalArgumentException("La zona o la entrega no existen");
-        }
-        return zonaRepository.pointInZona(entrega.getLugarentrega(), zona.getGeom());
-    }
-
     public EntregaEntity findByOrden(Long idorden) {
-        OrdenEntity orden = ordenService.getOrdenById(idorden);
-        if (orden == null) {
-            throw new IllegalArgumentException("La orden no existe o no contiene un ID");
-        }
         return entregaRepository.findByOrdenId(idorden);
     }
 }

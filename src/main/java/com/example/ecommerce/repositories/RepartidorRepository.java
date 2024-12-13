@@ -11,6 +11,5 @@ public interface RepartidorRepository {
     List<RepartidorEntity> findAll();
     void save(RepartidorEntity repartidor);
     void delete(RepartidorEntity repartidor);
-    List<RepartidorEntity> findByZonaId(Long idZona);
     RepartidorEntity getRandom();
 }
