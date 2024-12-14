@@ -9,9 +9,11 @@ VALUES (
        );
 
 -- Insertar tiendas
-INSERT INTO public.tiendas (idtienda,nombre) VALUES
-     (1,'MiniMaxMarket'),
-     (2,'Touhou Project LostWord');
+INSERT INTO public.tiendas (idtienda, nombre, ubicacion) VALUES
+(1, 'MiniMaxMarket', ST_SetSRID(ST_MakePoint(-7894478.840900226, -4004100.4729038887), 0)),
+(2, 'Touhou Project LostWord', ST_SetSRID(ST_MakePoint(-7864771.840900226, -4001111.5729038887), 0)),
+(3, 'La Tiendita', ST_SetSRID(ST_MakePoint(-7878211.840900226, -3981111.5729038887), 0));
+
 
 -- Insertar las zonas de reparto con la subzona 3 generada para Tienda 1
 INSERT INTO public.zonas (idtienda, nombrezona, geom)
@@ -32,6 +34,16 @@ SELECT
             (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 5986
              ))).geom  -- Subzona 4
 LIMIT 1 OFFSET 3;  -- Seleccionamos la cuarta subzona
+
+INSERT INTO public.zonas (idtienda, nombrezona, geom)
+SELECT
+    3,
+    'Zona alrededor de la tienda ' || nombre AS nombrezona,
+    -- Buffer de 10,000 unidades alrededor de la ubicación
+    ST_Buffer( ubicacion, 10000 )
+FROM public.tiendas
+WHERE idtienda = 3;
+
 
 -- Insertar repartidores para tienda 1
 INSERT INTO public.repartidores (idrepartidor, nombre, apellido, idtienda) VALUES
