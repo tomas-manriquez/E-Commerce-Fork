@@ -1,5 +1,7 @@
 <script>
 import api from "@/services/api";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 
 export default {
@@ -7,9 +9,15 @@ export default {
     return {
       purchase: {
         customerId: Number(localStorage.getItem("userId")),
-        compras: [], // Lista de compras dinámicas
+        compras: [],
+        lat: null,
+        lon: null,
+        address: "",
       },
       products: [],
+      showMap: false, // Controla la visibilidad del mapa
+      map: null,
+      marker: null,
     };
   },
   mounted() {
@@ -21,20 +29,17 @@ export default {
       this.products = response.data;
     },
     addPurchase() {
-      // Agregar una nueva compra a la lista
       this.purchase.compras.push({
-        productId: "", // ID del producto seleccionado
-        nombreProducto: "", // Nombre del producto (opcional para mostrar)
+        productId: "",
+        nombreProducto: "",
         cantidad: 0,
-        stock: 0, // Stock del producto seleccionado
+        stock: 0,
       });
     },
     removePurchase(index) {
-      // Eliminar una compra de la lista
       this.purchase.compras.splice(index, 1);
     },
     updateStock(index) {
-      // Actualizar el stock basado en el producto seleccionado
       const selectedProduct = this.products.find(
           (product) => product.idProducto === this.purchase.compras[index].productId
       );
@@ -46,26 +51,60 @@ export default {
         this.purchase.compras[index].nombreProducto = "";
       }
     },
+    openMap() {
+      this.showMap = true;
+      this.$nextTick(() => {
+        if (!this.map) {
+          this.initializeMap();
+        }
+      });
+    },
+    initializeMap() {
+      this.map = L.map("map").setView([0, 0], 2); // Coordenadas iniciales
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+      }).addTo(this.map);
+
+      this.map.on("click", (e) => {
+        const { lat, lng } = e.latlng;
+        this.purchase.lat = lat;
+        this.purchase.lon = lng;
+
+        if (this.marker) {
+          this.map.removeLayer(this.marker);
+        }
+
+        this.marker = L.marker([lat, lng]).addTo(this.map);
+        alert(`Coordenadas seleccionadas: Lat: ${lat}, Lon: ${lng}`);
+        this.showMap = false; // Cerrar el mapa después de seleccionar
+      });
+    },
     async buy() {
-      // Preparar los detalles para el envío
       const detalles = this.purchase.compras.map((compra) => ({
         idProducto: compra.productId,
         cantidad: compra.cantidad,
       }));
-      const response = await api.post("/api/v1/ordenes/create", {
-        idCliente: this.purchase.customerId,
-        detalles,
-      }, {
-        headers: {
-          'Accept': 'application/json',
-        },
-        withCredentials: false,
-      });
+      const response = await api.post(
+          "/api/v1/ordenes/create",
+          {
+            idCliente: this.purchase.customerId,
+            detalles,
+            lat: this.purchase.lat,
+            lon: this.purchase.lon,
+          },
+          {
+            headers: {
+              Accept: "application/json",
+            },
+            withCredentials: false,
+          }
+      );
       console.log("Compra realizada:", response);
       alert("Orden creada exitosamente");
     },
   },
 };
+
 </script>
 
 <template>
@@ -73,46 +112,25 @@ export default {
   <div class="container">
     <div class="text">Ingresar Compra</div>
     <form @submit.prevent="buy">
-      <div
-          v-for="(compra, index) in purchase.compras"
-          :key="index"
-          class="form-row"
-      >
-        <!-- Selección del producto -->
+      <div v-for="(compra, index) in purchase.compras" :key="index" class="form-row">
         <div class="input-data">
-          <select
-              v-model="compra.productId"
-              @change="updateStock(index)"
-              required
-          >
+          <select v-model="compra.productId" @change="updateStock(index)" required>
             <option disabled value="">Selecciona un producto</option>
-            <option
-                v-for="product in products"
-                :key="product.idProducto"
-                :value="product.idProducto"
-            >
+            <option v-for="product in products" :key="product.idProducto" :value="product.idProducto">
               {{ product.nombre }} - ${{ product.precio }}
             </option>
           </select>
         </div>
-        <!-- Stock -->
         <div class="input-data">
           <input type="number" :value="compra.stock" disabled />
           <div class="underline always-active-underline"></div>
           <label class="always-active">Stock</label>
         </div>
-        <!-- Cantidad -->
         <div class="input-data">
-          <input
-              type="number"
-              v-model.number="compra.cantidad"
-              :max="compra.stock"
-              required
-          />
+          <input type="number" v-model.number="compra.cantidad" :max="compra.stock" required />
           <div class="underline"></div>
           <label for="cantidad">Cantidad</label>
         </div>
-        <!-- Botón de borrar -->
         <div class="erase-button">
           <div class="submit-btn">
             <div class="input-data">
@@ -122,7 +140,6 @@ export default {
           </div>
         </div>
       </div>
-      <!-- Botón para agregar más productos -->
       <div class="add-button">
         <div class="submit-btn">
           <div class="input-data">
@@ -131,7 +148,11 @@ export default {
           </div>
         </div>
       </div>
-      <!-- Botón para enviar la compra -->
+      <!-- Dirección -->
+      <div class="form-row submit-btn">
+        <input type="button" value="Seleccionar en el Mapa" @click="openMap" />
+      </div>
+      <div v-if="showMap" id="map" style="height: 300px; width: 100%;"></div>
       <div class="form-row submit-btn">
         <div class="input-data">
           <div class="inner"></div>
@@ -142,6 +163,7 @@ export default {
   </div>
   </body>
 </template>
+
 
 <style scoped>
 *{
@@ -364,6 +386,12 @@ form .form-row .input-data{
 
 .erase-button .submit-btn .input-data input {
   font-size: 10px; /* Ajustar texto al tamaño */
+}
+
+#map {
+  height: 300px;
+  width: 100%;
+  margin-top: 10px;
 }
 
 </style>
