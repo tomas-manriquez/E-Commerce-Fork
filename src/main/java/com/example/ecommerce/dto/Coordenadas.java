@@ -15,4 +15,8 @@ public class Coordenadas {
         return geometryFactory.createPoint(new Coordinate(lat, lon));
     }
 
+    public String toWKT() {
+        return getPoint().toText(); // Retorna la representación en WKT del Point
+    }
+
 }

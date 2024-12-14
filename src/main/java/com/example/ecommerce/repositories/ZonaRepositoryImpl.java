@@ -35,11 +35,6 @@ public class ZonaRepositoryImpl implements ZonaRepository {
     }
 
     @Override
-    public ZonaEntity findByUbicacion(Coordenadas ubicacion) {
-        return null;
-    }
-
-    @Override
     public Boolean pointInZona(Point point, Geometry zona) {
         String sql = "SELECT ST_Contains(:zona, :point) AS esta_dentro";
         try (org.sql2o.Connection con = sql2o.open()) {

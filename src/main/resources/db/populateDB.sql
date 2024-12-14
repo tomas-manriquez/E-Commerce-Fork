@@ -157,6 +157,9 @@ INSERT INTO public.entregas (identrega, idrepartidor, idorden, lugarentrega, fec
 (7,2, 7, ST_SetSRID(ST_MakePoint(-7783263.864502415, -4052558.5597056677), 0), '2024-12-25 12:00:00'),
 (8,3, 8, ST_SetSRID(ST_MakePoint(-7786449.350640302, -3957491.5681165485), 0), '2024-12-27 12:00:00');
 
+-- Ajustar secuencia de detalleordenes
+SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
+
 -- Actualizaciones de identrega en la tabla ordenes
 UPDATE public.ordenes SET identrega = 1 WHERE idorden = 1;
 UPDATE public.ordenes SET identrega = 2 WHERE idorden = 2;

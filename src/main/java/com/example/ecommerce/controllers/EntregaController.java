@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/entregas")
 public class EntregaController {
@@ -19,6 +21,12 @@ public class EntregaController {
     public ResponseEntity<EntregaEntity> getEntrega(@RequestParam Long idorden) {
         EntregaEntity entrega = entregaService.findByOrden(idorden);
         return ResponseEntity.ok(entrega);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<EntregaEntity>> getAllEntregas() {
+        List<EntregaEntity> entregas = entregaService.getAll();
+        return ResponseEntity.ok(entregas);
     }
 
 }

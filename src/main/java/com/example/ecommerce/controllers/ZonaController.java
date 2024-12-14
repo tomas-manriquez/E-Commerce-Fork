@@ -21,8 +21,8 @@ public class ZonaController {
     ZonaService zonaService;
 
     @GetMapping("/repartidores-zona")
-    public ResponseEntity<List<RepartidorEntity>> getByZona(Long idzona) {
-        List<RepartidorEntity> repartidores = zonaService.getByZona(idzona);
+    public ResponseEntity<List<RepartidorEntity>> getRepartidoresByZona(Long idzona) {
+        List<RepartidorEntity> repartidores = zonaService.getRepartidoresByZona(idzona);
         return ResponseEntity.ok(repartidores);
     }
 

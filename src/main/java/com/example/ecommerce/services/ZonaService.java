@@ -27,11 +27,6 @@ public class ZonaService {
         return zonaRepository.findById(id);
     }
 
-    public ZonaEntity getByUbicacion(Coordenadas ubicacion) {
-        // Validar si ubicación es válida primero??
-        return zonaRepository.findByUbicacion(ubicacion);
-    }
-
     public List<Map<String, Object>> getAllZonasWithGeoJSON() {
         return zonaRepository.findAllWithGeoJSON();
     }
@@ -53,12 +48,12 @@ public class ZonaService {
         return zonaRepository.pointInZona(ubicacion, zona);
     }
 
-    public List<RepartidorEntity> getByZona(Long idzona) {
+    public List<RepartidorEntity> getRepartidoresByZona(Long idzona) {
         ZonaEntity zona = getZona(idzona);
         if (zona == null || zona.getIdZona() == null) {
             throw new RuntimeException("Zona no encontrada");
         }
-        List<EntregaEntity> entregas = findByZona(zona);
+        List<EntregaEntity> entregas = getEntregasByZona(zona);
         List<RepartidorEntity> repartidores = new ArrayList<>();
         for (EntregaEntity entrega : entregas) {
             RepartidorEntity repartidor = repartidorService.getById(entrega.getIdRepartidor());
@@ -67,7 +62,7 @@ public class ZonaService {
         return repartidores;
     }
 
-    public List<EntregaEntity> findByZona(ZonaEntity zona) {
+    public List<EntregaEntity> getEntregasByZona(ZonaEntity zona) {
         List<EntregaEntity> entregas = new ArrayList<>();
         for (EntregaEntity entrega : entregaService.getAll()) {
             if (entregaInZona(zona, entrega)) {
