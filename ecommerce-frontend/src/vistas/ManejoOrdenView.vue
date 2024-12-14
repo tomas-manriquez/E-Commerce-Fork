@@ -2,6 +2,7 @@
 import api from "@/services/api";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import proj4 from "proj4";
 
 
 export default {
@@ -70,12 +71,19 @@ export default {
         this.purchase.lat = lat;
         this.purchase.lon = lng;
 
+        // Proj4js para convertir coordenadas
+        const projectionFrom = "EPSG:4326"; // WGS84 (Latitud/Longitud)
+        const projectionTo = "EPSG:3857";
+
+        // Convierte las coordenadas de UTM a Lat/Lon
+        const [x, y] = proj4(projectionFrom, projectionTo, [lng, lat]);
+
         if (this.marker) {
           this.map.removeLayer(this.marker);
         }
 
         this.marker = L.marker([lat, lng]).addTo(this.map);
-        alert(`Coordenadas seleccionadas: Lat: ${lat}, Lon: ${lng}`);
+        alert(`Coordenadas seleccionadas: Lat: ${x}, Lon: ${y}`);
         this.showMap = false; // Cerrar el mapa después de seleccionar
       });
     },
@@ -150,7 +158,10 @@ export default {
       </div>
       <!-- Dirección -->
       <div class="form-row submit-btn">
-        <input type="button" value="Seleccionar en el Mapa" @click="openMap" />
+        <div class="input-data">
+          <div class="inner"></div>
+          <input type="button" value="Seleccionar Ubicación" @click="openMap" />
+        </div>
       </div>
       <div v-if="showMap" id="map" style="height: 300px; width: 100%;"></div>
       <div class="form-row submit-btn">
