@@ -3,7 +3,10 @@
     <header class="header">
       <h1>Mapeo de la tienda</h1>
     </header>
-
+    <div class="text-center">
+      <p v-if="tamanioZona === 0">Por favor espere, datos cargando...</p>
+      <p v-else>Tamaño de la zona = {{ tamanioZona }} grados cuadrados</p>
+    </div>
     <main class="content">
       <div id="map" style="height: 500px; margin-top: 20px;"></div>
     </main>
@@ -13,6 +16,7 @@
       </router-link>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -27,6 +31,7 @@ const mapa = ref(null);
 // const nombreTienda = ref(null);
 const idZona = ref(0);
 const idTienda = ref(0);
+let tamanioZona = ref(0);
 const error = ref(null);
 const route = useRoute();
 
@@ -41,6 +46,19 @@ const fetchZonas = async (idtienda) => {
     return [];
   }
 };
+
+const fetchTamanioZona = async (idZona) => {
+  try{
+    console.log("idZona: ",idZona.value);
+    const response2 = await api.get(`/api/v1/zonas/areaZona/${idZona.value}`);
+    console.log("tamaño zona: ",response2.data);
+    tamanioZona.value = response2.data;
+  }catch (err) {
+    error.value = "Error al cargar el area de la zona";
+    console.error(err);
+    return [];
+  }
+}
 
 const addZonasToMap = (zonas) => {
   zonas.forEach((zona) => {
@@ -87,9 +105,11 @@ const initializeMap = async (idtienda) => {
 
   // Cargar zonas desde el backend y agregarlas al mapa
   const zonas = await fetchZonas(idtienda);
+  await fetchTamanioZona(idZona);
   console.log(zonas);
   // Agregar zonas al mapa
   addZonasToMap(zonas);
+
 };
 
 // const fetchTienda = async (idtienda) => {
@@ -115,6 +135,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.text-center {
+  display: flex;            /* Activa flexbox */
+  justify-content: center;  /* Centra horizontalmente */
+  align-items: center;      /* Centra verticalmente */
+  text-align: center;       /* Asegura que el texto esté alineado al centro */
+  height: 50px;             /* Altura del contenedor */
+  margin-top: 10px;         /* Margen superior */
+  font-size: 26px;          /* Tamaño de fuente */
+  font-weight: bold;        /* Opcional: texto en negrita */
+}
+
 html, body {
   height: 100%; /* Asegúrate de que el html y body ocupen toda la altura */
   margin: 0; /* Elimina cualquier margen por defecto */
