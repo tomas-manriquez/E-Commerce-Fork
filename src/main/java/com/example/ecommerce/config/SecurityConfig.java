@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/clientes/top-gastadores-tecnologia").permitAll() // Todos pueden acceder a este
                         .requestMatchers("/api/v1/zonas/**").permitAll()
                         .requestMatchers("/api/v1/zonas/mapeo-zonas").permitAll()
+                        .requestMatchers("/api/v1/entregas/**").permitAll()
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("api/v1/entregas/**").permitAll()
