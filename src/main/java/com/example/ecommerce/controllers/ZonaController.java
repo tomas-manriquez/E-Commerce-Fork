@@ -27,20 +27,18 @@ public class ZonaController {
     }
 
     @GetMapping("/mapeo-zonas")
-    public ResponseEntity<?> getZonasWithGeoJSON(
-            @RequestParam(value = "idzona", required = false) Long idzona) {
-        if (idzona != null) {
-            // Buscar una sola zona por su ID
-            Optional<Map<String, Object>> zona = zonaService.getZonaWithGeoJSONById(idzona);
-            if (zona.isPresent()) {
-                return ResponseEntity.ok(zona.get());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("message", "Zona no encontrada"));
-            }
+    public ResponseEntity<?> getZonaWithGeoJSON(@RequestParam Long idzona) {
+        Optional<Map<String, Object>> zona = zonaService.getZonaWithGeoJSONById(idzona);
+        if (zona.isPresent()) {
+            return ResponseEntity.ok(zona.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Zona no encontrada"));
         }
+    }
 
-        // Si no se pasa el ID, devolver todas las zonas
+    @GetMapping("/")
+    public ResponseEntity<?> getAllZonasWithGeoJSON() {
         List<Map<String, Object>> zonas = zonaService.getAllZonasWithGeoJSON();
         return ResponseEntity.ok(zonas);
     }
@@ -52,6 +50,5 @@ public class ZonaController {
         boolean isInside = zonaService.pointInZona(zona, point);
         return ResponseEntity.ok(isInside);
     }
-
 
 }
