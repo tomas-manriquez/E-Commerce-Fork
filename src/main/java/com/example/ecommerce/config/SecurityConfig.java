@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/zonas/mapeo-zonas").permitAll()
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("api/v1/entregas/**").permitAll()
                         .requestMatchers("/api/v1/ordenes/create").authenticated()
                         .requestMatchers("/api/v1/ordenes/byClientId/**").authenticated()
                         .requestMatchers("/api/v1/detalle/byOrdenId/**").authenticated()

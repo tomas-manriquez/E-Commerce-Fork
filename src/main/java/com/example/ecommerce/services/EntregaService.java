@@ -5,6 +5,7 @@ import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.RepartidorEntity;
 import com.example.ecommerce.repositories.EntregaRepository;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class EntregaService {
         return entregaRepository.save(entrega);
     }
 
+    public EntregaEntity findByOrden(Long idorden) {
+        return entregaRepository.findByOrdenId(idorden);
+    }
+
     public EntregaEntity create(OrdenEntity orden, Coordenadas coordenadas) {
         if (orden == null || orden.getIdOrden() == null) {
             throw new IllegalArgumentException("La orden es inválida o no contiene un ID.");
@@ -35,8 +40,10 @@ public class EntregaService {
 
         EntregaEntity entrega = new EntregaEntity();
         entrega.setIdOrden(orden.getIdOrden());
-        entrega.setFechaEntrega(orden.getFechaOrden().plusDays(2).toLocalDate());
-        entrega.setLugarentrega(coordenadas.getPoint());
+        entrega.setFechaentrega(orden.getFechaOrden().plusDays(2));
+
+        Point point = coordenadas.getPoint();
+        entrega.setLugarentrega(point.toText());
 
         RepartidorEntity repartidor = repartidorService.getRandom();
         if (repartidor == null) {
@@ -47,14 +54,4 @@ public class EntregaService {
         return save(entrega);
     }
 
-    public List<EntregaEntity> findByRepartidor(RepartidorEntity repartidor) {
-        if (repartidor == null || repartidor.getIdRepartidor() == null) {
-            throw new IllegalArgumentException("El repartidor no existe o no contiene un ID");
-        }
-        return entregaRepository.findByRepartidorId(repartidor.getIdRepartidor());
-    }
-
-    public EntregaEntity findByOrden(Long idorden) {
-        return entregaRepository.findByOrdenId(idorden);
-    }
 }

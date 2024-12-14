@@ -8,7 +8,6 @@ import java.util.List;
 @Repository
 public interface EntregaRepository {
     EntregaEntity save(EntregaEntity entrega);
-    List<EntregaEntity> findByRepartidorId(Long repartidorId);
     List<EntregaEntity> findAll();
     EntregaEntity findById(Long id);
     EntregaEntity findByOrdenId(Long idorden);
