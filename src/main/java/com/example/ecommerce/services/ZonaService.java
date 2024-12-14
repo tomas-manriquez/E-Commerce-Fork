@@ -34,9 +34,10 @@ public class ZonaService {
     public Optional<Map<String, Object>> getZonaWithGeoJSONById(Long id) {
         return zonaRepository.findByOptionalId(id).map(zona -> {
             Map<String, Object> zonaMap = new HashMap<>();
-            zonaMap.put("id", zona.getIdZona());
+            zonaMap.put("idZona", zona.getIdZona());
             zonaMap.put("nombre", zona.getNombrezona());
-            zonaMap.put("geojson", zona.getGeom());
+            zonaMap.put("idTienda", zona.getIdTienda());
+            zonaMap.put("geojson", zona.getGeojson());
             return zonaMap;
         });
     }

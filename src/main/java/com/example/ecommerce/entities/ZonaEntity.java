@@ -13,4 +13,5 @@ public class ZonaEntity {
     private String nombrezona;
     private Long idTienda;
     private Geometry geom;
+    private String geojson;
 }

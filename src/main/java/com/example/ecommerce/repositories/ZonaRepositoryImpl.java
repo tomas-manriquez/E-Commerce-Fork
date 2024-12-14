@@ -50,7 +50,7 @@ public class ZonaRepositoryImpl implements ZonaRepository {
     @Override
     public Optional<ZonaEntity> findByOptionalId(Long idzona) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            ZonaEntity result = con.createQuery("SELECT * FROM zonas WHERE idzona = :idzona")
+            ZonaEntity result = con.createQuery("SELECT idzona, nombrezona, idtienda, ST_AsGeoJSON(geom) AS geojson FROM zonas WHERE idzona = :idzona")
                     .addParameter("idzona", idzona)
                     .executeAndFetchFirst(ZonaEntity.class);
             return Optional.ofNullable(result);
@@ -60,7 +60,7 @@ public class ZonaRepositoryImpl implements ZonaRepository {
 
     @Override
     public List<Map<String, Object>> findAllWithGeoJSON() {
-        String sql = "SELECT idzona, nombrezona, ST_AsGeoJSON(geom) AS geojson FROM zonas";
+        String sql = "SELECT idzona, nombrezona, ST_AsGeoJSON(geom), idtienda AS geojson FROM zonas";
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery(sql)
                     .executeAndFetchTable()
