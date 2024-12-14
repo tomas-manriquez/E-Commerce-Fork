@@ -26,8 +26,8 @@ public class ZonaController {
         return ResponseEntity.ok(repartidores);
     }
 
-    @GetMapping("/mapeo-zonas")
-    public ResponseEntity<?> getZonaWithGeoJSON(@RequestParam Long idzona) {
+    @GetMapping("/{idzona}")
+    public ResponseEntity<?> getZonaWithGeoJSON(@PathVariable Long idzona) {
         Optional<Map<String, Object>> zona = zonaService.getZonaWithGeoJSONById(idzona);
         if (zona.isPresent()) {
             return ResponseEntity.ok(zona.get());
@@ -40,6 +40,12 @@ public class ZonaController {
     @GetMapping("/")
     public ResponseEntity<?> getAllZonasWithGeoJSON() {
         List<Map<String, Object>> zonas = zonaService.getAllZonasWithGeoJSON();
+        return ResponseEntity.ok(zonas);
+    }
+
+    @GetMapping("/tienda/{idtienda}")
+    public ResponseEntity<?> getZonasByTiendaWithGeoJSON(@PathVariable Long idtienda){
+        List<Map<String, Object>> zonas = zonaService.getZonasByTiendaWithGeoJSON(idtienda);
         return ResponseEntity.ok(zonas);
     }
 

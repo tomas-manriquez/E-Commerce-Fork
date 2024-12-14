@@ -31,6 +31,10 @@ public class ZonaService {
         return zonaRepository.findAllWithGeoJSON();
     }
 
+    public List<Map<String, Object>> getZonasByTiendaWithGeoJSON(Long idtienda) {
+        return zonaRepository.findByTiendaWithGeoJSON(idtienda);
+    }
+
     public Optional<Map<String, Object>> getZonaWithGeoJSONById(Long id) {
         return zonaRepository.findByOptionalId(id).map(zona -> {
             Map<String, Object> zonaMap = new HashMap<>();
@@ -79,5 +83,6 @@ public class ZonaService {
         }
         return pointInZona(zona.getGeom(), entrega.getLugarentrega());
     }
+
 
 }

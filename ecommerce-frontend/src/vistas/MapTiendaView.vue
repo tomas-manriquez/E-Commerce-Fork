@@ -30,9 +30,9 @@ const idTienda = ref(0);
 const error = ref(null);
 const route = useRoute();
 
-const fetchZona = async (idzona) => {
+const fetchZonas = async (idtienda) => {
   try {
-    const response = await api.get(`/api/v1/zonas/mapeo-zonas?idzona=${idzona}`);
+    const response = await api.get(`/api/v1/zonas/tienda/${idtienda}`);
     console.log(response.data);
     return response.data;
   } catch (err) {
@@ -75,7 +75,7 @@ const addZonasToMap = (zonas) => {
   });
 };
 
-const initializeMap = async (idzona) => {
+const initializeMap = async (idtienda) => {
   // Inicializar el mapa
   mapa.value = L.map("map").setView([-33.4489, -70.6693], 8); // Coordenadas de Santiago, Chile
 
@@ -86,8 +86,8 @@ const initializeMap = async (idzona) => {
   }).addTo(mapa.value);
 
   // Cargar zonas desde el backend y agregarlas al mapa
-  const zonas = await fetchZona(idzona);
-
+  const zonas = await fetchZonas(idtienda);
+  console.log(zonas);
   // Agregar zonas al mapa
   addZonasToMap(zonas);
 };
@@ -108,7 +108,8 @@ onMounted(() => {
   idTienda.value = Number(idtienda); // Asignación correcta a las referencias
   idZona.value = Number(idzona);
   console.log("idzona enviado desde el frontend:", idzona);
-  initializeMap(Number(idzona));
+  console.log("idtienda enviado desde el frontend:", idtienda);
+  initializeMap(Number(idtienda));
   // fetchTienda(idtienda);
 });
 </script>
