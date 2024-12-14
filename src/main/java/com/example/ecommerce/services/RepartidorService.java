@@ -1,5 +1,6 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.dto.RepartidorDto;
 import com.example.ecommerce.entities.RepartidorEntity;
 import com.example.ecommerce.repositories.RepartidorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,7 @@ public class RepartidorService {
         return repartidor;
     }
 
-    public RepartidorEntity getById(Long id) {
-        return repartidorRepository.findById(id);
-    }
+    public RepartidorEntity getById(Long id) { return repartidorRepository.findById(id); }
 
     public List<RepartidorEntity> getAll() { return repartidorRepository.findAll(); }
 
@@ -31,5 +30,5 @@ public class RepartidorService {
 
     public void delete(RepartidorEntity repartidor) { this.repartidorRepository.delete(repartidor); }
 
-
+    public List<RepartidorDto> getByEntregasEnZona(Long idzona, Long idtienda){ return repartidorRepository.getRepPedidosEntregados(idzona,idtienda); }
 }

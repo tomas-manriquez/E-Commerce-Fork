@@ -7,6 +7,9 @@
       <!-- Si el usuario está autenticado -->
       <template v-if="isLoggedIn">
         <li>
+          <router-link to="/tiendas">Ver tiendas</router-link>
+        </li>
+        <li>
           <router-link to="/top5clientes">Top 5 Clientes</router-link>
         </li>
         <li>
@@ -39,6 +42,9 @@
         </li>
         <li>
           <router-link to="/registro">Registrarse</router-link>
+        </li>
+        <li>
+          <router-link to="/tiendas">Ver tiendas</router-link>
         </li>
       </template>
     </ul>

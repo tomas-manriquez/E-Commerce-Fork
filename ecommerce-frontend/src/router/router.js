@@ -76,8 +76,22 @@ const router = createRouter({
             name: '/mapa',
             component: () => import('../vistas/MapView.vue'),
             meta: { requiresAuth: true},
+        },{
+            path: '/tiendas',
+            name: '/tiendas',
+            component: () => import('../vistas/TiendasListView.vue'),
+            meta: { requiresAuth: false},
+        },{
+            path: '/tienda/:idtienda/:idzona',
+            name: '/tienda/',
+            component: () => import('../vistas/MapTiendaView.vue'),
+            meta: { requiresAuth: false},
+        },{
+            path: '/tienda/:idtienda/:idzona/repartidores',
+            name: '/tienda/repartidores',
+            component: () => import('../vistas/Act16View.vue'),
+            meta: { requiresAuth: true},
         }
-
     ],
 });
 

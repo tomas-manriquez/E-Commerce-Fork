@@ -1,5 +1,6 @@
 package com.example.ecommerce.repositories;
 
+import com.example.ecommerce.dto.RepartidorDto;
 import com.example.ecommerce.entities.RepartidorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -46,9 +47,28 @@ public class RepartidorRepositoryImpl implements RepartidorRepository {
     @Override
     public RepartidorEntity getRandom() {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM repartidores" +
+            return con.createQuery("SELECT * FROM repartidores " +
                                             "ORDER BY RAND() LIMIT 1")
                     .executeAndFetchFirst(RepartidorEntity.class);
+        }
+    }
+
+    @Override
+    public List<RepartidorDto> getRepPedidosEntregados(Long idzona, Long idTienda){
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT DISTINCT " +
+                            "rep.idrepartidor, " +
+                            "rep.nombre, " +
+                            "rep.apellido, " +
+                            "ent.fechaentrega " +
+                            "FROM repartidores rep " +
+                            "JOIN entregas ent ON rep.idrepartidor = ent.idrepartidor " +
+                            "JOIN zonas z ON ST_Contains(z.geom, ent.lugarentrega) " +
+                            "WHERE z.idzona = :idzona " +
+                            "AND rep.idtienda = :idtienda;")
+                    .addParameter("idzona", idzona)
+                    .addParameter("idtienda", idTienda)
+                    .executeAndFetch(RepartidorDto.class);
         }
     }
 }
