@@ -88,3 +88,48 @@ RAISE NOTICE 'Descuento del % aplicado a productos inactivos en la categoría %'
 END;
 $$;
 
+--LAB 2: funcionalidad 17
+--true = entrega de id 'p_identrega' esta en zona restringida
+--false = entrega de id 'p_identrega' NO esta en zona restringida (es decir, dentro de la zona de la tienda que crea la entrega)
+CREATE OR REPLACE FUNCTION is_delivery_outside_store_zone(p_identrega BIGINT)
+RETURNS BOOLEAN AS $$
+DECLARE
+v_delivery_point GEOMETRY;
+    v_store_zone GEOMETRY;
+    v_is_outside BOOLEAN;
+BEGIN
+    -- Retrieve the delivery point and associated store zone
+SELECT
+    e.lugarentrega,
+    z.geom
+INTO
+    v_delivery_point,
+    v_store_zone
+FROM
+    public.entregas e
+        JOIN
+    public.ordenes o ON e.idorden = o.idorden
+        JOIN
+    public.productos p ON o.idorden = (
+        SELECT idorden
+        FROM public.detalleordenes
+        WHERE idproducto = p.idproducto
+    LIMIT 1
+    )
+    JOIN
+    public.tiendas t ON p.idtienda = t.idtienda
+    JOIN
+    public.zonas z ON z.idtienda = t.idtienda
+WHERE
+    e.identrega = p_identrega;
+
+-- Check if the delivery point is outside the store zone
+-- Use ST_Disjoint to check if the points do not overlap
+v_is_outside := ST_Disjoint(v_delivery_point, v_store_zone);
+
+RETURN v_is_outside;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Example usage:
+--SELECT is_delivery_outside_store_zone(1) AS is_outside_zone;
