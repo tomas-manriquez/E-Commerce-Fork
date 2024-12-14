@@ -19,7 +19,7 @@ SELECT
     1,  -- Tienda 1
     'zona de reparto tienda 1 - subzona 3',
     (ST_Dump(ST_Subdivide(
-            (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 5
+            (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 50
              ))).geom  -- Subzona 3
 LIMIT 1 OFFSET 2;  -- Seleccionamos la tercera subzona
 
@@ -29,7 +29,7 @@ SELECT
     2,  -- Tienda 2
     'zona de reparto tienda 2 - subzona 4',
     (ST_Dump(ST_Subdivide(
-            (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 5
+            (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 50
              ))).geom  -- Subzona 4
 LIMIT 1 OFFSET 3;  -- Seleccionamos la cuarta subzona
 
