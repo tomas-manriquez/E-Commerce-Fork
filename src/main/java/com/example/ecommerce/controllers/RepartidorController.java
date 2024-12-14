@@ -1,6 +1,8 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.RepartidorDto;
 import com.example.ecommerce.entities.RepartidorEntity;
+import com.example.ecommerce.entities.TiendaEntity;
 import com.example.ecommerce.services.RepartidorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,16 @@ public class RepartidorController {
         }
     }
 
+    @GetMapping("/byId/{id}")
+    public ResponseEntity<List<RepartidorEntity>> getRepartidorById(@PathVariable Long id) {
+        RepartidorEntity prod = repartidorService.getById(id);
+        if (prod != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> save(@RequestBody RepartidorEntity repartidor) {
         repartidorService.save(repartidor);
@@ -38,6 +50,16 @@ public class RepartidorController {
         repartidor = repartidorService.getById(repartidor.getIdRepartidor());
         if (repartidor == null) {
             return ResponseEntity.ok("ProductoEntity deleted successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{idzona}/{idtienda}")
+    public ResponseEntity<List<RepartidorDto>> getByEntregasEnZona(@PathVariable Long idzona, @PathVariable Long idtienda) {
+        List<RepartidorDto> prod = repartidorService.getByEntregasEnZona(idzona,idtienda);
+        if (prod != null) {
+            return ResponseEntity.ok(prod);
         } else {
             return ResponseEntity.notFound().build();
         }
