@@ -13,25 +13,25 @@ INSERT INTO public.tiendas (idtienda,nombre) VALUES
      (1,'MiniMaxMarket'),
      (2,'Touhou Project LostWord');
 
--- Insertar las zonas de reparto con las subzonas generadas para Tienda 1
+-- Insertar las zonas de reparto con la subzona 3 generada para Tienda 1
 INSERT INTO public.zonas (idtienda, nombrezona, geom)
 SELECT
     1,  -- Tienda 1
-    'zona de reparto tienda 1',
+    'zona de reparto tienda 1 - subzona 3',
     (ST_Dump(ST_Subdivide(
             (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 5
-             ))).geom  -- Primera subzona
-LIMIT 1;  -- Seleccionamos la primera subzona
+             ))).geom  -- Subzona 3
+LIMIT 1 OFFSET 2;  -- Seleccionamos la tercera subzona
 
--- Insertar las zonas de reparto con las subzonas generadas para Tienda 2
+-- Insertar las zonas de reparto con la subzona 4 generada para Tienda 2
 INSERT INTO public.zonas (idtienda, nombrezona, geom)
 SELECT
     2,  -- Tienda 2
-    'zona de reparto tienda 2',
+    'zona de reparto tienda 2 - subzona 4',
     (ST_Dump(ST_Subdivide(
             (SELECT geom FROM public.zonas WHERE nombrezona = 'Región Metropolitana'), 5
-             ))).geom  -- Segunda subzona
-LIMIT 1 OFFSET 1;  -- Seleccionamos la segunda subzona
+             ))).geom  -- Subzona 4
+LIMIT 1 OFFSET 3;  -- Seleccionamos la cuarta subzona
 
 -- Insertar repartidores para tienda 1
 INSERT INTO public.repartidores (idrepartidor, nombre, apellido, idtienda) VALUES
