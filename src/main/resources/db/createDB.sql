@@ -24,7 +24,8 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 -- Crear la tabla tienda (necesaria para los productos y repartidores)
 CREATE TABLE IF NOT EXISTS public.tiendas (
     idtienda BIGSERIAL PRIMARY KEY,     -- ID autoincremental
-    nombre VARCHAR(255) NOT NULL        -- Nombre de la tienda
+    nombre VARCHAR(255) NOT NULL,       -- Nombre de la tienda
+    ubicacion GEOMETRY(POINT, 0)        -- Ubicacion de la tienda
     );
 
 -- Crear la tabla clientes

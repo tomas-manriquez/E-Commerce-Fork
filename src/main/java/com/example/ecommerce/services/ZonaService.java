@@ -67,7 +67,7 @@ public class ZonaService {
         return repartidores;
     }
 
-    public List<EntregaEntity> getEntregasByZona(ZonaEntity zona) {
+    private List<EntregaEntity> getEntregasByZona(ZonaEntity zona) {
         List<EntregaEntity> entregas = new ArrayList<>();
         for (EntregaEntity entrega : entregaService.getAll()) {
             if (entregaInZona(zona, entrega)) {
