@@ -17,4 +17,5 @@ public interface ZonaRepository {
     List<ZonaEntity> findAll();
     Boolean pointInZona(Point point, Geometry zona);
     List<Map<String, Object>> findAllWithGeoJSON();
+    List<Map<String, Object>> findByTiendaWithGeoJSON(Long idtienda);
 }

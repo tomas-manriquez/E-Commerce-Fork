@@ -60,9 +60,20 @@ public class ZonaRepositoryImpl implements ZonaRepository {
 
     @Override
     public List<Map<String, Object>> findAllWithGeoJSON() {
-        String sql = "SELECT idzona, nombrezona, ST_AsGeoJSON(geom), idtienda AS geojson FROM zonas";
+        String sql = "SELECT idzona, nombrezona, idtienda, ST_AsGeoJSON(geom) AS geojson FROM zonas";
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery(sql)
+                    .executeAndFetchTable()
+                    .asList();
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findByTiendaWithGeoJSON(Long idtienda) {
+        String sql = "SELECT idzona, nombrezona, idtienda, ST_AsGeoJSON(geom) AS geojson FROM zonas WHERE idtienda = :idtienda";
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("idtienda", idtienda)
                     .executeAndFetchTable()
                     .asList();
         }
