@@ -4,7 +4,6 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import proj4 from "proj4";
 
-
 export default {
   data() {
     return {
@@ -16,7 +15,10 @@ export default {
         address: "",
       },
       products: [],
-      showMap: false, // Controla la visibilidad del mapa
+      storeIds: [], // Almacena los ids de las tiendas seleccionadas
+      zones: [], // Almacena las zonas obtenidas
+      selectedPoint: null, // Coordenadas seleccionadas como Point
+      showMap: false,
       map: null,
       marker: null,
     };
@@ -38,6 +40,10 @@ export default {
       });
     },
     removePurchase(index) {
+      const removedProduct = this.purchase.compras[index];
+      if (removedProduct.productId) {
+        this.removeStoreId(removedProduct.productId);
+      }
       this.purchase.compras.splice(index, 1);
     },
     updateStock(index) {
@@ -47,9 +53,22 @@ export default {
       if (selectedProduct) {
         this.purchase.compras[index].stock = selectedProduct.stock;
         this.purchase.compras[index].nombreProducto = selectedProduct.nombre;
+        this.addStoreId(selectedProduct.idTienda); // Añade el idTienda
       } else {
         this.purchase.compras[index].stock = 0;
         this.purchase.compras[index].nombreProducto = "";
+      }
+    },
+    addStoreId(idTienda) {
+      if (!this.storeIds.includes(idTienda)) {
+        this.storeIds.push(idTienda);
+      }
+    },
+    removeStoreId(productId) {
+      const product = this.products.find((p) => p.idProducto === productId);
+      if (product) {
+        const idTienda = product.idTienda;
+        this.storeIds = this.storeIds.filter((id) => id !== idTienda);
       }
     },
     openMap() {
@@ -68,24 +87,63 @@ export default {
 
       this.map.on("click", (e) => {
         const { lat, lng } = e.latlng;
-        this.purchase.lat = lat;
-        this.purchase.lon = lng;
 
-        // Proj4js para convertir coordenadas
         const projectionFrom = "EPSG:4326"; // WGS84 (Latitud/Longitud)
         const projectionTo = "EPSG:3857";
 
         // Convierte las coordenadas de UTM a Lat/Lon
         const [x, y] = proj4(projectionFrom, projectionTo, [lng, lat]);
 
+        this.purchase.lat = y;
+        this.purchase.lon = x;
+
+        this.selectedPoint = {
+          type: "Point",
+          coordinates: [x, y],
+        };
+
         if (this.marker) {
           this.map.removeLayer(this.marker);
         }
-
-        this.marker = L.marker([lat, lng]).addTo(this.map);
-        alert(`Coordenadas seleccionadas: Lat: ${x}, Lon: ${y}`);
+        this.marker = L.marker([y, x]).addTo(this.map);
+        alert(`Coordenadas seleccionadas: Lat: ${y}, Lon: ${x}`);
         this.showMap = false; // Cerrar el mapa después de seleccionar
       });
+    },
+    async validateAndBuy() {
+      // Cargar zonas basadas en los ids de tienda seleccionados
+      await this.fetchZones();
+      const isValid = await this.isPointInZones();
+      if (!isValid) {
+        alert("Ubicación fuera de la zona de reparto.");
+        return;
+      }
+      await this.buy();
+    },
+    async fetchZones() {
+      const promises = this.storeIds.map((idZona) =>
+          api.get(`/api/v1/zonas/${idZona}`)
+      );
+      const responses = await Promise.all(promises);
+      this.zones = responses.map((response) => response.data);
+    },
+    async isPointInZones() {
+      for (const zone of this.zones) {
+        const parsedGeoJson = JSON.parse(zone.geojson);
+        console.log(parsedGeoJson);
+        this.selectedZone = {
+          type: parsedGeoJson.type,
+          coordinates: parsedGeoJson.coordinates,
+        };
+        const response = await api.post("/api/v1/zonas/point-in-zona", {
+          zona: this.selectedZone,
+          point: this.selectedPoint,
+        });
+        if (response.data) {
+          return true;
+        }
+      }
+      return false;
     },
     async buy() {
       const detalles = this.purchase.compras.map((compra) => ({
@@ -97,14 +155,15 @@ export default {
           {
             idCliente: this.purchase.customerId,
             detalles,
-            lat: this.purchase.lat,
-            lon: this.purchase.lon,
+            coordenadas: {
+              lat: this.purchase.lat,
+              lon: this.purchase.lon,
+            },
           },
           {
             headers: {
               Accept: "application/json",
             },
-            withCredentials: false,
           }
       );
       console.log("Compra realizada:", response);
@@ -112,14 +171,13 @@ export default {
     },
   },
 };
-
 </script>
 
 <template>
   <body>
   <div class="container">
     <div class="text">Ingresar Compra</div>
-    <form @submit.prevent="buy">
+    <form @submit.prevent="validateAndBuy">
       <div v-for="(compra, index) in purchase.compras" :key="index" class="form-row">
         <div class="input-data">
           <select v-model="compra.productId" @change="updateStock(index)" required>

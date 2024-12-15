@@ -35,7 +35,7 @@ public class EntregaRepositoryImpl implements EntregaRepository {
     @Override
     public List<EntregaEntity> findAll() {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT identrega, idrepartidor, idorden, ST_AsText(lugarentrega) AS lugarentrega, fechaentrega " +
+            return con.createQuery("SELECT idrepartidor, idorden, ST_AsText(lugarentrega) AS lugarentrega, fechaentrega " +
                             "FROM entregas")
                     .executeAndFetch(EntregaEntity.class);
         } catch (Exception e) {
