@@ -97,7 +97,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                         .addParameter("estado", orden.getEstado())
                         .addParameter("total", orden.getTotal())
                         .addParameter("idorden", orden.getIdOrden())
-                        .addParameter("identrega", orden.getIdEntrega())
                         .executeUpdate();
             } else {
                 // Solo actualizar el estado y otros campos si el estado es "pendiente"
@@ -113,7 +112,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                         .addParameter("idcliente", orden.getIdCliente())
                         .addParameter("total", orden.getTotal())
                         .addParameter("idorden", orden.getIdOrden())
-                        .addParameter("identrega", orden.getIdEntrega())
                         .executeUpdate();
             }
         } catch (Exception ex) {
@@ -136,7 +134,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                     .addParameter("idcliente", orden.getIdCliente())
                     .addParameter("total", orden.getTotal())
                     .addParameter("idorden", orden.getIdOrden())
-                    .addParameter("identrega", orden.getIdEntrega())
                     .executeUpdate();
         } catch (Exception ex) {
             throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);

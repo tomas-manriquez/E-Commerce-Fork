@@ -18,5 +18,4 @@ public class OrdenEntity {
     private String estado;
     private Long idCliente;
     private BigDecimal total;
-    private Long idEntrega;
 }
