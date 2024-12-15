@@ -1,6 +1,5 @@
 package com.example.ecommerce.repositories;
 
-import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.entities.ZonaEntity;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
@@ -51,11 +50,11 @@ public class ZonaRepositoryImpl implements ZonaRepository {
 
     @Override
     public Boolean pointInZona(Point point, Geometry zona) {
-        String sql = "SELECT ST_Contains(:zona, :point) AS esta_dentro";
+        String sql = "SELECT ST_Contains(ST_GeomFromText(:zona, 0), ST_GeomFromText(:point, 0)) AS esta_dentro";
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery(sql)
-                    .addParameter("zona", zona)
-                    .addParameter("point", point)
+                    .addParameter("zona", zona.toText())
+                    .addParameter("point", point.toText())
                     .executeScalar(Boolean.class);
         } catch (Exception e) {
             throw new RuntimeException("Error al verificar si el punto está dentro de la zona", e);
