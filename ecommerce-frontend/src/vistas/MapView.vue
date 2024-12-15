@@ -57,9 +57,6 @@ const addZonasToMap = (zonas) => {
           weight: 2,
           opacity: 0.8,
         },
-        onEachFeature: (feature, layer) => {
-          layer.bindPopup(`Zona: ${zona.nombrezona}`);
-        },
       }).addTo(mapa.value); // Agrega la capa al mapa
     } catch (error) {
       console.error(`Error procesando la zona: ${zona.nombrezona}`, error);
@@ -100,13 +97,6 @@ const addEntregasToMap = (entregas) => {
         fillOpacity: 0.5, // Opacidad del relleno
         radius: 100, // Radio en metros
       });
-
-      // Agregar un popup con información de la entrega
-      circle.bindPopup(
-          `<strong>Entrega ID:</strong> ${entrega.idEntrega}<br>
-         <strong>Fecha:</strong> ${new Date(entrega.fechaentrega).toLocaleString()}<br>
-         <strong>Repartidor ID:</strong> ${entrega.idRepartidor}`
-      );
 
       // Agregar el círculo al mapa
       circle.addTo(mapa.value);
