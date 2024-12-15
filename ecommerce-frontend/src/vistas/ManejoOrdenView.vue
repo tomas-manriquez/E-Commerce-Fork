@@ -79,6 +79,13 @@ export default {
         }
       });
     },
+    closeMap() {
+      if (this.map) {
+        this.map.remove(); // Destruye la instancia del mapa
+        this.map = null;   // Asegúrate de reiniciar la referencia
+      }
+      this.showMap = false;
+    },
     initializeMap() {
       this.map = L.map("map").setView([-33.4489, -70.6693], 8); // Coordenadas de Santiago, Chile
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -102,12 +109,15 @@ export default {
           coordinates: [x, y],
         };
 
-        if (this.marker) {
-          this.map.removeLayer(this.marker);
-        }
-        this.marker = L.marker([y, x]).addTo(this.map);
+        const circle = L.circle([lat, lng], {
+          color: "blue", // Color del borde
+          fillColor: "blue", // Color de relleno
+          fillOpacity: 0.5, // Opacidad del relleno
+          radius: 100, // Radio en metros
+        });
+        circle.addTo(this.map);
         alert(`Coordenadas seleccionadas: Lat: ${y}, Lon: ${x}`);
-        this.showMap = false; // Cerrar el mapa después de seleccionar
+        this.showMap = true; // Cerrar el mapa después de seleccionar
       });
     },
     async validateAndBuy() {
@@ -218,7 +228,18 @@ export default {
       <div class="form-row submit-btn">
         <div class="input-data">
           <div class="inner"></div>
-          <input type="button" value="Seleccionar Ubicación" @click="openMap" />
+          <input
+              type="button"
+              v-if="!showMap"
+              value="Seleccionar Ubicación"
+              @click="openMap"
+          />
+          <input
+              type="button"
+              v-else
+              value="Cerrar Mapa"
+              @click="closeMap"
+          />
         </div>
       </div>
       <div v-if="showMap" id="map" style="height: 300px; width: 100%;"></div>
