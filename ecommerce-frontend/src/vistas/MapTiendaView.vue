@@ -53,6 +53,7 @@ const fetchTamanioZona = async (idZona) => {
     const response2 = await api.get(`/api/v1/zonas/areaZona/${idZona.value}`);
     console.log("tamaño zona: ",response2.data);
     tamanioZona.value = response2.data;
+    tamanioZona.value = tamanioZona.value.toFixed(2);
   }catch (err) {
     error.value = "Error al cargar el area de la zona";
     console.error(err);
