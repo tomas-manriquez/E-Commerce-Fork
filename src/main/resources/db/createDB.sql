@@ -76,16 +76,6 @@ CREATE TABLE IF NOT EXISTS public.zonas (
     geom GEOMETRY(POLYGON, 0)          -- Geometría de la zona (SRID 4326)
     );
 
--- Crear la tabla entregas (referenciada en ordenes)
-CREATE TABLE IF NOT EXISTS public.entregas (
-    identrega BIGSERIAL PRIMARY KEY,      -- ID autoincremental
-    idrepartidor BIGINT,
-    idorden BIGINT,
-    lugarentrega GEOMETRY(POINT, 0),    -- Punto de entrega (coordenadas geográficas)
-    fechaentrega TIMESTAMP,             -- Fecha en que se realizó la orden
-    CONSTRAINT fk_repartidor FOREIGN KEY (idrepartidor) REFERENCES public.repartidores (idrepartidor) ON DELETE SET NULL
-    );
-
 -- Crear la tabla ordenes con relación a clientes y entregas
 CREATE TABLE IF NOT EXISTS public.ordenes (
     idorden BIGSERIAL PRIMARY KEY,      -- ID autoincremental
@@ -93,9 +83,7 @@ CREATE TABLE IF NOT EXISTS public.ordenes (
     estado character varying(50),       -- Estado de la orden ("pendiente","pagada","enviada")
     idcliente BIGINT,                   -- Cliente que realizó la orden
     total DECIMAL(10,2),                -- Total a pagar por la orden
-    identrega BIGINT,
-    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE SET NULL,
-    CONSTRAINT fk_entrega FOREIGN KEY (identrega) REFERENCES public.entregas (identrega) ON DELETE SET NULL
+    CONSTRAINT fk_cliente FOREIGN KEY (idcliente) REFERENCES public.clientes (idcliente) ON DELETE SET NULL
     );
 
 -- Crear la tabla detalleordenes con relaciones a ordenes y productos
@@ -107,4 +95,15 @@ CREATE TABLE IF NOT EXISTS public.detalleordenes (
     preciounitario DECIMAL(10,2),       -- Precio unitario del producto
     CONSTRAINT fk_orden FOREIGN KEY (idorden) REFERENCES public.ordenes (idorden),
     CONSTRAINT fk_producto FOREIGN KEY (idproducto) REFERENCES public.productos (idproducto) ON DELETE SET NULL
+    );
+
+-- Crear la tabla entregas (referenciada en ordenes)
+CREATE TABLE IF NOT EXISTS public.entregas (
+    identrega BIGSERIAL PRIMARY KEY,      -- ID autoincremental
+    idrepartidor BIGINT,
+    idorden BIGINT,
+    lugarentrega GEOMETRY(POINT, 0),    -- Punto de entrega (coordenadas geográficas)
+    fechaentrega TIMESTAMP,             -- Fecha en que se realizó la orden
+    CONSTRAINT fk_repartidor FOREIGN KEY (idrepartidor) REFERENCES public.repartidores (idrepartidor) ON DELETE SET NULL,
+    CONSTRAINT fk_orden FOREIGN KEY (idorden) REFERENCES public.ordenes (idorden) ON DELETE CASCADE
     );

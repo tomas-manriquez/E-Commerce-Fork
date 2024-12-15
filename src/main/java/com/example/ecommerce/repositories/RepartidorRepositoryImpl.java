@@ -47,8 +47,7 @@ public class RepartidorRepositoryImpl implements RepartidorRepository {
     @Override
     public RepartidorEntity getRandom() {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM repartidores " +
-                                            "ORDER BY RAND() LIMIT 1")
+            return con.createQuery("SELECT * FROM repartidores ORDER BY RANDOM() LIMIT 1")
                     .executeAndFetchFirst(RepartidorEntity.class);
         }
     }

@@ -42,8 +42,8 @@ SELECT * FROM json_to_recordset(p_productos) AS (
         )
     LOOP
 -- Inserta el detalle de la orden
-INSERT INTO detalleordenes (idorden, idproducto, cantidad, preciounitario, lugar_entrega)
-VALUES (v_idorden, v_producto.idproducto, v_producto.cantidad, v_producto.preciounitario, p_lugar_entrega);
+INSERT INTO detalleordenes (idorden, idproducto, cantidad, preciounitario)
+VALUES (v_idorden, v_producto.idproducto, v_producto.cantidad, v_producto.preciounitario);
 
 -- Actualiza el stock del producto
 UPDATE productos

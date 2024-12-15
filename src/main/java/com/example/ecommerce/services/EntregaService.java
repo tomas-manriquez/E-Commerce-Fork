@@ -45,6 +45,9 @@ public class EntregaService {
         Point point = coordenadas.getPoint();
         entrega.setLugarentrega(point.toText());
 
+        System.out.println(coordenadas);
+        System.out.println(entrega.getLugarentrega());
+
         RepartidorEntity repartidor = repartidorService.getRandom();
         if (repartidor == null) {
             throw new RuntimeException("No hay repartidores disponibles.");
