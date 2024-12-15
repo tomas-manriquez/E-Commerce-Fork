@@ -18,6 +18,21 @@ public class ZonaRepositoryImpl implements ZonaRepository {
     Sql2o sql2o;
 
     @Override
+    public Double calculateAreaById(Long idZona) {
+        String sql = "SELECT SUM(ST_Area(z.geom)) AS area_total_cubierta " +
+                "FROM public.zonas z " +
+                "WHERE z.idzona = :idZona";
+
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("idZona", idZona)
+                    .executeScalar(Double.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al calcular el área de la zona", e);
+        }
+    }
+
+    @Override
     public ZonaEntity findById(Long idzona) {
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM zonas WHERE idzona = :idzona")

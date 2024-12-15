@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface ZonaRepository {
+    Double calculateAreaById(Long idZona);
     ZonaEntity findById(Long id);
     Optional<ZonaEntity> findByOptionalId(Long id);
     List<ZonaEntity> findAll();

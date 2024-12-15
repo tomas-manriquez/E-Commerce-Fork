@@ -20,6 +20,16 @@ public class ZonaController {
     @Autowired
     ZonaService zonaService;
 
+    @GetMapping("/areaZona/{idZona}")
+    public ResponseEntity<Double> getAreaZona(@PathVariable Long idZona) {
+        try {
+            Double area = zonaService.getAreaZonaById(idZona);
+            return ResponseEntity.ok(area);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/repartidores-zona")
     public ResponseEntity<List<RepartidorEntity>> getRepartidoresByZona(Long idzona) {
         List<RepartidorEntity> repartidores = zonaService.getRepartidoresByZona(idzona);
