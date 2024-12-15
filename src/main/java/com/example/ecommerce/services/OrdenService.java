@@ -64,20 +64,13 @@ public class OrdenService {
             //Tras guardar todos los detalles, actualizar Orden con cálculo del total
             ordenRepository.setTotal(idOrden);
 
-            //Asociar entrega a la orden
-            associateEntrega(orden, idOrden, coordenadas);
+            //Crear la entrega asociada a la orden
+            entregaService.create(orden, coordenadas);
 
             con.commit();
         } catch (Exception e) {
             throw new RuntimeException("Error al procesar la orden", e);
         }
-    }
-
-
-    private void associateEntrega(OrdenEntity orden, Long idOrden, Coordenadas coordenadas) {
-        EntregaEntity entrega = entregaService.create(orden, coordenadas);
-        orden.setIdEntrega(entrega.getIdEntrega());
-        ordenRepository.updateNormal(orden);
     }
 
     private void validateStock(List<DetalleOrdenRequest> detalles){
