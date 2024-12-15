@@ -23,6 +23,10 @@ public class ZonaService {
     @Autowired
     RepartidorService repartidorService;
 
+    public Double getAreaZonaById(Long idZona) {
+        return zonaRepository.calculateAreaById(idZona);
+    }
+
     public ZonaEntity getZona(Long id) {
         return zonaRepository.findById(id);
     }
