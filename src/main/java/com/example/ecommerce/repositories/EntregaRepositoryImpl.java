@@ -16,10 +16,10 @@ public class EntregaRepositoryImpl implements EntregaRepository {
     public EntregaEntity save(EntregaEntity entrega) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
             con.createQuery("INSERT INTO entregas (idrepartidor, idorden, lugarentrega, fechaentrega)" +
-                            "VALUES (:idrepartidor, :idorden, :lugarentrega, :fechaentrega)")
+                            "VALUES (:idrepartidor, :idorden, ST_GeomFromText(:lugarentrega, 0), :fechaentrega)")
                     .addParameter("idrepartidor", entrega.getIdRepartidor())
                     .addParameter("idorden", entrega.getIdOrden())
-                    .addParameter("lugarentrega", entrega.getLugarentrega())
+                    .addParameter("lugarentrega", entrega.getLugarentrega().toText())
                     .addParameter("fechaentrega", entrega.getFechaentrega())
                     .executeUpdate();
             Long generatedId = con.createQuery("SELECT currval('entregas_identrega_seq')")
@@ -35,7 +35,7 @@ public class EntregaRepositoryImpl implements EntregaRepository {
     @Override
     public List<EntregaEntity> findAll() {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT idrepartidor, idorden, ST_AsText(lugarentrega) AS lugarentrega, fechaentrega " +
+            return con.createQuery("SELECT identrega, idrepartidor, idorden, ST_AsText(lugarentrega) AS lugarentrega, fechaentrega " +
                             "FROM entregas")
                     .executeAndFetch(EntregaEntity.class);
         } catch (Exception e) {

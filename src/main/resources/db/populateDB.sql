@@ -149,15 +149,18 @@ INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, pass
 SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM public.clientes), true);
 
 -- Inserciones en la tabla ordenes
-INSERT INTO public.ordenes (idorden,fechaorden, estado, idcliente, total) VALUES
-(1,'2024-12-22 10:00:00', 'pendiente', 1, 100.00),
-(2,'2024-12-23 11:00:00', 'pagada', 2, 200.00),
-(3,'2024-12-24 12:00:00', 'enviada', 3, 150.00),
-(4,'2024-12-25 13:00:00', 'pendiente', 4, 250.00),
-(5,'2024-12-26 14:00:00', 'pagada', 5, 300.00),
-(6,'2024-12-27 15:00:00', 'enviada', 1, 100.00),
-(7,'2024-12-28 16:00:00', 'pendiente', 2, 400.00),
-(8,'2024-12-29 17:00:00', 'pagada', 3, 500.00);
+INSERT INTO public.ordenes (fechaorden, estado, idcliente, total) VALUES
+('2024-12-22 10:00:00', 'pendiente', 1, 100.00),
+('2024-12-23 11:00:00', 'pagada', 2, 200.00),
+('2024-12-24 12:00:00', 'enviada', 3, 150.00),
+('2024-12-25 13:00:00', 'pendiente', 4, 250.00),
+('2024-12-26 14:00:00', 'pagada', 5, 300.00),
+('2024-12-27 15:00:00', 'enviada', 1, 100.00),
+('2024-12-28 16:00:00', 'pendiente', 2, 400.00),
+('2024-12-29 17:00:00', 'pagada', 3, 500.00);
+
+-- Ajustar secuencia de ordenes
+SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
 
 INSERT INTO public.entregas (identrega, idrepartidor, idorden, lugarentrega, fechaentrega) VALUES
 (1,1, 1, ST_SetSRID(ST_MakePoint(-7903933.409478473, -4022029.7084031934), 0), '2024-12-23 12:00:00'),
@@ -169,18 +172,8 @@ INSERT INTO public.entregas (identrega, idrepartidor, idorden, lugarentrega, fec
 (7,2, 7, ST_SetSRID(ST_MakePoint(-7783263.864502415, -4052558.5597056677), 0), '2024-12-25 12:00:00'),
 (8,3, 8, ST_SetSRID(ST_MakePoint(-7786449.350640302, -3957491.5681165485), 0), '2024-12-27 12:00:00');
 
--- Ajustar secuencia de detalleordenes
-SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
-
--- Actualizaciones de identrega en la tabla ordenes
-UPDATE public.ordenes SET identrega = 1 WHERE idorden = 1;
-UPDATE public.ordenes SET identrega = 2 WHERE idorden = 2;
-UPDATE public.ordenes SET identrega = 3 WHERE idorden = 3;
-UPDATE public.ordenes SET identrega = 4 WHERE idorden = 4;
-UPDATE public.ordenes SET identrega = 5 WHERE idorden = 5;
-UPDATE public.ordenes SET identrega = 6 WHERE idorden = 6;
-UPDATE public.ordenes SET identrega = 7 WHERE idorden = 7;
-UPDATE public.ordenes SET identrega = 8 WHERE idorden = 8;
+-- Ajustar secuencia de entregas
+SELECT setval('public.entregas_identrega_seq', (SELECT MAX(identrega) FROM public.entregas), true);
 
 -- Inserción en la tabla detalleordenes (después de las actualizaciones en ordenes)
 INSERT INTO public.detalleordenes (iddetalle, idorden, idproducto, cantidad, preciounitario) VALUES
