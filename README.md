@@ -8,6 +8,7 @@
 - Tener instalado **PostgreSQL**.
 - Tener acceso al usuario de PostgreSQL con permisos suficientes para crear bases de datos y tablas.
 - **Maven** instalado en tu máquina. Si no tienes Maven, sigue [este enlace](https://maven.apache.org/install.html) para instalarlo.
+- Tener instalado **Stackbuilder** con la extensión de **postgis** en la versión 3.3.5.
 - Tener acceso al archivo `.env` que contiene las variables de configuración para la base de datos.
 
 Las variables de entorno necesarias son:
