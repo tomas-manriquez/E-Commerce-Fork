@@ -10,7 +10,7 @@
     <main class="content">
       <div id="map" style="height: 500px; margin-top: 20px;"></div>
     </main>
-    <div class="secondary-section">
+    <div class="secondary-section" v-if="userType === 'ADMIN'">
       <router-link :to="`/tienda/${idTienda}/${idZona}/repartidores`" class="btn">
         Ver los repartidores de esta zona
       </router-link>
@@ -34,6 +34,7 @@ const idTienda = ref(0);
 let tamanioZona = ref(0);
 const error = ref(null);
 const route = useRoute();
+const userType = localStorage.getItem('userType');
 
 const fetchZonas = async (idtienda) => {
   try {

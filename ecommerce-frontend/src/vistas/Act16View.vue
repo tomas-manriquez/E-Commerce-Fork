@@ -27,6 +27,9 @@
       </tbody>
     </table>
 
+    <div v-if ="repartidores.length===0">
+      No hay entregas en esta zona, por lo que no se muestran los repartidores.
+    </div>
     <!-- Empty state -->
     <div v-if="!loading && !error && !repartidores.length">No hay repartidores disponibles.</div>
 

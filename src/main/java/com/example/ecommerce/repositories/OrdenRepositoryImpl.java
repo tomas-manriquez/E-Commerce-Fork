@@ -105,7 +105,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                                 "estado = :estado, " +
                                 "idcliente = :idcliente, " +
                                 "total = :total " +
-                                "identrega = :identrega" +
                                 "WHERE idorden = :idorden")
                         .addParameter("fechaorden", orden.getFechaOrden())
                         .addParameter("estado", orden.getEstado())
@@ -127,7 +126,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
                             "estado = :estado, " +
                             "idcliente = :idcliente, " +
                             "total = :total " +
-                            "identrega = : identrega" +
                             "WHERE idorden = :idorden")
                     .addParameter("fechaorden", orden.getFechaOrden())
                     .addParameter("estado", orden.getEstado())
