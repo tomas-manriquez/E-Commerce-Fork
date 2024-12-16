@@ -25,12 +25,18 @@ public class TiendaController {
 
     @GetMapping("/all")
     public ResponseEntity<List<TiendaEntity>> getAllTiendas() {
-        List<TiendaEntity> prod = tiendaService.findAll();
-        if (prod != null) {
-            return ResponseEntity.ok(prod);
+        List<TiendaEntity> tiendas = tiendaService.findAll();
+        if (tiendas != null) {
+            return ResponseEntity.ok(tiendas);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("all-min")
+    public ResponseEntity<List<TiendaDto>> getAllTiendasMin() {
+        List<TiendaDto> tiendas = tiendaService.findAllMin();
+        return ResponseEntity.ok(tiendas);
     }
 
     @PostMapping("/create")
@@ -72,9 +78,9 @@ public class TiendaController {
     // Solo consigue el id de las zonas de reparto, no sus areas en si (revisar dto)
     @GetMapping("/tiendasyzonas")
     public ResponseEntity<List<TiendaDto>> getTiendasAndZonaReparto(@RequestParam int page, @RequestParam int size) {
-        List<TiendaDto> prod = tiendaService.getTiendasAndZonaReparto(page,size);
-        if (prod != null) {
-            return ResponseEntity.ok(prod);
+        List<TiendaDto> tiendas = tiendaService.getTiendasAndZonaReparto(page,size);
+        if (tiendas != null) {
+            return ResponseEntity.ok(tiendas);
         } else {
             return ResponseEntity.notFound().build();
         }

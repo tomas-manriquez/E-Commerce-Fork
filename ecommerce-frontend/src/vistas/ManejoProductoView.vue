@@ -10,15 +10,18 @@ export default {
         descripcion: '',
         stock: 0,
         estado: '',
+        idTienda: 0,
         idCategoria: null // Aquí se seleccionará el ID de la categoría
       },
       categories: [], // Lista de categorías existentes
+      tiendas: [], // Lista de tiendas existentes
       newCategory: '', // Nombre de la nueva categoría a agregar
       showModal: false // Controla si la ventana emergente está visible
     };
   },
   mounted() {
     this.fetchCategories();
+    this.fetchTiendas();
   },
   methods: {
     async fetchCategories() {
@@ -27,6 +30,15 @@ export default {
         this.categories = response.data;
       } catch (error) {
         console.error('Error fetching categories:', error);
+      }
+    },
+
+    async fetchTiendas() {
+      try {
+        const response = await api.get('/api/v1/tiendas/all-min');
+        this.tiendas = response.data;
+      } catch (error) {
+        console.error('Error fetching tiendas:', error);
       }
     },
 
@@ -120,6 +132,17 @@ export default {
             <div class="underline"></div>
             <label for="stock">Stock</label>
           </div>
+          <div class="input-data">
+            <select v-model="product.idTienda" required :disabled="showModal">
+              <option disabled value="">Seleccionar tienda</option>
+              <option v-for="tienda in tiendas" :key="tienda.idtienda" :value="tienda.idtienda">
+                {{ tienda.nombre_tienda }}
+              </option>
+            </select>
+            <div class="underline"></div>
+            <label for="categoria">Tienda</label>
+          </div>
+
           <div class="input-data">
             <select v-model="product.idCategoria" @change="handleCategoryChange" required :disabled="showModal">
               <option disabled value="">Seleccionar categoría</option>
