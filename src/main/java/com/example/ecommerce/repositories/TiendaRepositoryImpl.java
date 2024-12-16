@@ -90,6 +90,16 @@ public class TiendaRepositoryImpl implements TiendaRepository{
                     .executeAndFetch(TiendaDto.class);
         }
     }
+    @Override
+    public List<TiendaDto> findAllMin() {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT " +
+                            "tiendas.idtienda," +
+                            "tiendas.nombre AS nombre_tienda " +
+                            "FROM tiendas ")
+                    .executeAndFetch(TiendaDto.class);
+        }
+    }
 
     @Override
     public int count() {
@@ -98,4 +108,6 @@ public class TiendaRepositoryImpl implements TiendaRepository{
                     .executeScalar(Integer.class);
         }
     }
+
+
 }

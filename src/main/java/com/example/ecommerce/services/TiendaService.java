@@ -39,4 +39,8 @@ public class TiendaService {
     public List<TiendaDto> getTiendasAndZonaReparto(int page, int pageSize){
         return tiendaRepository.getTiendasAndZonaReparto(page, pageSize);
     }
+
+    public List<TiendaDto> findAllMin() {
+        return tiendaRepository.findAllMin();
+    }
 }

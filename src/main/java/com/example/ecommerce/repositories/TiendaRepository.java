@@ -16,4 +16,5 @@ public interface TiendaRepository {
     void deleteById(Long id);
     List<TiendaDto> getTiendasAndZonaReparto(int page, int pageSize);
     int count();
+    List<TiendaDto> findAllMin();
 }

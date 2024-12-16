@@ -53,14 +53,15 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public void save(ProductoEntity producto) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
-            con.createQuery("INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria)"+
-                    "VALUES (:nombre, :descripcion, :precio, :stock, :estado, :idcategoria)")
+            con.createQuery("INSERT INTO productos (nombre, descripcion, precio, stock, estado, idcategoria, idtienda)"+
+                    "VALUES (:nombre, :descripcion, :precio, :stock, :estado, :idcategoria, :idtienda)")
                     .addParameter("nombre", producto.getNombre())
                     .addParameter("descripcion", producto.getDescripcion())
                     .addParameter("precio", producto.getPrecio())
                     .addParameter("stock", producto.getStock())
                     .addParameter("estado", producto.getEstado())
                     .addParameter("idcategoria", producto.getIdCategoria())
+                    .addParameter("idtienda", producto.getIdTienda())
                     .executeUpdate();
             Long generatedId = con.createQuery("SELECT currval('productos_idproducto_seq')")
                     .executeScalar(Long.class);
