@@ -2,8 +2,6 @@ package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.entities.ZonaEntity;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
@@ -50,13 +48,11 @@ public class ZonaRepositoryImpl implements ZonaRepository {
     }
 
     @Override
-    public Boolean pointInZona(Coordenadas ubicacion, Geometry zona) {
-        System.out.println(ubicacion);
-        System.out.println(ubicacion.toWKT());
-        String sql = "SELECT ST_Contains(ST_GeomFromText(:zona, 0), ST_GeomFromText(:point, 0)) AS esta_dentro";
+    public Boolean pointInZona(Coordenadas ubicacion, String zona) {
+        String sql = "SELECT ST_Contains(ST_SetSRID(ST_GeomFromGeoJSON(:zona), 0), ST_SetSRID(ST_GeomFromText(:point), 0)) AS esta_dentro";
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery(sql)
-                    .addParameter("zona", zona.toText())
+                    .addParameter("zona", zona)
                     .addParameter("point", ubicacion.toWKT())
                     .executeScalar(Boolean.class);
         } catch (Exception e) {

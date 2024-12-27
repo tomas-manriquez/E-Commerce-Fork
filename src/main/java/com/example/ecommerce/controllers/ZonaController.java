@@ -63,11 +63,8 @@ public class ZonaController {
 
     @PostMapping("/point-in-zona")
     public ResponseEntity<Boolean> isPointInZona(@RequestBody ZonaPointRequest request) {
-        Geometry zona = request.getZona(); // Geometría de la zona
+        String zona = request.getZona(); // Geometría de la zona
         Coordenadas ubicacion = request.getCoordenadas();
-        System.out.println("**********************         ************\n\n**************");
-        System.out.println(ubicacion);
-
         boolean isInside = zonaService.pointInZona(zona, ubicacion);
         return ResponseEntity.ok(isInside);
     }
