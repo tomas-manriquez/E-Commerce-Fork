@@ -145,9 +145,13 @@ export default {
           type: parsedGeoJson.type,
           coordinates: parsedGeoJson.coordinates,
         };
+        console.log(this.selectedPoint) 
         const response = await api.post("/api/v1/zonas/point-in-zona", {
           zona: this.selectedZone,
-          point: this.selectedPoint,
+          coordenadas: {
+              lat: this.purchase.lat,
+              lon: this.purchase.lon,
+            },
         });
         if (response.data) {
           return true;

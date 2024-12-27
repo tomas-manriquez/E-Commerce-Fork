@@ -4,7 +4,6 @@ import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.dto.DetalleOrdenRequest;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.DetalleOrdenEntity;
-import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.repositories.OrdenRepository;
@@ -109,10 +108,6 @@ public class OrdenService {
 
     public void updateOrden(OrdenEntity orden) {
         ordenRepository.update(orden);
-    }
-
-    public void updateOrdenNormal(OrdenEntity orden) {
-        ordenRepository.updateNormal(orden);
     }
 
     public void deleteOrdenById(Long id) {

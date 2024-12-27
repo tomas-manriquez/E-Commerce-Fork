@@ -2,6 +2,7 @@ package com.example.ecommerce.entities;
 
 
 import com.example.ecommerce.config.PointSerializer;
+import com.example.ecommerce.dto.Coordenadas;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,16 +20,7 @@ public class EntregaEntity {
     private Long idRepartidor;
     private Long idOrden;
     @JsonSerialize(using = PointSerializer.class)
-    private Point lugarentrega;
+    private Coordenadas lugarentrega;
     private LocalDateTime fechaentrega;
-
-    public void setLugarentrega(String lugarentregaWKT) {
-        try {
-            WKTReader reader = new WKTReader();
-            this.lugarentrega = (Point) reader.read(lugarentregaWKT);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al parsear lugarentrega: " + lugarentregaWKT, e);
-        }
-    }
 
 }

@@ -50,7 +50,7 @@ public class ZonaService {
         });
     }
 
-    public boolean pointInZona(Geometry zona, Point ubicacion) {
+    public boolean pointInZona(Geometry zona, Coordenadas ubicacion) {
         if (zona == null || ubicacion == null) {
             throw new IllegalArgumentException("Argumentos inválidos o vacíos");
         }
