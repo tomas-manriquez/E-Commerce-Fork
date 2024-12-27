@@ -1,96 +1,96 @@
 [{
   "_id": 1,
-  "id_categoria": 1,
-  "id_opinion_destacada": 1,
-  "veces_recomendada": 15,
-  "otras_opiniones_destacadas": [
+  "idCategoria": 1,
+  "idDestacada": 1,
+  "vecesRecomendada": 15,
+  "otrasDestacadas": [
     {
-      "id_opinion": 3,
-      "veces_recomendada": 1
+      "idOpinion": 3,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 5,
-      "veces_recomendada": 1
+      "idOpinion": 5,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 4,
-      "veces_recomendada": 1
+      "idOpinion": 4,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 2,
-      "veces_recomendada": 1
+      "idOpinion": 2,
+      "vecesRecomendada": 1
     }
   ]
 },
 {
   "_id": 2,
-  "id_categoria": 2,
-  "id_opinion_destacada": 6,
-  "veces_recomendada": 18,
-  "otras_opiniones_destacadas": [
+  "idCategoria": 2,
+  "idDestacada": 6,
+  "vecesRecomendada": 18,
+  "otrasDestacadas": [
     {
-      "id_opinion": 8,
-      "veces_recomendada": 1
+      "idOpinion": 8,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 10,
-      "veces_recomendada": 1
+      "idOpinion": 10,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 9,
-      "veces_recomendada": 1
+      "idOpinion": 9,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 7,
-      "veces_recomendada": 1
+      "idOpinion": 7,
+      "vecesRecomendada": 1
     }
   ]
 },
 {
   "_id": 3,
-  "id_categoria": 3,
-  "id_opinion_destacada": 11,
-  "veces_recomendada": 20,
-  "otras_opiniones_destacadas": [
+  "idCategoria": 3,
+  "idDestacada": 11,
+  "vecesRecomendada": 20,
+  "otrasDestacadas": [
     {
-      "id_opinion": 13,
-      "veces_recomendada": 1
+      "idOpinion": 13,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 14,
-      "veces_recomendada": 1
+      "idOpinion": 14,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 15,
-      "veces_recomendada": 1
+      "idOpinion": 15,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 12,
-      "veces_recomendada": 1
+      "idOpinion": 12,
+      "vecesRecomendada": 1
     }
   ]
 },
 {
   "_id": 4,
-  "id_categoria": 4,
-  "id_opinion_destacada": 16,
-  "veces_recomendada": 25,
-  "otras_opiniones_destacadas": [
+  "idCategoria": 4,
+  "idDestacada": 16,
+  "vecesRecomendada": 25,
+  "otrasDestacadas": [
     {
-      "id_opinion": 19,
-      "veces_recomendada": 1
+      "idOpinion": 19,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 18,
-      "veces_recomendada": 1
+      "idOpinion": 18,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 17,
-      "veces_recomendada": 1
+      "idOpinion": 17,
+      "vecesRecomendada": 1
     },
     {
-      "id_opinion": 20,
-      "veces_recomendada": 1
+      "idOpinion": 20,
+      "vecesRecomendada": 1
     }
   ]
 }]

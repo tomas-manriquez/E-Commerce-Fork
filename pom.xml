@@ -91,7 +91,10 @@
 			<version>2.17.2</version> <!-- Usar la misma versión que `jackson-databind` -->
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 
 	</dependencies>
 
