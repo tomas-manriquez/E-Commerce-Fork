@@ -1,0 +1,96 @@
+[{
+  "_id": 1,
+  "id_categoria": 1,
+  "id_opinion_destacada": 1,
+  "veces_recomendada": 15,
+  "otras_opiniones_destacadas": [
+    {
+      "id_opinion": 3,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 5,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 4,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 2,
+      "veces_recomendada": 1
+    }
+  ]
+},
+{
+  "_id": 2,
+  "id_categoria": 2,
+  "id_opinion_destacada": 6,
+  "veces_recomendada": 18,
+  "otras_opiniones_destacadas": [
+    {
+      "id_opinion": 8,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 10,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 9,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 7,
+      "veces_recomendada": 1
+    }
+  ]
+},
+{
+  "_id": 3,
+  "id_categoria": 3,
+  "id_opinion_destacada": 11,
+  "veces_recomendada": 20,
+  "otras_opiniones_destacadas": [
+    {
+      "id_opinion": 13,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 14,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 15,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 12,
+      "veces_recomendada": 1
+    }
+  ]
+},
+{
+  "_id": 4,
+  "id_categoria": 4,
+  "id_opinion_destacada": 16,
+  "veces_recomendada": 25,
+  "otras_opiniones_destacadas": [
+    {
+      "id_opinion": 19,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 18,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 17,
+      "veces_recomendada": 1
+    },
+    {
+      "id_opinion": 20,
+      "veces_recomendada": 1
+    }
+  ]
+}]
