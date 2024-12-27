@@ -34,19 +34,14 @@ public class EntregaService {
         if (orden == null || orden.getIdOrden() == null) {
             throw new IllegalArgumentException("La orden es inválida o no contiene un ID.");
         }
-        if (coordenadas == null || coordenadas.getPoint() == null) {
+        if (coordenadas == null) {
             throw new IllegalArgumentException("Las coordenadas son inválidas o no contienen un punto.");
         }
 
         EntregaEntity entrega = new EntregaEntity();
         entrega.setIdOrden(orden.getIdOrden());
         entrega.setFechaentrega(orden.getFechaOrden().plusDays(2));
-
-        Point point = coordenadas.getPoint();
-        entrega.setLugarentrega(point.toText());
-
-        System.out.println(coordenadas);
-        System.out.println(entrega.getLugarentrega());
+        entrega.setLugarentrega(coordenadas);
 
         RepartidorEntity repartidor = repartidorService.getRandom();
         if (repartidor == null) {
