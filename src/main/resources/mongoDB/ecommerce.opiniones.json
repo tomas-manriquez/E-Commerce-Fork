@@ -1,0 +1,180 @@
+[{
+  "_id": 1,
+  "id_cliente": 1,
+  "id_producto": 1,
+  "id_categoria": 1,
+  "fecha": "2024-12-24T12:00:00",
+  "comentario": "¡Excelente calidad y muy rápido!",
+  "puntuacion": 5
+},
+{
+  "_id": 2,
+  "id_cliente": 2,
+  "id_producto": 2,
+  "id_categoria": 1,
+  "fecha": "2024-12-20T14:00:00",
+  "comentario": "Muy buen celular, pero un poco caro.",
+  "puntuacion": 4
+},
+{
+  "_id": 3,
+  "id_cliente": 3,
+  "id_producto": 3,
+  "id_categoria": 1,
+  "fecha": "2024-12-15T09:30:00",
+  "comentario": "Excelente relación calidad-precio.",
+  "puntuacion": 5
+},
+{
+  "_id": 4,
+  "id_cliente": 4,
+  "id_producto": 4,
+  "id_categoria": 1,
+  "fecha": "2024-12-10T11:00:00",
+  "comentario": "Cumple perfectamente con lo que promete.",
+  "puntuacion": 4
+},
+{
+  "_id": 5,
+  "id_cliente": 5,
+  "id_producto": 5,
+  "id_categoria": 1,
+  "fecha": "2024-12-08T16:45:00",
+  "comentario": "Buena batería y diseño cómodo.",
+  "puntuacion": 5
+},
+{
+  "_id": 6,
+  "id_cliente": 6,
+  "id_producto": 11,
+  "id_categoria": 2,
+  "fecha": "2024-12-24T12:00:00",
+  "comentario": "Muy práctico y fácil de usar.",
+  "puntuacion": 5
+},
+{
+  "_id": 7,
+  "id_cliente": 7,
+  "id_producto": 12,
+  "id_categoria": 2,
+  "fecha": "2024-12-20T14:00:00",
+  "comentario": "Cocina muy rápido y tiene buen diseño.",
+  "puntuacion": 4
+},
+{
+  "_id": 8,
+  "id_cliente": 8,
+  "id_producto": 13,
+  "id_categoria": 2,
+  "fecha": "2024-12-15T09:30:00",
+  "comentario": "Compacto y funcional, excelente compra.",
+  "puntuacion": 5
+},
+{
+  "_id": 9,
+  "id_cliente": 9,
+  "id_producto": 14,
+  "id_categoria": 2,
+  "fecha": "2024-12-10T11:00:00",
+  "comentario": "Perfecto para espacios pequeños.",
+  "puntuacion": 4
+},
+{
+  "_id": 10,
+  "id_cliente": 10,
+  "id_producto": 15,
+  "id_categoria": 2,
+  "fecha": "2024-12-08T16:45:00",
+  "comentario": "Funciona muy bien para mi cocina.",
+  "puntuacion": 5
+},
+{
+  "_id": 11,
+  "id_cliente": 11,
+  "id_producto": 20,
+  "id_categoria": 3,
+  "fecha": "2024-12-24T12:00:00",
+  "comentario": "Potente y eficiente, limpia todo a fondo.",
+  "puntuacion": 5
+},
+{
+  "_id": 12,
+  "id_cliente": 1,
+  "id_producto": 21,
+  "id_categoria": 3,
+  "fecha": "2024-12-20T14:00:00",
+  "comentario": "Compacta y con buena potencia.",
+  "puntuacion": 4
+},
+{
+  "_id": 13,
+  "id_cliente": 2,
+  "id_producto": 22,
+  "id_categoria": 3,
+  "fecha": "2024-12-15T09:30:00",
+  "comentario": "Muy práctica y fácil de usar.",
+  "puntuacion": 5
+},
+{
+  "_id": 14,
+  "id_cliente": 3,
+  "id_producto": 23,
+  "id_categoria": 3,
+  "fecha": "2024-12-10T11:00:00",
+  "comentario": "El mejor producto que he comprado.",
+  "puntuacion": 5
+},
+{
+  "_id": 15,
+  "id_cliente": 4,
+  "id_producto": 24,
+  "id_categoria": 3,
+  "fecha": "2024-12-08T16:45:00",
+  "comentario": "Buen diseño y excelente potencia.",
+  "puntuacion": 4
+},
+{
+  "_id": 16,
+  "id_cliente": 5,
+  "id_producto": 30,
+  "id_categoria": 4,
+  "fecha": "2024-12-24T12:00:00",
+  "comentario": "Muy eficiente y fácil de manejar.",
+  "puntuacion": 5
+},
+{
+  "_id": 17,
+  "id_cliente": 6,
+  "id_producto": 31,
+  "id_categoria": 4,
+  "fecha": "2024-12-20T14:00:00",
+  "comentario": "Perfecta para mi jardín pequeño.",
+  "puntuacion": 4
+},
+{
+  "_id": 18,
+  "id_cliente": 7,
+  "id_producto": 32,
+  "id_categoria": 4,
+  "fecha": "2024-12-15T09:30:00",
+  "comentario": "Cumple con lo esperado.",
+  "puntuacion": 5
+},
+{
+  "_id": 19,
+  "id_cliente": 8,
+  "id_producto": 33,
+  "id_categoria": 4,
+  "fecha": "2024-12-10T11:00:00",
+  "comentario": "Muy potente y con excelente duración.",
+  "puntuacion": 5
+},
+{
+  "_id": 20,
+  "id_cliente": 9,
+  "id_producto": 34,
+  "id_categoria": 4,
+  "fecha": "2024-12-08T16:45:00",
+  "comentario": "Ideal para el mantenimiento del jardín.",
+  "puntuacion": 4
+}]
