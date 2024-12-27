@@ -104,11 +104,6 @@ export default {
         this.purchase.lat = y;
         this.purchase.lon = x;
 
-        this.selectedPoint = {
-          type: "Point",
-          coordinates: [x, y],
-        };
-
         const circle = L.circle([lat, lng], {
           color: "blue", // Color del borde
           fillColor: "blue", // Color de relleno
@@ -145,9 +140,14 @@ export default {
           type: parsedGeoJson.type,
           coordinates: parsedGeoJson.coordinates,
         };
+        console.log(this.selectedPoint) 
         const response = await api.post("/api/v1/zonas/point-in-zona", {
-          zona: this.selectedZone,
-          point: this.selectedPoint,
+          //zona: this.selectedZone,
+          zona: JSON.stringify(parsedGeoJson),
+          coordenadas: {
+              lat: this.purchase.lat,
+              lon: this.purchase.lon,
+            },
         });
         if (response.data) {
           return true;

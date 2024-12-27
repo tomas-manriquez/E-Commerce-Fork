@@ -10,9 +10,10 @@ public class Coordenadas {
     private double lat;
     private double lon;
 
+
     public Point getPoint(){
         GeometryFactory geometryFactory = new GeometryFactory();
-        return geometryFactory.createPoint(new Coordinate(lat, lon));
+        return geometryFactory.createPoint(new Coordinate(lon, lat));
     }
 
     public String toWKT() {
