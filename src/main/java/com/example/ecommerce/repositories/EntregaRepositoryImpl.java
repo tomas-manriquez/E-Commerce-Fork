@@ -19,7 +19,7 @@ public class EntregaRepositoryImpl implements EntregaRepository {
                             "VALUES (:idrepartidor, :idorden, ST_GeomFromText(:lugarentrega, 0), :fechaentrega)")
                     .addParameter("idrepartidor", entrega.getIdRepartidor())
                     .addParameter("idorden", entrega.getIdOrden())
-                    .addParameter("lugarentrega", entrega.getLugarentrega().toText())
+                    .addParameter("lugarentrega", entrega.getLugarentrega().toWKT())
                     .addParameter("fechaentrega", entrega.getFechaentrega())
                     .executeUpdate();
             Long generatedId = con.createQuery("SELECT currval('entregas_identrega_seq')")

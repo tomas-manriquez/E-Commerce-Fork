@@ -1,5 +1,6 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.Coordenadas;
 import com.example.ecommerce.dto.ZonaPointRequest;
 import com.example.ecommerce.entities.RepartidorEntity;
 import com.example.ecommerce.services.ZonaService;
@@ -62,9 +63,9 @@ public class ZonaController {
 
     @PostMapping("/point-in-zona")
     public ResponseEntity<Boolean> isPointInZona(@RequestBody ZonaPointRequest request) {
-        Geometry zona = request.getZona(); // Geometría de la zona
-        Point point = request.getPoint();  // Punto a verificar
-        boolean isInside = zonaService.pointInZona(zona, point);
+        String zona = request.getZona(); // Geometría de la zona
+        Coordenadas ubicacion = request.getCoordenadas();
+        boolean isInside = zonaService.pointInZona(zona, ubicacion);
         return ResponseEntity.ok(isInside);
     }
 

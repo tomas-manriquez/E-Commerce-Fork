@@ -4,7 +4,6 @@ import com.example.ecommerce.dto.OrdenRequest;
 import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.services.OrdenService;
-import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +58,7 @@ public class OrdenController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateOrden(@RequestBody OrdenEntity ord) {
-        ordenService.updateOrdenNormal(ord);
+        ordenService.updateOrden(ord);
         return ResponseEntity.ok("OrdenEntity updated successfully");
     }
 

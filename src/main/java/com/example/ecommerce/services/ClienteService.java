@@ -48,7 +48,7 @@ public class ClienteService {
             } else {
                 // Actualizar idCliente a NULL para las órdenes con otros estados
                 orden.setIdCliente(null);
-                ordenService.updateOrdenNormal(orden);
+                ordenService.updateOrden(orden);
             }
         }
 
