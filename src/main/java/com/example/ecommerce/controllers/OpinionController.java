@@ -1,5 +1,6 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.OpinionDTO;
 import com.example.ecommerce.entities.OpinionEntity;
 import com.example.ecommerce.services.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class OpinionController {
     }
 
     @PostMapping("/create")
-    public OpinionEntity createOpinion(@RequestBody OpinionEntity opinion) {
+    public OpinionEntity createOpinion(@RequestBody OpinionDTO opinion) {
         return opinionService.createOpinion(opinion);
     }
 
     @PutMapping("/{id}")
-    public OpinionEntity updateOpinion(@PathVariable String id, @RequestBody OpinionEntity opinion) {
+    public OpinionEntity updateOpinion(@PathVariable String id, @RequestBody OpinionDTO opinion) {
         return opinionService.updateOpinion(id, opinion);
     }
 
