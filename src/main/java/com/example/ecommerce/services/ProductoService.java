@@ -101,4 +101,8 @@ public class ProductoService {
         }
     }
 
+    public boolean existsById(Long id) {
+        return productoRepository.findById(id) != null;
+    }
+
 }

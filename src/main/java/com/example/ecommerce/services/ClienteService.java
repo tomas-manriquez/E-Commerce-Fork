@@ -82,4 +82,8 @@ public class ClienteService {
     public List<ClienteEntity> findAll(){
         return clienteRepository.findAll();
     }
+
+    public boolean existsById(Long id) {
+        return clienteRepository.findById(id) != null;
+    }
 }
