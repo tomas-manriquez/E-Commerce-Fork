@@ -15,7 +15,7 @@ public class EntregaRepositoryImpl implements EntregaRepository {
     @Override
     public EntregaEntity save(EntregaEntity entrega) {
         try (org.sql2o.Connection con = sql2o.beginTransaction()) {
-            con.createQuery("INSERT INTO entregas (idrepartidor, idorden, lugarentrega, fechaentrega)" +
+            con.createQuery("INSERT INTO entregas (idrepartidor, idorden,lugarentrega, fechaentrega)" +
                             "VALUES (:idrepartidor, :idorden, ST_GeomFromText(:lugarentrega, 0), :fechaentrega)")
                     .addParameter("idrepartidor", entrega.getIdRepartidor())
                     .addParameter("idorden", entrega.getIdOrden())
