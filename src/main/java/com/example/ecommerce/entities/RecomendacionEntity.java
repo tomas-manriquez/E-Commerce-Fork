@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -24,7 +26,19 @@ public class RecomendacionEntity {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class OtrasDestacadas {
-        private Long idOpinion;
-        private int vecesRecomendada;
+        private Long idOrden;
+        private LocalDate fecha;
+        private String estado;
+        private BigDecimal total;
+        private List<Detalles> detalles;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Detalles {
+        private Long idProducto;
+        private int cantidad;
+        private int precio;
     }
 }

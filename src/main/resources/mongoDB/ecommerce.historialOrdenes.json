@@ -1,182 +1,113 @@
-[{
-  "_id": 1,
-  "fechaorden": "2024-12-22T10:00:00",
-  "estado": "pendiente",
-  "idCliente": 1,
-  "total": 100,
-  "detalleordenes": [
-    {
-      "idproducto": 1,
-      "cantidad": 2,
-      "preciounitario": 450000
-    },
-    {
-      "idproducto": 2,
-      "cantidad": 1,
-      "preciounitario": 499000
-    }
-  ]
-},
-{
-  "_id": 2,
-  "fechaorden": "2024-12-23T11:00:00",
-  "estado": "pagada",
-  "idCliente": 2,
-  "total": 200,
-  "detalleordenes": [
-    {
-      "idproducto": 1,
-      "cantidad": 4,
-      "preciounitario": 450000
-    },
-    {
-      "idproducto": 2,
-      "cantidad": 3,
-      "preciounitario": 499000
-    }
-  ]
-},
-{
-  "_id": 3,
-  "fechaorden": "2024-12-24T12:00:00",
-  "estado": "enviada",
-  "idCliente": 3,
-  "total": 150,
-  "detalleordenes": [
-    {
-      "idproducto": 11,
-      "cantidad": 1,
-      "preciounitario": 120000
-    },
-    {
-      "idproducto": 14,
-      "cantidad": 2,
-      "preciounitario": 60000
-    },
-    {
-      "idproducto": 17,
-      "cantidad": 2,
-      "preciounitario": 130000
-    }
-  ]
-},
-{
-  "_id": 4,
-  "fechaorden": "2024-12-25T13:00:00",
-  "estado": "pendiente",
-  "idCliente": 4,
-  "total": 250,
-  "detalleordenes": [
-    {
-      "idproducto": 20,
-      "cantidad": 10,
-      "preciounitario": 120000
-    },
-    {
-      "idproducto": 29,
-      "cantidad": 5,
-      "preciounitario": 80000
-    },
-    {
-      "idproducto": 30,
-      "cantidad": 1,
-      "preciounitario": 150000
-    }
-  ]
-},
-{
-  "_id": 5,
-  "fechaorden": "2024-12-26T14:00:00",
-  "estado": "pagada",
-  "idCliente": 5,
-  "total": 300,
-  "detalleordenes": [
-    {
-      "idproducto": 2,
-      "cantidad": 5,
-      "preciounitario": 499000
-    },
-    {
-      "idproducto": 6,
-      "cantidad": 8,
-      "preciounitario": 500000
-    },
-    {
-      "idproducto": 7,
-      "cantidad": 5,
-      "preciounitario": 620000
-    },
-    {
-      "idproducto": 8,
-      "cantidad": 10,
-      "preciounitario": 550000
-    }
-  ]
-},
-{
-  "_id": 6,
-  "fechaorden": "2024-12-27T15:00:00",
-  "estado": "enviada",
-  "idCliente": 1,
-  "total": 100,
-  "detalleordenes": [
-    {
-      "idproducto": 3,
-      "cantidad": 4,
-      "preciounitario": 220000
-    },
-    {
-      "idproducto": 1,
-      "cantidad": 10,
-      "preciounitario": 450000
-    },
-    {
-      "idproducto": 8,
-      "cantidad": 10,
-      "preciounitario": 550000
-    }
-  ]
-},
-{
-  "_id": 7,
-  "fechaorden": "2024-12-28T16:00:00",
-  "estado": "pendiente",
-  "idCliente": 2,
-  "total": 400,
-  "detalleordenes": [
-    {
-      "idproducto": 4,
-      "cantidad": 4,
-      "preciounitario": 180000
-    },
-    {
-      "idproducto": 12,
-      "cantidad": 4,
-      "preciounitario": 95000
-    },
-    {
-      "idproducto": 21,
-      "cantidad": 7,
-      "preciounitario": 95000
-    }
-  ]
-},
-{
-  "_id": 8,
-  "fechaorden": "2024-12-29T17:00:00",
-  "estado": "pagada",
-  "idCliente": 3,
-  "total": 500,
-  "detalleordenes": [
-    {
-      "idproducto": 4,
-      "cantidad": 7,
-      "preciounitario": 180000
-    },
-    {
-      "idproducto": 15,
-      "cantidad": 6,
-      "preciounitario": 45000
-    }
-  ]
-}]
+[
+  {
+    "_id": 1,
+    "ordenes": [
+      {
+        "idOrden": 6,
+        "fecha": "2024-12-27T15:00:00",
+        "estado": "enviada",
+        "total": 10880000.00,
+        "detalles": [
+          {"idProducto": 3, "cantidad":  4, "precio": 220000.00},
+          {"idProducto": 1, "cantidad": 10, "precio": 450000.00},
+          {"idProducto": 8, "cantidad": 10, "precio": 550000.00}
+        ]
+      },
+      {
+        "idOrden": 1,
+        "fecha": "2024-12-22T10:00:00",
+        "estado": "pendiente",
+        "total": 1399000.00,
+        "detalles": [
+          {"idProducto": 1, "cantidad": 2, "precio": 450000.00},
+          {"idProducto": 2, "cantidad": 1, "precio": 499000.00}
+        ]
+      }
+    ]
+  },
+  {
+    "_id": 2,
+    "ordenes": [
+      {
+        "idOrden": 7,
+        "fecha": "2024-12-28T16:00:00",
+        "estado": "pendiente",
+        "total": 1765000.00,
+        "detalles": [
+          {"idProducto":  4, "cantidad": 4, "precio": 180000.00},
+          {"idProducto": 12, "cantidad": 4, "precio":  95000.00},
+          {"idProducto": 21, "cantidad": 7, "precio":  95000.00}
+        ]
+      },
+      {
+        "idOrden": 2,
+        "fecha": "2024-12-23T11:00:00",
+        "estado": "pagada",
+        "total": 3297000.00,
+        "detalles": [
+          {"idProducto": 1, "cantidad": 4, "precio": 450000.00},
+          {"idProducto": 2, "cantidad": 3, "precio": 499000.00}
+        ]
+      }
+    ]
+  },
+  {
+    "_id": 3,
+    "ordenes": [
+      {
+        "idOrden": 8,
+        "fecha": "2024-12-29T17:00:00",
+        "estado": "pagada",
+        "total": 1530000.00,
+        "detalles": [
+          {"idProducto":  4, "cantidad": 7, "precio": 180000.00},
+          {"idProducto": 15, "cantidad": 6, "precio":  45000.00}
+        ]
+      },
+      {
+        "idOrden": 3,
+        "fecha": "2024-12-24T12:00:00",
+        "estado": "enviada",
+        "total": 500000.00,
+        "detalles": [
+          {"idProducto": 11, "cantidad": 1, "precio": 120000.00},
+          {"idProducto": 14, "cantidad": 2, "precio":  60000.00},
+          {"idProducto": 17, "cantidad": 2, "precio": 130000.00}
+        ]
+      }
+    ]
+  },
+  {
+    "_id": 4,
+    "ordenes": [
+      {
+        "idOrden": 4,
+        "fecha": "2024-12-25T13:00:00",
+        "estado": "pendiente",
+        "total": 1750000.00,
+        "detalles": [
+          {"idProducto": 20, "cantidad": 10, "precio": 120000.00},
+          {"idProducto": 29, "cantidad":  5, "precio":  80000.00},
+          {"idProducto": 30, "cantidad":  1, "precio": 150000.00}
+        ]
+      }
+    ]
+  },
+  {
+    "_id": 5,
+    "ordenes": [
+      {
+        "idOrden": 5,
+        "fecha": "2024-12-26T14:00:00",
+        "estado": "pagada",
+        "total": 15095000.00,
+        "detalles": [
+          {"idProducto": 2, "cantidad":  5, "precio": 499000.00},
+          {"idProducto": 6, "cantidad":  8, "precio": 500000.00},
+          {"idProducto": 7, "cantidad":  5, "precio": 620000.00},
+          {"idProducto": 8, "cantidad": 10, "precio": 550000.00}
+        ]
+      }
+    ]
+  }
+]
