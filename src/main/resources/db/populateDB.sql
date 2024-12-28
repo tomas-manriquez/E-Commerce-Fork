@@ -150,14 +150,14 @@ SELECT setval('public.clientes_idcliente_seq', (SELECT MAX(idcliente) FROM publi
 
 -- Inserciones en la tabla ordenes
 INSERT INTO public.ordenes (fechaorden, estado, idcliente, total) VALUES
-('2024-12-22 10:00:00', 'pendiente', 1, 100.00),
-('2024-12-23 11:00:00', 'pagada', 2, 200.00),
-('2024-12-24 12:00:00', 'enviada', 3, 150.00),
-('2024-12-25 13:00:00', 'pendiente', 4, 250.00),
-('2024-12-26 14:00:00', 'pagada', 5, 300.00),
-('2024-12-27 15:00:00', 'enviada', 1, 100.00),
-('2024-12-28 16:00:00', 'pendiente', 2, 400.00),
-('2024-12-29 17:00:00', 'pagada', 3, 500.00);
+('2024-12-22 10:00:00', 'pendiente', 1, 1399000.00),
+('2024-12-23 11:00:00', 'pagada', 2, 3297000.00),
+('2024-12-24 12:00:00', 'enviada', 3, 500000.00),
+('2024-12-25 13:00:00', 'pendiente', 4, 1750000.00),
+('2024-12-26 14:00:00', 'pagada', 5, 15095000.00),
+('2024-12-27 15:00:00', 'enviada', 1, 10880000.00),
+('2024-12-28 16:00:00', 'pendiente', 2, 1765000.00),
+('2024-12-29 17:00:00', 'pagada', 3, 1530000.00);
 
 -- Ajustar secuencia de ordenes
 SELECT setval('public.ordenes_idorden_seq', (SELECT MAX(idorden) FROM public.ordenes), true);
