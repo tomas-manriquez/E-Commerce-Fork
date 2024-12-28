@@ -48,7 +48,7 @@ public class ClienteService {
             } else {
                 // Actualizar idCliente a NULL para las órdenes con otros estados
                 orden.setIdCliente(null);
-                ordenService.updateOrdenNormal(orden);
+                ordenService.updateOrden(orden);
             }
         }
 
@@ -81,5 +81,9 @@ public class ClienteService {
 
     public List<ClienteEntity> findAll(){
         return clienteRepository.findAll();
+    }
+
+    public boolean existsById(Long id) {
+        return clienteRepository.findById(id) != null;
     }
 }

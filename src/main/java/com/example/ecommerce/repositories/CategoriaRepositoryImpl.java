@@ -13,10 +13,10 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
     private Sql2o sql2o;
 
     @Override
-    public CategoriaEntity findById(Long id) {
+    public CategoriaEntity findById(Long idcategoria) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM categorias WHERE idcategoria= :id")
-                    .addParameter("idcategoria",id)
+            return con.createQuery("SELECT * FROM categorias WHERE idcategoria= :idcategoria")
+                    .addParameter("idcategoria",idcategoria)
                     .executeAndFetchFirst(CategoriaEntity.class);
         }
     }
@@ -67,10 +67,10 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long idcategoria) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            con.createQuery("DELETE FROM categorias WHERE idcategoria = :id")
-                    .addParameter("id", id)
+            con.createQuery("DELETE FROM categorias WHERE idcategoria = :idcategoria")
+                    .addParameter("idcategoria", idcategoria)
                     .executeUpdate();
         }
     }

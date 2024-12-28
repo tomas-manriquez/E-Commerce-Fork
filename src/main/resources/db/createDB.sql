@@ -4,14 +4,14 @@
 DO
 $$
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}') THEN
-            EXECUTE 'CREATE DATABASE ${DB_NAME}';
+        IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'ecommerce') THEN
+            EXECUTE 'CREATE DATABASE ecommerce';
         END IF;
     END
 $$;
 
 -- Conectar a la base de datos
-\connect ${DB_NAME}
+\connect ecommerce
 
 -- Table: public.clientes
 

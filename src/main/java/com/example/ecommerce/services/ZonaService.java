@@ -50,7 +50,7 @@ public class ZonaService {
         });
     }
 
-    public boolean pointInZona(Geometry zona, Point ubicacion) {
+    public boolean pointInZona(String zona, Coordenadas ubicacion) {
         if (zona == null || ubicacion == null) {
             throw new IllegalArgumentException("Argumentos inválidos o vacíos");
         }
@@ -85,7 +85,7 @@ public class ZonaService {
         if (zona == null || entrega == null) {
             throw new IllegalArgumentException("La zona o la entrega no existen");
         }
-        return pointInZona(zona.getGeom(), entrega.getLugarentrega());
+        return pointInZona(zona.getGeojson(), entrega.getLugarentrega());
     }
 
 
