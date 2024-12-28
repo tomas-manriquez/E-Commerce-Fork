@@ -33,7 +33,7 @@ const fetchZonas = async () => {
 };
 
 const addZonasToMap = (zonas) => {
-  zonas.forEach((zona, index) => { // Usamos `index` para diferenciar las zonas
+  zonas.forEach((zona, index) => {
     try {
       const geojson = JSON.parse(zona.st_asgeojson); // Convierte la cadena a objeto GeoJSON
 
