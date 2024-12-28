@@ -51,4 +51,8 @@ public class CategoriaService {
         }
         categoriaRepository.save(categoria);
     }
+
+    public boolean existsById(Long id) {
+        return categoriaRepository.findById(id) != null;
+    }
 }

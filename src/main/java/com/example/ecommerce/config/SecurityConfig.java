@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/clientes/top-gastadores-tecnologia").permitAll() // Todos pueden acceder a este
                         .requestMatchers("/api/v1/zonas/**").permitAll()
                         .requestMatchers("/api/v1/zonas/mapeo-zonas").permitAll()
+                        .requestMatchers("/api/v1/opiniones/**").permitAll()
                         .requestMatchers("/api/v1/entregas/**").permitAll()
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
                         .requestMatchers("/error").permitAll()
@@ -50,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/ordenes/byClientId/**").authenticated()
                         .requestMatchers("/api/v1/detalle/byOrdenId/**").authenticated()
                         .requestMatchers("api/v1/ordenes/delete/**").authenticated()
+                        .requestMatchers("api/v1/opiniones/create").authenticated()
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .sessionManagement(session -> session // Configura la política de creación de sesiones

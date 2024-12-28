@@ -84,43 +84,6 @@ public class OrdenRepositoryImpl implements OrdenRepository {
     @Override
     public void update(OrdenEntity orden) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            // Actualizar solo si el estado no es "pendiente"
-            if (!"pendiente".equalsIgnoreCase(orden.getEstado())) {
-                con.createQuery("UPDATE ordenes SET " +
-                                "fechaorden = :fechaorden, " +
-                                "estado = :estado, " +
-                                "idcliente = NULL, " +  // Establecer idcliente a NULL
-                                "total = :total " +
-                                "identrega = :identrega" +
-                                "WHERE idorden = :idorden")
-                        .addParameter("fechaorden", orden.getFechaOrden())
-                        .addParameter("estado", orden.getEstado())
-                        .addParameter("total", orden.getTotal())
-                        .addParameter("idorden", orden.getIdOrden())
-                        .executeUpdate();
-            } else {
-                // Solo actualizar el estado y otros campos si el estado es "pendiente"
-                con.createQuery("UPDATE ordenes SET " +
-                                "fechaorden = :fechaorden, " +
-                                "estado = :estado, " +
-                                "idcliente = :idcliente, " +
-                                "total = :total " +
-                                "WHERE idorden = :idorden")
-                        .addParameter("fechaorden", orden.getFechaOrden())
-                        .addParameter("estado", orden.getEstado())
-                        .addParameter("idcliente", orden.getIdCliente())
-                        .addParameter("total", orden.getTotal())
-                        .addParameter("idorden", orden.getIdOrden())
-                        .executeUpdate();
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Error al actualizar la orden con ID: " + orden.getIdOrden(), ex);
-        }
-    }
-
-    @Override
-    public void updateNormal(OrdenEntity orden) {
-        try (org.sql2o.Connection con = sql2o.open()) {
             con.createQuery("UPDATE ordenes SET " +
                             "fechaorden = :fechaorden, " +
                             "estado = :estado, " +
