@@ -1,0 +1,72 @@
+package com.example.ecommerce.services;
+
+import com.example.ecommerce.entities.CategoriaEntity;
+import com.example.ecommerce.entities.HistorialEntity;
+import com.example.ecommerce.entities.ProductoEntity;
+import com.example.ecommerce.repositories.HistorialRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class HistorialService {
+    @Autowired
+    private HistorialRepository historialRepository;
+
+    @Autowired
+    private ProductoService productoService;
+
+    @Autowired
+    private CategoriaService categoriaService;
+
+    public Optional<HistorialEntity> getHistorial(String idCliente) {
+        return historialRepository.findById(idCliente);
+    }
+
+    public List<HistorialEntity> getAllHistorial() {
+        return historialRepository.findAll();
+    }
+
+    public CategoriaEntity getFavoriteCategoria(String idCliente) {
+        Optional<HistorialEntity> historial = getHistorial(idCliente);
+        List<Long> categorias = new ArrayList<>();
+        if (historial.isPresent()) {
+            for(HistorialEntity.Ordenes orden : historial.get().getOrdenes()) {
+                for (HistorialEntity.Detalles detalles : orden.getDetalles()) {
+                    ProductoEntity producto = productoService.getProductoById(detalles.getIdProducto());
+                    categorias.add(producto.getIdCategoria());
+                }
+            }
+            Long idFavedCategoria = findMostCommon(categorias);
+            return categoriaService.getCategoriaById(idFavedCategoria);
+        }
+        return null;
+    }
+
+
+
+
+
+
+    private static Long findMostCommon(List<Long> list) {
+        Collections.sort(list);
+        Long mostCommon = null;
+        Long last = null;
+        int mostCount = 0;
+        int lastCount = 0;
+        for (Long x : list) {
+            if (x.equals(last)) {
+                lastCount++;
+            } else if (lastCount > mostCount) {
+                mostCount = lastCount;
+                mostCommon = last;
+            }
+            last = x;
+        }
+        return mostCommon;
+    }
+}
