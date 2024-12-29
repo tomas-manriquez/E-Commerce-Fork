@@ -4,6 +4,7 @@ import com.example.ecommerce.dto.PageResponse;
 import com.example.ecommerce.dto.ProductoDTO;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.services.ProductoService;
+import com.example.ecommerce.services.RecomendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ProductoController {
     @Autowired
     ProductoService productoService;
+    @Autowired
+    private RecomendationService recomendationService;
 
     @GetMapping("/byId/{id}")
     public ResponseEntity<ProductoEntity> getProductoById(@PathVariable Long id) {
@@ -64,7 +67,7 @@ public class ProductoController {
 
     @GetMapping("/recommend/{idCliente}")
     public ResponseEntity<List<ProductoDTO>> getProductosRecomendados (@PathVariable Long idCliente){
-        List<ProductoDTO> productosRecomendados = productoService.recomendarProductos(idCliente);
+        List<ProductoDTO> productosRecomendados = recomendationService.recomendarProductos(idCliente);
         return productosRecomendados != null ? ResponseEntity.ok(productosRecomendados) : ResponseEntity.notFound().build();
     }
 }
