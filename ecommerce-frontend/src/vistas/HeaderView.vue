@@ -7,6 +7,10 @@
       <!-- Si el usuario está autenticado -->
       <template v-if="isLoggedIn">
         <li>
+          <router-link to="/add/Orden" class="btn-link">Agregar orden</router-link>
+        </li>
+
+        <li>
           <router-link to="/tiendas">Ver tiendas</router-link>
         </li>
         <li>
@@ -224,5 +228,24 @@ html {
   height: 200px;
   width: 200px;
   margin-left: 20px;
+}
+
+.btn-link {
+  display: inline-block;
+  background-color: #e77917;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none; /* Quita el subrayado */
+}
+
+.btn-link:hover {
+  background-color: #ff9269;
+  color: #fff;
+  text-decoration: none;
 }
 </style>

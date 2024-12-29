@@ -1,0 +1,513 @@
+[33mcommit 9aa63b36e008b7b14044bb9802a5721094631a4d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 28 15:06:39 2024 -0300
+
+    Correction on historialOrdenes JSON, entity for Historial
+
+[33mcommit 1a8f265113d88af3629f3a86cec1aa600d8e5e61[m
+Merge: ee0c9ec e41a7d2
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 28 12:26:26 2024 -0300
+
+    Solving minor conflicts from merge
+
+[33mcommit e41a7d2c9416f292f40de31b9cb64d4f3cf0e9e1[m
+Merge: 533e63e 1558b48
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 27 21:44:27 2024 -0300
+
+    Merge remote-tracking branch 'origin/main'
+
+[33mcommit 533e63e689e2313b7f8345f51334626145611a59[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 27 21:43:49 2024 -0300
+
+    JSON WITH MONGODB
+
+[33mcommit ee0c9ecf75e0540ace8b843db62ccc76376e55d4[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 27 17:28:37 2024 -0300
+
+    Fix on create/update opinion on validate references
+
+[33mcommit 1558b4870776625f9dd1a1abf14482e80e8b3345[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 27 17:28:37 2024 -0300
+
+    Fix on create/update opinion on validate references
+
+[33mcommit 0a2ea0400a6bfa2ca88c506d5bc47d2802357b44[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 27 11:36:50 2024 -0300
+
+    Opinion Backend updated
+
+[33mcommit e920492986677a10c9e76a0b919daf83244d925a[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 27 11:36:50 2024 -0300
+
+    Opinion Backend updated
+
+[33mcommit adc89b8352e28995692458e4e4ae15a85b5c9866[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 27 05:46:01 2024 -0300
+
+    Opinion y Recomendacion entities and basic repositories
+
+[33mcommit 6bf33157e192ccd4c6c6cdea3d8d19db4d6deb98[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 27 05:46:01 2024 -0300
+
+    Opinion y Recomendacion entities and basic repositories
+
+[33mcommit f8c56c87f0f6277aaf1debf7bd23ae8fd08aea68[m
+Merge: e7d428b d0fcd69
+Author: nico-s-b <144077441+nico-s-b@users.noreply.github.com>
+Date:   Thu Dec 26 23:46:16 2024 -0300
+
+    Merge pull request #1 from MatiasMontNec/geompoint
+    
+    Geompoint
+
+[33mcommit 10a040bd2db8661fe4d4266c87371b1b13f214f8[m
+Merge: 82e8572 a71fd6b
+Author: nico-s-b <144077441+nico-s-b@users.noreply.github.com>
+Date:   Thu Dec 26 23:46:16 2024 -0300
+
+    Merge pull request #1 from MatiasMontNec/geompoint
+    
+    Geompoint
+
+[33mcommit d0fcd6952ff8f3d5c94503683c7f9234f724983a[m[33m ([m[1;31morigin/geompoint[m[33m, [m[1;32mgeompoint[m[33m)[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 26 23:45:24 2024 -0300
+
+    Coordenadas y GeoJSON para ubicaciones y zonas evitando serialización y deserialización
+
+[33mcommit a71fd6bd22d4510cd170553bdefeb38654bde460[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 26 23:45:24 2024 -0300
+
+    Coordenadas y GeoJSON para ubicaciones y zonas evitando serialización y deserialización
+
+[33mcommit 82e85722e21deadcda1e8629517d93734987f3d9[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Thu Dec 26 22:48:54 2024 -0300
+
+    JSON WITH MONGODB
+
+[33mcommit e7d428b5312e8ba461f134d92e5201dc342fcf8c[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Thu Dec 26 22:48:54 2024 -0300
+
+    JSON WITH MONGODB
+
+[33mcommit 28a295e7f7ba73a579f546ac0f1509dc1ef3b99c[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 26 22:09:33 2024 -0300
+
+    Intentos de Mejorar tratamiento de Point
+
+[33mcommit 819b701eb4dcae78690502f1d416ce5ee0525e51[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 26 22:09:33 2024 -0300
+
+    Intentos de Mejorar tratamiento de Point
+
+[33mcommit d9be029e784dd9c7cdc521b83ad53226b9b5f9fe[m
+Author: Matias Montano <matias.montano@usach.cl>
+Date:   Mon Dec 16 15:25:38 2024 -0300
+
+    Minichange on the front and some of the back.
+
+[33mcommit 49bbaacf420f30468229da81a3420ea0628c5252[m
+Author: Matias Montano <matias.montano@usach.cl>
+Date:   Mon Dec 16 15:25:38 2024 -0300
+
+    Minichange on the front and some of the back.
+
+[33mcommit 05aa4c5a9f87d3b043bbd397315debffb360d709[m
+Author: Matias Montano <matias.montano@usach.cl>
+Date:   Mon Dec 16 15:21:17 2024 -0300
+
+    Minichange to start the create database correctly.
+
+[33mcommit f865930e9456991f5539075db9f80de2e6d1c6e5[m
+Author: Matias Montano <matias.montano@usach.cl>
+Date:   Mon Dec 16 15:21:17 2024 -0300
+
+    Minichange to start the create database correctly.
+
+[33mcommit 87027752c72d48fe42fb054ce35f3f2eda3cece1[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 22:31:02 2024 -0300
+
+    Add products restored, now is possible to associate producto to tienda
+
+[33mcommit 58d1b9a7b196f830d0b13b2d10a92f6686f67dcc[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 22:31:02 2024 -0300
+
+    Add products restored, now is possible to associate producto to tienda
+
+[33mcommit f5f5b4d023a4ab84fe438d48fd8e7f6cbcda7f8a[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 21:54:43 2024 -0300
+
+    Fix on Repartidores by Zona List
+
+[33mcommit 3bec5ff1d711902e57aa601ecf5609fa9e1a97a2[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 21:54:43 2024 -0300
+
+    Fix on Repartidores by Zona List
+
+[33mcommit a1c6c440ead3cb245dc99147e8c1fadb4577c553[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sun Dec 15 03:06:32 2024 -0300
+
+    Map fixes
+
+[33mcommit 350ac28f38a50c67206dd38b5900d81c8fcf96a5[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sun Dec 15 03:06:32 2024 -0300
+
+    Map fixes
+
+[33mcommit d7962d6e039b339b7a6447abcf68230a18a2968b[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 02:57:54 2024 -0300
+
+    Now is possible to Place an Order again (with delivery location)
+
+[33mcommit 12ec26de2a81ef8fe056c6fea62373fe9d11d2d4[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sun Dec 15 02:57:54 2024 -0300
+
+    Now is possible to Place an Order again (with delivery location)
+
+[33mcommit 6a50587c0453ca4da908afb17d340371ec8842c7[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 23:21:25 2024 -0300
+
+    ManejoOrdenView.vue now confirm the location before purchasing
+
+[33mcommit e32f496f556f77b8b2e6bb0d4d28d48b40fab873[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 23:21:25 2024 -0300
+
+    ManejoOrdenView.vue now confirm the location before purchasing
+
+[33mcommit c302867f6c6f12d468ae9b3005a1901610c54a88[m
+Merge: 1a6209c a17b74d
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 21:03:54 2024 -0300
+
+    Merge branch 'main' of https://github.com/MatiasMontNec/E-Commerce-Grupo-1
+
+[33mcommit 0dbfb08db4cafc357e5a73ca285d1c18e3eb1c66[m
+Merge: 4a91879 eaae2cb
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 21:03:54 2024 -0300
+
+    Merge branch 'main' of https://github.com/MatiasMontNec/E-Commerce-Grupo-1
+
+[33mcommit 1a6209ca2053591018edd36da7e78c844fa799eb[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 21:03:47 2024 -0300
+
+    Deleted refference to Entregas in Ordenes
+
+[33mcommit 4a91879162fcd3c6270667c8abd02e3dc17a9780[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 21:03:47 2024 -0300
+
+    Deleted refference to Entregas in Ordenes
+
+[33mcommit a17b74dd49afdee0696d02d3172bbb6e46a24d62[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Sat Dec 14 21:02:13 2024 -0300
+
+    now we can see the distance! 2
+
+[33mcommit eaae2cbdd2400677f3e2993779a1aa2b04a6a6d4[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Sat Dec 14 21:02:13 2024 -0300
+
+    now we can see the distance! 2
+
+[33mcommit 9f26a61939316b7abe9360ddd84fe027d3db991c[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Sat Dec 14 20:53:52 2024 -0300
+
+    now we can see the distance!
+
+[33mcommit 24a82767bc3e597603bade03bd4a3d6f4d66d582[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Sat Dec 14 20:53:52 2024 -0300
+
+    now we can see the distance!
+
+[33mcommit 8de968530aa6c861ddb2462438b60f2255cfdc15[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 19:28:51 2024 -0300
+
+    Tiendas now have Ubicacion
+
+[33mcommit e91747651a490f2e8f8750099abc2bec39462779[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 19:28:51 2024 -0300
+
+    Tiendas now have Ubicacion
+
+[33mcommit 037dba951eff8ac63003a92cab1bd6c3c147c43b[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 15:57:45 2024 -0300
+
+    MapTiendaView now shows Zonas de reparto on Map
+
+[33mcommit 1259b404097c99e4111721fb5a60558e18ef840c[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 15:57:45 2024 -0300
+
+    MapTiendaView now shows Zonas de reparto on Map
+
+[33mcommit 7e562ee725687a72443935f526e068f4e913463d[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 15:38:45 2024 -0300
+
+    Format given to lat & lon in ManejoOrdenView.vue
+
+[33mcommit 88e3afa5ccd9a949c8a603325c7183a74f2508ad[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 15:38:45 2024 -0300
+
+    Format given to lat & lon in ManejoOrdenView.vue
+
+[33mcommit 14aafa7dce3387445558311f4d0705e6a3073bbf[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 14:26:00 2024 -0300
+
+    MapView almost finished, advanced ManejoOrdenView
+
+[33mcommit 0e59da4ac228801969d74c6d744383977e9be976[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Sat Dec 14 14:26:00 2024 -0300
+
+    MapView almost finished, advanced ManejoOrdenView
+
+[33mcommit c1d8a6ae7f6d2e4172a3b3330adc7ad99198308f[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 13:38:55 2024 -0300
+
+    Fixed GetZonaWithGeoJSON
+
+[33mcommit 2201a0ad9a83161446a28d0e000305b2a658291d[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 13:38:55 2024 -0300
+
+    Fixed GetZonaWithGeoJSON
+
+[33mcommit f3099878309f96dc07f8088a380a9a84dcd91a8b[m
+Author: Josue Quileñan <josue.quilenan@usach.cl>
+Date:   Sat Dec 14 13:03:31 2024 -0300
+
+    Se crean las vistas para la actividad 16 y todo lo del back. (Falta que se muestre el mapa correctamente)
+
+[33mcommit 286e93fa6cdfddaebba8b0b985a0e5a38619347b[m
+Author: Josue Quileñan <josue.quilenan@usach.cl>
+Date:   Sat Dec 14 13:03:31 2024 -0300
+
+    Se crean las vistas para la actividad 16 y todo lo del back. (Falta que se muestre el mapa correctamente)
+
+[33mcommit 0784ea639c7dba52fb5e7df70731a9d83560a072[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 05:11:54 2024 -0300
+
+    Fixed Point missmatch when get an Entrega
+
+[33mcommit 2e5c3aedf439af34f7be36a65a4a5c026206ac97[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Sat Dec 14 05:11:54 2024 -0300
+
+    Fixed Point missmatch when get an Entrega
+
+[33mcommit 84a865e72b31205a4753a317658e1cb392e7e503[m
+Author: tomas-manriquez <tomas.manriquez@usach.cl>
+Date:   Sat Dec 14 00:07:04 2024 -0300
+
+    Funcion 17: verificar si entrega es en zona restringida o no
+
+[33mcommit c4a67d9063a11eee14d0198b56d7f038d5fcb7e0[m
+Author: tomas-manriquez <tomas.manriquez@usach.cl>
+Date:   Sat Dec 14 00:07:04 2024 -0300
+
+    Funcion 17: verificar si entrega es en zona restringida o no
+
+[33mcommit 8b7ffbb665bb152eab93851e7cb278b2298c963f[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 13 22:37:55 2024 -0300
+
+    fixed zones2
+
+[33mcommit c325c6dabff97df33d26acf79cbac618e88c1a40[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Fri Dec 13 22:37:55 2024 -0300
+
+    fixed zones2
+
+[33mcommit 80d4ce3497716c7c56ac0d905408d71df5d89f53[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 13 22:21:17 2024 -0300
+
+    fixed zones
+
+[33mcommit e7d2e79192a327561ef19ca2b1ffb3a039779cc1[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Fri Dec 13 22:21:17 2024 -0300
+
+    fixed zones
+
+[33mcommit 44654c8891db41675e878f3a07bb859df4b63898[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 13 18:54:08 2024 -0300
+
+    MapView created, map created and visualization of zones done.
+
+[33mcommit 46765564c8c4b11549431501316dabfffc92fd38[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 13 18:54:08 2024 -0300
+
+    MapView created, map created and visualization of zones done.
+
+[33mcommit 818691708482a233b65c617d8e9bb4b0bfb50f35[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 13 17:35:34 2024 -0300
+
+    fixed points
+
+[33mcommit ce699eb64fedf0f2b3494a6f3a60c975e2270780[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Fri Dec 13 17:35:34 2024 -0300
+
+    fixed points
+
+[33mcommit ba9baa84f1a7fe2e9fdd0ffee3b0e936394b60f8[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 13 14:57:13 2024 -0300
+
+    a lot of fixes
+
+[33mcommit 6a408290537ad53abf392c9169cb991f8ba3445a[m
+Author: niptuS <patricio.paez@usach.cl>
+Date:   Fri Dec 13 14:57:13 2024 -0300
+
+    a lot of fixes
+
+[33mcommit ccc36d66a99ed216b96aa7b9e79a3fa418c52a9e[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 13 02:23:55 2024 -0300
+
+    Work in Zona, repartidores, entrega controllers, services and repositories
+
+[33mcommit 31734b4492c12324101d1afad9815cca5501db2e[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Fri Dec 13 02:23:55 2024 -0300
+
+    Work in Zona, repartidores, entrega controllers, services and repositories
+
+[33mcommit 88946efc7fbb7f1fd2809b0233aa439e10579a9c[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Fri Dec 13 00:13:02 2024 -0300
+
+    fixed
+
+[33mcommit c0db5d0dda43975b2658d4b199a3afcc37b8653a[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Fri Dec 13 00:13:02 2024 -0300
+
+    fixed
+
+[33mcommit 0f9e876c4e9730aae76bd0ca41d4d92f9e52a7cb[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 21:51:02 2024 -0300
+
+    Variable names on database fixed
+
+[33mcommit 13d31de99e67c59179563858953ad33bdd1e8fcd[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 21:51:02 2024 -0300
+
+    Variable names on database fixed
+
+[33mcommit 328ad44284fa35d6069e091fbaff3bcf86b7098d[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 21:17:24 2024 -0300
+
+    Repositories for some entities
+
+[33mcommit b77da8e5b202c46bbffcd3ce4eb9f57465a83289[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 21:17:24 2024 -0300
+
+    Repositories for some entities
+
+[33mcommit 00397caa2fcd1c09142e08160062125e13e0416b[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 03:52:35 2024 -0300
+
+    Variable format on database
+
+[33mcommit efe2905973fb27cc29c9299c119f9616a260f1b0[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 03:52:35 2024 -0300
+
+    Variable format on database
+
+[33mcommit bad1f4481a248a81e5a7086b52634774ed29dbef[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 03:39:31 2024 -0300
+
+    Added delivery address to Order placement
+
+[33mcommit 05691e8d4fd84f362f98fdf22b7c675fa9bc486d[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 03:39:31 2024 -0300
+
+    Added delivery address to Order placement
+
+[33mcommit ac5d294819ae26259ecb41e658ec6ba63a051a28[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 02:05:42 2024 -0300
+
+    Added entities Zona, Repartidor, Entrega, Tienda
+
+[33mcommit ca4d11581566c96839ef88880a68fba9710f0a80[m
+Author: Nicolas Sepulveda <nicolas.sepulveda.b@usach.cl>
+Date:   Thu Dec 12 02:05:42 2024 -0300
+
+    Added entities Zona, Repartidor, Entrega, Tienda
+
+[33mcommit 9b1f3c8f526d7b471f83f0813a37f6bf0abc7294[m
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Wed Dec 11 22:27:35 2024 -0300
+
+    actualizado
+
+[33mcommit 8c12237014f38ff4eb3224ea7e5a9c1878b23a13[m
+Author: UsuarioCompuElite <matiasmontano10@gmail.com>
+Date:   Wed Dec 11 22:27:35 2024 -0300
+
+    actualizado
+
+[33mcommit 9c27a8028119f0edbcfed65bcfb029802438cedc[m
+Merge: 751d71d 5c6c0b8
+Author: MatiasMontNec <matias.montano@usach.cl>
+Date:   Wed Dec 11 20:06:08 2024 -0300
+
+    Merge remote-tracking branch 'origin/main'
+    
+    # Conflicts:
+    #       src/main/resources/db/createDB.sql
+    #       src/main/resources/db/storedProcedures.sql
+    #       src/main/resources/db/triggers.sql
