@@ -13,7 +13,8 @@
 
 Las variables de entorno necesarias son:
 - `DB_HOST`: Dirección del servidor de la base de datos (por defecto, `localhost`).
-- `DB_PORT`: Puerto del servidor de la base de datos (por defecto, `5432`).
+- `DB_PORT`: Puerto del servidor de la base de datos de Postgres (por defecto, `5432`).
+- `DB_MONGOPORT`: Puerto del servidor de la base de datos de MongoDB (por defecto, `27017`).
 - `DB_NAME`: Nombre de la base de datos a crear.
 - `DB_USERNAME`: Nombre de usuario para acceder a la base de datos.
 - `DB_PASSWORD`: Contraseña del usuario de la base de datos.
@@ -26,11 +27,18 @@ Las variables de entorno necesarias son:
    git clone <url-del-repositorio>
    cd <directorio-del-repositorio>
    ```
+2. Si no está instalado, instala el driver de MongoDB para Node.js
+
+   ```bash
+   npm install mongodb
+   ```
+
 2. **Crea el archivo `.env`** en la raíz del proyecto y define las variables de entorno necesarias. Un ejemplo de archivo `.env` podría ser:
 
    ```bash
    DB_HOST=localhost
    DB_PORT=5432
+   DB_MONGOPORT=27017
    DB_NAME=ecommerce
    DB_USERNAME=postgres
    DB_PASSWORD=admin
@@ -42,7 +50,7 @@ Las variables de entorno necesarias son:
 * ```bash
     $envVars = Get-Content (Join-Path (Resolve-Path "..\..\..\..") ".env") | ForEach-Object {
       $key, $value = $_ -split '='
-      if ($key -eq "DB_USERNAME" -or $key -eq "DB_NAME" -or $key -eq "DB_PASSWORD" -or $key -eq "DB_HOST" -or $key -eq "DB_PORT") {
+      if ($key -eq "DB_USERNAME" -or $key -eq "DB_NAME" -or $key -eq "DB_PASSWORD" -or $key -eq "DB_HOST" -or $key -eq "DB_PORT" -or $key -eq "DB_MONGOPORT") {
       [System.Environment]::SetEnvironmentVariable($key, $value, [System.EnvironmentVariableTarget]::Process)
       }
     }
@@ -55,7 +63,8 @@ Las variables de entorno necesarias son:
         -replace '\${DB_NAME}', $env:DB_NAME `
         -replace '\${DB_PASSWORD}', $env:DB_PASSWORD `
         -replace '\${DB_HOST}', $env:DB_HOST `
-        -replace '\${DB_PORT}', $env:DB_PORT
+        -replace '\${DB_PORT}', $env:DB_PORT `
+        -replace '\${DB_MONGOPORT}', $env:DB_MONGOPORT
     } | Set-Content $filePath
     }
     Replace-EnvVarsInFile "createDB.sql"
@@ -63,9 +72,12 @@ Las variables de entorno necesarias son:
     Replace-EnvVarsInFile "populateDB.sql"
     Replace-EnvVarsInFile "storedProcedures.sql"
     Replace-EnvVarsInFile "initDB.sql"
+    Replace-EnvVarsInFile "populateMongoDB.js"
+
     $env:PGPASSWORD = $env:DB_PASSWORD
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d postgres -c "CREATE DATABASE $env:DB_NAME;"
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d $env:DB_NAME -f initDB.sql
+    node populateDatabase.js 
   ```
 * ### Ejecución en Linux/MacOS
 * Abre el terminal dentro de la carpeta 'db'. (Puedes acceder a esta abriendo terminal en el directorio raiz y ejecutar el comando `cd src\main\resources\db`)
