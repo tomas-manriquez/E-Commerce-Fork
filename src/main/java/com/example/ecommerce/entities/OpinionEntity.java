@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Document(collection = "opiniones")
 public class OpinionEntity {
     @Id
-    private Long idOpinion;
+    private String idOpinion;
 
     private Long idCliente;
     private Long idProducto;
