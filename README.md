@@ -9,6 +9,7 @@
 - Tener acceso al usuario de PostgreSQL con permisos suficientes para crear bases de datos y tablas.
 - **Maven** instalado en tu máquina. Si no tienes Maven, sigue [este enlace](https://maven.apache.org/install.html) para instalarlo.
 - Tener instalado **Stackbuilder** con la extensión de **postgis** en la versión 3.3.5.
+- Tener instalado MongoDB y mongosh
 - Tener acceso al archivo `.env` que contiene las variables de configuración para la base de datos.
 
 Las variables de entorno necesarias son:
@@ -27,12 +28,6 @@ Las variables de entorno necesarias son:
    git clone <url-del-repositorio>
    cd <directorio-del-repositorio>
    ```
-2. Si no está instalado, instala el driver de MongoDB para Node.js
-
-   ```bash
-   npm install mongodb
-   ```
-
 2. **Crea el archivo `.env`** en la raíz del proyecto y define las variables de entorno necesarias. Un ejemplo de archivo `.env` podría ser:
 
    ```bash
@@ -77,7 +72,12 @@ Las variables de entorno necesarias son:
     $env:PGPASSWORD = $env:DB_PASSWORD
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d postgres -c "CREATE DATABASE $env:DB_NAME;"
     psql -h $env:DB_HOST -U $env:DB_USERNAME -d $env:DB_NAME -f initDB.sql
-    node populateDatabase.js 
+    mongosh --eval "
+        const dbName = '$env:DB_NAME';
+        const db = db.getSiblingDB(dbName);
+        db.createCollection('init_collection');
+        db.init_collection.drop();"
+    node populateMongoDB.js
   ```
 * ### Ejecución en Linux/MacOS
 * Abre el terminal dentro de la carpeta 'db'. (Puedes acceder a esta abriendo terminal en el directorio raiz y ejecutar el comando `cd src\main\resources\db`)
