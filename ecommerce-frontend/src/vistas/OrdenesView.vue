@@ -25,12 +25,17 @@
         <td>$ {{ orden.total }}</td>
         <td>
           <router-link :to="`/ordenes/detalle/${orden.idOrden}`" class="button">Ver detalles</router-link>
-          <div v-if="orden.estado!=='pagada'">
-            <button class="button" @click="marcarComoPagada(orden)" :disabled="orden.estado === 'pagada'">
+          <div v-if="orden.estado !== 'pagada' && orden.estado !== 'recibido por cliente'">
+            <button class="button" @click="marcarComoPagada(orden)">
               Marcar como Pagada
             </button>
             <button class="button cancel-button" @click="confirmarCancelacion(orden.idOrden)">
               Cancelar Orden
+            </button>
+          </div>
+          <div v-else-if="orden.estado === 'pagada'">
+            <button class="button" @click="marcarComoRecibido(orden)">
+              Marcar como Recibido
             </button>
           </div>
         </td>
@@ -58,6 +63,7 @@ import api from "@/services/api";
 export default {
   data() {
     return {
+      entrega: null,
       ordenes: [],
       idCliente: null,
       loading: false,
@@ -105,6 +111,19 @@ export default {
       }
     },
 
+    async marcarComoRecibido(orden) {
+      try {
+        const ordenActualizada = orden;
+        ordenActualizada.estado = 'recibido por cliente';
+        await api.post("/api/v1/ordenes/update", ordenActualizada);
+        await this.fetchOrdenes(this.idCliente); // Refrescar lista de órdenes
+        alert("Orden recibida por cliente exitosamente.");
+      } catch (error) {
+        console.error("Error al marcar la orden como recibida por cliente:", error);
+        alert("Hubo un error al actualizar la orden.");
+      }
+    },
+
     confirmarCancelacion(idOrden) {
       if (confirm("¿Estás seguro de que deseas cancelar esta orden? Esta acción no se puede deshacer.")) {
         this.cancelarOrden(idOrden);
@@ -125,6 +144,7 @@ export default {
       }
     }
   },
+
   mounted() {
     const idcliente = Number(localStorage.getItem("userId"));
     this.idCliente = idcliente;

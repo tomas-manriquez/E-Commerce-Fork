@@ -1,11 +1,11 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.dto.Coordenadas;
+import com.example.ecommerce.dto.EntregaRequest;
 import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.entities.OrdenEntity;
 import com.example.ecommerce.entities.RepartidorEntity;
 import com.example.ecommerce.repositories.EntregaRepository;
-import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +50,14 @@ public class EntregaService {
         entrega.setIdRepartidor(repartidor.getIdRepartidor());
 
         return save(entrega);
+    }
+
+    public EntregaEntity update(EntregaRequest entrega) {
+        EntregaEntity entregaEntity = entregaRepository.findByOrdenId(entrega.getIdorden());
+        if (entregaEntity == null) {
+            throw new IllegalArgumentException("La entrega no existe por esta orden.");
+        }
+        return entregaRepository.save(entregaEntity);
     }
 
 }

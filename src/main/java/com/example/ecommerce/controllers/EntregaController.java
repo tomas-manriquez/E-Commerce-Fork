@@ -1,13 +1,11 @@
 package com.example.ecommerce.controllers;
 
+import com.example.ecommerce.dto.EntregaRequest;
 import com.example.ecommerce.entities.EntregaEntity;
 import com.example.ecommerce.services.EntregaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +27,9 @@ public class EntregaController {
         return ResponseEntity.ok(entregas);
     }
 
+    @PutMapping("/")
+    public ResponseEntity<EntregaEntity> updateEntrega(@RequestBody EntregaRequest entrega) {
+        EntregaEntity updatedEntrega = entregaService.update(entrega);
+        return ResponseEntity.ok(updatedEntrega);
+    }
 }

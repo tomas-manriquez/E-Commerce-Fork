@@ -1,8 +1,10 @@
 package com.example.ecommerce.entities;
 
 
+import com.example.ecommerce.config.CoordenadasDeserializer;
 import com.example.ecommerce.config.PointSerializer;
 import com.example.ecommerce.dto.Coordenadas;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class EntregaEntity {
     private Long idRepartidor;
     private Long idOrden;
     @JsonSerialize(using = PointSerializer.class)
+    @JsonDeserialize(using = CoordenadasDeserializer.class)
     private Coordenadas lugarentrega;
     private LocalDateTime fechaentrega;
 
