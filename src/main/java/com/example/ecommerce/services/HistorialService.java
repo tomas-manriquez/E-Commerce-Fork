@@ -7,10 +7,7 @@ import com.example.ecommerce.repositories.HistorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class HistorialService {
@@ -23,7 +20,7 @@ public class HistorialService {
     @Autowired
     private CategoriaService categoriaService;
 
-    public Optional<HistorialEntity> getHistorial(String idCliente) {
+    public Optional<HistorialEntity> getHistorial(Long idCliente) {
         return historialRepository.findById(idCliente);
     }
 
@@ -31,7 +28,7 @@ public class HistorialService {
         return historialRepository.findAll();
     }
 
-    public CategoriaEntity getFavoriteCategoria(String idCliente) {
+    public CategoriaEntity getFavoriteCategoria(Long idCliente) {
         Optional<HistorialEntity> historial = getHistorial(idCliente);
         List<Long> categorias = new ArrayList<>();
         if (historial.isPresent()) {
@@ -46,11 +43,6 @@ public class HistorialService {
         }
         return null;
     }
-
-
-
-
-
 
     private static Long findMostCommon(List<Long> list) {
         Collections.sort(list);

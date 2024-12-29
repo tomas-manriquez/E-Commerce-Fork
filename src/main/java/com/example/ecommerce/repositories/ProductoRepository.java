@@ -15,4 +15,5 @@ public interface ProductoRepository {
     void update(ProductoEntity producto);
     void delete(ProductoEntity producto);
     void deleteById(Long id);
+    List<ProductoEntity> findByCategoria(Long idCategoria);
 }

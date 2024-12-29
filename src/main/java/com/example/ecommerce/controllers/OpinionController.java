@@ -22,7 +22,7 @@ public class OpinionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<OpinionEntity> getOpinionById(@PathVariable String id) {
+    public Optional<OpinionEntity> getOpinionById(@PathVariable Long id) {
         return opinionService.getOpinionById(id);
     }
 
@@ -32,12 +32,12 @@ public class OpinionController {
     }
 
     @PutMapping("/{id}")
-    public OpinionEntity updateOpinion(@PathVariable String id, @RequestBody OpinionDTO opinion) {
+    public OpinionEntity updateOpinion(@PathVariable Long id, @RequestBody OpinionDTO opinion) {
         return opinionService.updateOpinion(id, opinion);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOpinion(@PathVariable String id) {
+    public void deleteOpinion(@PathVariable Long id) {
         opinionService.deleteOpinion(id);
     }
 }

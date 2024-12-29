@@ -175,7 +175,7 @@ export default {
     async enviarResena() {
       try {
         const resenaData = {
-          idCliente: localStorage.getItem("userId"),
+          idCliente: Number(localStorage.getItem("userId")),
           idProducto: this.productoSeleccionado.idProducto,
           idCategoria: this.productoSeleccionado.idCategoria,
           fecha: new Date().toISOString(),

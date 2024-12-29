@@ -1,6 +1,7 @@
 package com.example.ecommerce.controllers;
 
 import com.example.ecommerce.dto.PageResponse;
+import com.example.ecommerce.dto.ProductoDTO;
 import com.example.ecommerce.entities.ProductoEntity;
 import com.example.ecommerce.services.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +20,13 @@ public class ProductoController {
     @GetMapping("/byId/{id}")
     public ResponseEntity<ProductoEntity> getProductoById(@PathVariable Long id) {
         ProductoEntity prod = productoService.getProductoById(id);
-        if (prod != null) {
-            return ResponseEntity.ok(prod);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return prod != null ? ResponseEntity.ok(prod) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<ProductoEntity>> getAllProductos() {
         List<ProductoEntity> prod = productoService.getAllProductos();
-        if (prod != null) {
-            return ResponseEntity.ok(prod);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return prod != null ? ResponseEntity.ok(prod) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/page")
@@ -54,15 +47,11 @@ public class ProductoController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCategoriaById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProductoById(@PathVariable Long id) {
         productoService.deleteProductoById(id);
 
         ProductoEntity prod = productoService.getProductoById(id);
-        if (prod == null) {
-            return ResponseEntity.ok("ProductoEntity deleted successfully");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return prod == null ? ResponseEntity.ok("ProductoEntity deleted successfully") : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/delete")
@@ -70,10 +59,12 @@ public class ProductoController {
         productoService.deleteProducto(producto);
 
         ProductoEntity prod = productoService.getProductoById(producto.getIdProducto());
-        if (prod == null) {
-            return ResponseEntity.ok("ProductoEntity deleted successfully");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return prod == null ? ResponseEntity.ok("ProductoEntity deleted successfully") : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/recommend/{idCliente}")
+    public ResponseEntity<List<ProductoDTO>> getProductosRecomendados (@PathVariable Long idCliente){
+        List<ProductoDTO> productosRecomendados = productoService.recomendarProductos(idCliente);
+        return productosRecomendados != null ? ResponseEntity.ok(productosRecomendados) : ResponseEntity.notFound().build();
     }
 }

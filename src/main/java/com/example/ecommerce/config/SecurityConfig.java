@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/productos/all").permitAll()
                         .requestMatchers("/api/v1/productos/page").permitAll()
                         .requestMatchers(("/api/v1/productos/byId/**")).permitAll()
+                        .requestMatchers(("/api/v1/productos/recommend/**")).permitAll()
                         .requestMatchers("/api/v1/productos/**").hasAnyRole("ADMIN")
                         .requestMatchers("/api/v1/clientes/byId/**").permitAll()
                         .requestMatchers("/api/v1/clientes/update/**").permitAll()

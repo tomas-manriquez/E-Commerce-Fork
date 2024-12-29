@@ -1,6 +1,7 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.dto.OpinionDTO;
+import com.example.ecommerce.dto.OpinionPromedioDTO;
 import com.example.ecommerce.entities.OpinionEntity;
 import com.example.ecommerce.repositories.OpinionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class OpinionService {
         return opinionRepository.findAll();
     }
 
-    public Optional<OpinionEntity> getOpinionById(String id) {
+    public Optional<OpinionEntity> getOpinionById(Long id) {
         return opinionRepository.findById(id);
     }
 
@@ -45,11 +46,11 @@ public class OpinionService {
         return opinionRepository.save(opinion);
     }
 
-    public OpinionEntity updateOpinion(String id, OpinionDTO op) {
-        OpinionEntity opinion = opinionRepository.findById(id).get();
-        if (opinion == null) {
-            throw new RuntimeException("Opinion no encontrads");
-        }
+    public OpinionEntity updateOpinion(Long id, OpinionDTO op) {
+        OpinionEntity opinion;
+        if (opinionRepository.findById(id).isPresent()) opinion = opinionRepository.findById(id).get();
+        else throw new RuntimeException("Opinion no encontrada");
+
         validateReferences(op);
         opinion.setComentario(op.getComentario());
         opinion.setFecha(LocalDateTime.now());
@@ -60,7 +61,7 @@ public class OpinionService {
         return opinionRepository.save(opinion);
     }
 
-    public void deleteOpinion(String id) {
+    public void deleteOpinion(Long id) {
         opinionRepository.deleteById(id);
     }
 
@@ -74,5 +75,9 @@ public class OpinionService {
         if (!categoriaService.existsById(opinion.getIdCategoria())) {
             throw new IllegalArgumentException("idCategoria inválido");
         }
+    }
+
+    public OpinionPromedioDTO calcularPromedioProcucto (Long idProducto) {
+        return opinionRepository.calcularPromedioPorProducto(idProducto);
     }
 }

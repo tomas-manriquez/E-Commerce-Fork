@@ -118,4 +118,13 @@ public class ProductoRepositoryImpl implements ProductoRepository {
             throw new RuntimeException("Error al eliminar producto", ex);
         }
     }
+
+    @Override
+    public List<ProductoEntity> findByCategoria(Long idCategoria){
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT p FROM productos p WHERE p.idCategoria = :idCategoria")
+                    .addParameter("idCategoria", idCategoria)
+                    .executeAndFetch(ProductoEntity.class);
+        }
+    }
 }
