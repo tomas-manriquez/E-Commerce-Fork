@@ -15,6 +15,8 @@ export default {
         address: "",
       },
       products: [],
+      selectedProductId: '', // ID del producto seleccionado
+      selectedProduct: null, // Producto seleccionado       
       storeIds: [], // Almacena los ids de las tiendas seleccionadas
       zones: [], // Almacena las zonas obtenidas
       selectedPoint: null, // Coordenadas seleccionadas como Point
@@ -46,6 +48,36 @@ export default {
       }
       this.purchase.compras.splice(index, 1);
     },
+    updateSelectedProduct() {
+      this.selectedProduct = this.products.find(product => product.idProducto === this.selectedProductId);
+    },
+    calculateValue(productId, cantidad) {
+      const product = this.products.find((product) => product.idProducto === productId);
+      if (product) {
+        return (product.precio * cantidad).toFixed(0); 
+      }
+      return 0; 
+    },
+
+    calculateTotal() {
+      let total = 0; 
+      for (const compra of this.purchase.compras) {
+        const product = this.products.find((product) => product.idProducto === compra.productId);
+        if (product) {
+          total += product.precio * compra.cantidad; 
+        }
+      }
+      return total; 
+    },
+
+    formatCurrency(value) {
+      if (!value) return "$0"; 
+      return new Intl.NumberFormat("es-CL", {
+        style: "currency",
+        currency: "CLP",
+        minimumFractionDigits: 0, 
+      }).format(value);
+    },    
     updateStock(index) {
       const selectedProduct = this.products.find(
           (product) => product.idProducto === this.purchase.compras[index].productId
@@ -207,6 +239,15 @@ export default {
           <div class="underline"></div>
           <label for="cantidad">Cantidad</label>
         </div>
+      
+        <div class="input-data">
+          <div class="underline always-active"></div>
+          <label class="always-active">Valor</label>
+          <div class="value-display">
+            {{ formatCurrency(calculateValue(compra.productId, compra.cantidad)) }}
+          </div>
+        </div>
+
         <div class="erase-button">
           <div class="submit-btn">
             <div class="input-data">
@@ -215,15 +256,29 @@ export default {
             </div>
           </div>
         </div>
+
       </div>
+      <div class="form-row">
+
+
       <div class="add-button">
         <div class="submit-btn">
           <div class="input-data">
             <div class="inner"></div>
             <input type="button" value="Agregar producto" @click="addPurchase" />
           </div>
-        </div>
+        </div>     
       </div>
+
+      <div class="input-data">
+        <div class="underline always-active"></div>
+        <label class="always-active">Total orden</label>
+        <div class="value-display">
+          {{ formatCurrency(calculateTotal()) }}
+        </div>
+      </div> 
+    </div>
+
       <!-- Dirección -->
       <div class="form-row submit-btn">
         <div class="input-data">
@@ -343,6 +398,13 @@ form .form-row .input-data{
   height: 2px;
   width: 100%;
 }
+
+.value-display {
+  padding: 10px 0;
+  font-size: 16px;
+  color: #000;
+}
+
 .input-data .underline:before{
   position: absolute;
   content: "";

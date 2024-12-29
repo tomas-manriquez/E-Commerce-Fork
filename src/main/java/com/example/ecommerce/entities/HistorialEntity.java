@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -14,14 +16,27 @@ import java.util.List;
 @Document(collection = "historiales")
 public class HistorialEntity {
     @Id
-    private Long idCliente;
+    private String idCliente;
+
     private List<Ordenes> ordenes;
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Ordenes {
-        private Long idOpinion;
-        private int vecesRecomendada;
+        private Long idOrden;
+        private LocalDate fecha;
+        private String estado;
+        private BigDecimal total;
+        private List<Detalles> detalles;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Detalles {
+        private Long idProducto;
+        private int cantidad;
+        private BigDecimal precio;
     }
 }

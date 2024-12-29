@@ -20,25 +20,5 @@ public class RecomendacionEntity {
     private Long idCategoria;
     private Long idDestacada;
     private int vecesRecomendada;
-    private List<OtrasDestacadas> otrasDestacadas;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class OtrasDestacadas {
-        private Long idOrden;
-        private LocalDate fecha;
-        private String estado;
-        private BigDecimal total;
-        private List<Detalles> detalles;
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Detalles {
-        private Long idProducto;
-        private int cantidad;
-        private int precio;
-    }
 }
