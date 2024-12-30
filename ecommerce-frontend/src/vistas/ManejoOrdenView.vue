@@ -25,13 +25,11 @@ export default {
       marker: null,
       recommendedProducts: [], // Para los productos recomendados
       showRecommendations: false, // Para controlar si mostrar las recomendaciones
-      historial: null,
     };
   },
   mounted() {
     this.fetchProducts();
     this.fetchRecommendedProducts();
-    this.fetchHistorial();
   },
   methods: {
     async fetchProducts() {
@@ -228,15 +226,6 @@ export default {
         console.error("Error fetching recommended products:", error);
       }
     },
-    async fetchHistorial(){
-      try {
-        const response = await api.get(`/api/v1/historiales/${this.purchase.customerId}`);
-        this.historial = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching historial:", error);
-      }
-    }
   },
 };
 </script>
@@ -336,7 +325,7 @@ export default {
       <div class="recommendation-title">Te puede interesar</div>
       <ul>
         <li v-for="product in recommendedProducts" :key="product.idProducto">
-          {{ product.nombre }} - ${{ product.precio }}
+          {{ product.nombre }} - ${{ product.precio }} {{ product.puntuacion }}&#9733;
         </li>
       </ul>
     </div>

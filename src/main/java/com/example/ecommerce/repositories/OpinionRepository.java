@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OpinionRepository extends MongoRepository<OpinionEntity, Long> {
+public interface OpinionRepository extends MongoRepository<OpinionEntity, String> {
     @Aggregation(pipeline = {
             "{ '$match': { 'idProducto': ?0 } }",
-            "{ '$group': { '_id': ?0, 'promedio': { '$avg': '$puntuacion' } } }"
+            "{ '$group': { '_id': '$idProducto', 'promedio': { '$avg': '$puntuacion' } } }",
+            "{ '$project': { '_id': 0, 'idProducto': '$_id', 'promedio': 1 } }"
     })
     OpinionPromedioDTO calcularPromedioPorProducto(Long idProducto);
+
 }

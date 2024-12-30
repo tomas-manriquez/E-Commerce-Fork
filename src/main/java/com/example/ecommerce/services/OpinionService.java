@@ -30,7 +30,7 @@ public class OpinionService {
         return opinionRepository.findAll();
     }
 
-    public Optional<OpinionEntity> getOpinionById(Long id) {
+    public Optional<OpinionEntity> getOpinionById(String id) {
         return opinionRepository.findById(id);
     }
 
@@ -46,7 +46,7 @@ public class OpinionService {
         return opinionRepository.save(opinion);
     }
 
-    public OpinionEntity updateOpinion(Long id, OpinionDTO op) {
+    public OpinionEntity updateOpinion(String id, OpinionDTO op) {
         OpinionEntity opinion;
         if (opinionRepository.findById(id).isPresent()) opinion = opinionRepository.findById(id).get();
         else throw new RuntimeException("Opinion no encontrada");
@@ -61,7 +61,7 @@ public class OpinionService {
         return opinionRepository.save(opinion);
     }
 
-    public void deleteOpinion(Long id) {
+    public void deleteOpinion(String id) {
         opinionRepository.deleteById(id);
     }
 

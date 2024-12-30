@@ -44,13 +44,14 @@ public class RecomendationService {
         for (ProductoEntity producto : productosCategoria) {
             // Calcular el promedio de puntuación para cada producto
             OpinionPromedioDTO opinion = opinionService.calcularPromedioProcucto(producto.getIdProducto());
+            double puntuacion = (opinion != null) ? opinion.getPromedio() : 0.0;
 
             // Mapear ProductoEntity a ProductoDTO
             ProductoDTO productoDTO = new ProductoDTO();
             productoDTO.setIdProducto(producto.getIdProducto());
             productoDTO.setNombre(producto.getNombre());
             productoDTO.setPrecio(producto.getPrecio());
-            productoDTO.setPuntuacion(opinion.getPuntuacion());  // Puntuación calculada
+            productoDTO.setPuntuacion(puntuacion);  // Puntuación calculada
 
             // Agregar el ProductoDTO a la lista
             productosOpinionesPromedio.add(productoDTO);
