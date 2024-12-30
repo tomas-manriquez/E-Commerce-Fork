@@ -25,6 +25,8 @@ public class OrdenService {
     @Autowired
     EntregaService entregaService;
     @Autowired
+    HistorialService historialService;
+    @Autowired
     Sql2o sql2o;
 
     public OrdenEntity getOrdenById(Long id) {
@@ -62,6 +64,8 @@ public class OrdenService {
 
             //Tras guardar todos los detalles, actualizar Orden con cálculo del total
             ordenRepository.setTotal(idOrden);
+
+            historialService.updateHistorial(orden, detalles);
 
             //Crear la entrega asociada a la orden
             entregaService.create(orden, coordenadas);
