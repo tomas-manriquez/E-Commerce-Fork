@@ -23,10 +23,15 @@ export default {
       showMap: false,
       map: null,
       marker: null,
+      recommendedProducts: [], // Para los productos recomendados
+      showRecommendations: false, // Para controlar si mostrar las recomendaciones
+      historial: null,
     };
   },
   mounted() {
     this.fetchProducts();
+    this.fetchRecommendedProducts();
+    this.fetchHistorial();
   },
   methods: {
     async fetchProducts() {
@@ -211,6 +216,27 @@ export default {
       console.log("Compra realizada:", response);
       alert("Orden creada exitosamente");
     },
+    async fetchRecommendedProducts() {
+      try {
+        const response = await api.get(`/api/v1/productos/recommend/${this.purchase.customerId}`);
+        if (response.data.length > 0) {
+          this.recommendedProducts = response.data;
+          this.showRecommendations = true;
+        }
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching recommended products:", error);
+      }
+    },
+    async fetchHistorial(){
+      try {
+        const response = await api.get(`/api/v1/historiales/${this.purchase.customerId}`);
+        this.historial = response.data;
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching historial:", error);
+      }
+    }
   },
 };
 </script>
@@ -305,6 +331,15 @@ export default {
         </div>
       </div>
     </form>
+    <div v-if="showRecommendations" class="recommendation-box">
+      <button class="close-btn" @click="showRecommendations = false">X</button>
+      <div class="recommendation-title">Te puede interesar</div>
+      <ul>
+        <li v-for="product in recommendedProducts" :key="product.idProducto">
+          {{ product.nombre }} - ${{ product.precio }}
+        </li>
+      </ul>
+    </div>
   </div>
   </body>
 </template>
@@ -544,6 +579,53 @@ form .form-row .input-data{
   height: 300px;
   width: 100%;
   margin-top: 10px;
+}
+.recommendation-box {
+  position: fixed;
+  top: 10%;
+  right: 20px;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  animation: slideIn 0.5s ease-out;
+}
+
+.recommendation-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.recommendation-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendation-box li {
+  padding: 8px 0;
+  font-size: 16px;
+}
+
+@keyframes slideIn {
+  0% {
+    right: -350px;
+  }
+  100% {
+    right: 20px;
+  }
 }
 
 </style>

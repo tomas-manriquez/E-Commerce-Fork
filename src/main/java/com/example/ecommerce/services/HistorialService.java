@@ -39,8 +39,13 @@ public class HistorialService {
                 }
             }
             Long idFavedCategoria = findMostCommon(categorias);
+            System.out.println("la categoria id: " + idFavedCategoria);
             return categoriaService.getCategoriaById(idFavedCategoria);
         }
+        else{
+            System.out.println("no hay historial :(");
+        }
+        System.out.println("no hay categoria jeje :(");
         return null;
     }
 
@@ -58,6 +63,10 @@ public class HistorialService {
                 mostCommon = last;
             }
             last = x;
+            lastCount = 1;
+        }
+        if (lastCount > mostCount) {
+            mostCommon = last;
         }
         return mostCommon;
     }

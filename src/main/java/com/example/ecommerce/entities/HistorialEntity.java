@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,7 +16,7 @@ import java.util.List;
 @Document(collection = "historiales")
 public class HistorialEntity {
     @Id
-    private String idCliente;
+    private Long idCliente;
 
     private List<Ordenes> ordenes;
 
@@ -25,7 +25,7 @@ public class HistorialEntity {
     @AllArgsConstructor
     public static class Ordenes {
         private Long idOrden;
-        private LocalDate fecha;
+        private LocalDateTime fecha;
         private String estado;
         private BigDecimal total;
         private List<Detalles> detalles;

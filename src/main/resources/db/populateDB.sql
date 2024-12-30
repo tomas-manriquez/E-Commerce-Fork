@@ -135,7 +135,7 @@ SELECT setval('public.productos_idproducto_seq', (SELECT MAX(idproducto) FROM pu
 
 -- contraseñas en formato pass123, pass234, pass345 etc segun numeros del nombre de usuario
 INSERT INTO public.clientes (idcliente, nombre, direccion, email, telefono, password, username, rol) VALUES
-(1, 'nombre', 'direccion', 'admin@ecommerce.cl', 'telefono', '$2a$10$dZVr6KP5UyftVBA48HHbve4NHsD3CPzkjcu3dJBuwJuykEC2zoEIS', 'admin', 'ADMIN'),
+(1, 'nombre', 'direccion', 'admin@ecommerce.cl', 'telefono', '$2a$10$DH4v8vPla7OnZ3Z9Fvqt4ergzgRa8bh5PSpDzGroyxvdnj5EQ6aky', 'admin', 'ADMIN'),
 (2, 'Juan Perez', 'Av. Siempre Viva 123', 'juan.perez@example.com', '987654321', '$2a$10$VVf/yAaV7YWAqLnTn3f3weO7uB/g4i0TZKedKPJvtEr87VE6yhIZm', 'juan123', 'USER'),
 (3, 'Maria Lopez', 'Calle Falsa 456', 'maria.lopez@example.com', '987654322', '$2a$10$lkU792clrkZm8crs6jpQbu9DXqyuG4caZ6zIip34T3Q.LJvrB9shS', 'maria234', 'USER'),
 (4, 'Carlos Gonzalez', 'Pje. Los Alamos 789', 'carlos.gonzalez@example.com', '987654323', '$2a$10$3/e6BmfT11nd.La4FGHrF.LfBA2z0ZQhEaPelbNqxG52VlEEnrkZO', 'carlos345', 'USER'),

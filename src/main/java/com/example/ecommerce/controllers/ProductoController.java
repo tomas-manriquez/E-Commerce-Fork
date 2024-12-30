@@ -68,6 +68,6 @@ public class ProductoController {
     @GetMapping("/recommend/{idCliente}")
     public ResponseEntity<List<ProductoDTO>> getProductosRecomendados (@PathVariable Long idCliente){
         List<ProductoDTO> productosRecomendados = recomendationService.recomendarProductos(idCliente);
-        return productosRecomendados != null ? ResponseEntity.ok(productosRecomendados) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productosRecomendados);
     }
 }

@@ -122,7 +122,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public List<ProductoEntity> findByCategoria(Long idCategoria){
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT p FROM productos p WHERE p.idCategoria = :idCategoria")
+            return con.createQuery("SELECT * FROM productos WHERE productos.idcategoria = :idCategoria")
                     .addParameter("idCategoria", idCategoria)
                     .executeAndFetch(ProductoEntity.class);
         }

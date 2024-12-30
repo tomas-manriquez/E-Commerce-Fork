@@ -26,11 +26,17 @@ public class RecomendationService {
     public List<ProductoDTO> recomendarProductos(Long idCliente) {
         // 1. Obtener la categoría favorita del cliente
         CategoriaEntity categoriaFavorita = historialService.getFavoriteCategoria(idCliente);
-        if (categoriaFavorita == null) throw new IllegalArgumentException("El cliente no tiene historial o no se encontró una categoría favorita.");
+        if (categoriaFavorita == null) {
+            System.out.println("no hay categoria :(");
+            return new ArrayList<>();
+        }
 
         // 2. Obtener los productos de la categoría favorita
         List<ProductoEntity> productosCategoria = productoService.findByCategoriaId(categoriaFavorita.getIdCategoria());
-        if (productosCategoria.isEmpty()) return null;
+        if (productosCategoria.isEmpty()) {
+            System.out.println("no hay productos por la categoria encontrada :(");
+            return new ArrayList<>();
+        }
 
         // 3. Obtener el promedio de las puntuaciones de los productos por categoría
         List<ProductoDTO> productosOpinionesPromedio = new ArrayList<>();

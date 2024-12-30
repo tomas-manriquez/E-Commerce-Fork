@@ -5,7 +5,7 @@ const uri = "mongodb://localhost:27017";
 const databaseName = "ecommerce";
 
 const collections = [
-    { name: "historial", file: "ecommerce.historiales.json" },
+    { name: "historiales", file: "ecommerce.historiales.json" },
     { name: "opiniones", file: "ecommerce.opiniones.json" },
 ];
 

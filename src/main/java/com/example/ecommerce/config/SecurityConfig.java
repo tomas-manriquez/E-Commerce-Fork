@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/detalle/byOrdenId/**").authenticated()
                         .requestMatchers("api/v1/ordenes/delete/**").authenticated()
                         .requestMatchers("api/v1/opiniones/create").authenticated()
+                        .requestMatchers("api/v1/historiales/**").authenticated()
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .sessionManagement(session -> session // Configura la política de creación de sesiones
