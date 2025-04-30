@@ -108,6 +108,7 @@ pipeline {
             echo 'Cleaning up dangling Docker images...'
             script {
                 if (isUnix()) {
+                    sh 'which docker && docker --version && echo $PATH'
                     sh '/usr/local/bin/docker image prune -f'
                 } else {
                     bat '/usr/local/bin/docker image prune -f'
