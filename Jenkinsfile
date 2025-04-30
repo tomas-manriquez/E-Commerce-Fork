@@ -18,13 +18,12 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                //dir('E-commerce-Fork')
-                {
+                 {
                     echo 'Building backend with Maven...'
                     script {
                         if (isUnix()) {
                             sh 'pwd'
-                            sh 'ls -R'
+                            sh 'ls -la'
                             sh '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
                         } else {
                             bat '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
