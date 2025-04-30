@@ -77,10 +77,12 @@ pipeline {
                             bat "DOCKER_BUILDKIT=0 && /usr/local/bin/docker build -t ${DOCKER_USER}/${BACKEND_IMAGE}:latest ."
                         }
 
+                        dir('ecommerce-frontend'){
                         if (isUnix()) {
                             sh "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
                         } else {
                             bat "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
+                            }
                         }
                 }
             }
