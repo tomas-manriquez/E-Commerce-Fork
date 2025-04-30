@@ -22,6 +22,7 @@ pipeline {
                     echo 'Building backend with Maven...'
                     script {
                         if (isUnix()) {
+                            sh 'pwd'
                             sh '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
                         } else {
                             bat '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
