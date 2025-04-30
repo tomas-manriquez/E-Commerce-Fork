@@ -70,6 +70,7 @@ pipeline {
                 echo 'Building Docker images...'
                 script {
                         if (isUnix()) {
+                            sh 'echo $PATH'
                             sh "DOCKER_BUILDKIT=0 /usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         } else {
                             bat "DOCKER_BUILDKIT=0 && /usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
