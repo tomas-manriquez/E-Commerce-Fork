@@ -18,7 +18,8 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                dir('E-commerce-Fork') {
+                //dir('E-commerce-Fork')
+                {
                     echo 'Building backend with Maven...'
                     script {
                         if (isUnix()) {
