@@ -1,0 +1,2 @@
+# From root (E-commerce-Fork)
+docker-compose --env-file .env up --build
