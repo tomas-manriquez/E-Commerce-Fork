@@ -5,7 +5,7 @@ pipeline {
         BACKEND_IMAGE = 'e-commerce-fork-backend'
         FRONTEND_IMAGE = 'e-commerce-fork-frontend'
         DOCKER_CREDENTIALS_ID = 'docker-credentials'
-        TEST_MARKER = 'src/test/java/com.example.ecommerce/EcommerceApplicationTests.java'
+        TEST_MARKER = 'EcommerceApplicationTests.java'
     }
 
     stages {
@@ -33,7 +33,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                     script {
-                        def testDir = 'src/test/java/com/example/ecommerce/'
+                        def testDir = 'src/test/java/com/example/ecommerce'
                         def testMarker = TEST_MARKER.replace('/', File.separator)
                         def testFiles = []
 
