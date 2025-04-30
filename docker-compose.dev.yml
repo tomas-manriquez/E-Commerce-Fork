@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "8090:8090"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - mongodb
+    command: mvn spring-boot:run
+    environment:
+      DB_HOST: postgres
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MONGO_HOST: mongodb
+      MONGO_PORT: ${DB_MONGOPORT}
+      MONGO_DB_NAME: ${DB_NAME}
+      MONGO_USERNAME: mongo
+      MONGO_PASSWORD: mongo
+
+  frontend:
+    build:
+      context: ./ecommerce-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./ecommerce-frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run serve
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:15
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
