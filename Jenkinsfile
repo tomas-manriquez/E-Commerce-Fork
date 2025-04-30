@@ -93,7 +93,7 @@ pipeline {
                 }
                 script {
 
-                    withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
+                    withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID, , url: 'https://index.docker.io/v1/') {
                         if (isUnix()) {
                             sh "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
                             sh "/usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
