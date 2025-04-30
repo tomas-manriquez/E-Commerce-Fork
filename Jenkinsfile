@@ -33,7 +33,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                     script {
-                        def testDir = 'src/test/java'
+                        def testDir = 'src/test/java/com/example/ecommerce/'
                         def testMarker = TEST_MARKER.replace('/', File.separator)
                         def testFiles = []
 
