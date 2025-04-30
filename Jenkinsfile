@@ -89,6 +89,10 @@ pipeline {
             steps {
                 echo 'Pushing images to Docker Hub...'
                 script {
+                    sh 'docker context use default || true'
+                }
+                script {
+
                     withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
                         if (isUnix()) {
                             sh "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
