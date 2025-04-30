@@ -18,18 +18,15 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                 {
                     echo 'Building backend with Maven...'
                     script {
                         if (isUnix()) {
-                            sh 'pwd'
-                            sh 'ls -la'
+                            sh 'pwd; ls -R'
                             sh '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
                         } else {
                             bat '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn clean package -DskipTests'
                         }
                     }
-                }
             }
         }
 
