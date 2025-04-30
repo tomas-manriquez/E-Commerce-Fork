@@ -56,9 +56,9 @@ pipeline {
                         } else {
                             echo 'Running JUnit tests...'
                             if (isUnix()) {
-                                sh 'mvn test'
+                                sh '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn test'
                             } else {
-                                bat 'mvn test'
+                                bat '/Users/tomasmanriquez/apache-maven-3.9.9/bin/mvn test'
                             }
                         }
                     }
@@ -70,15 +70,15 @@ pipeline {
                 echo 'Building Docker images...'
                 script {
                         if (isUnix()) {
-                            sh "docker build -t ${BACKEND_IMAGE}:latest ."
+                            sh "/usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         } else {
-                            bat "docker build -t ${BACKEND_IMAGE}:latest ."
+                            bat "/usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         }
                     dir('E-commerce-Fork/ecommerce-frontend') {
                         if (isUnix()) {
-                            sh "docker build -t ${FRONTEND_IMAGE}:latest ."
+                            sh "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
                         } else {
-                            bat "docker build -t ${FRONTEND_IMAGE}:latest ."
+                            bat "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
                         }
                     }
                 }
@@ -91,11 +91,11 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
                         if (isUnix()) {
-                            sh "docker push ${BACKEND_IMAGE}:latest"
-                            sh "docker push ${FRONTEND_IMAGE}:latest"
+                            sh "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
+                            sh "/usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
                         } else {
-                            bat "docker push ${BACKEND_IMAGE}:latest"
-                            bat "docker push ${FRONTEND_IMAGE}:latest"
+                            bat "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
+                            bat "/usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
                         }
                     }
                 }
@@ -108,9 +108,9 @@ pipeline {
             echo 'Cleaning up dangling Docker images...'
             script {
                 if (isUnix()) {
-                    sh 'docker image prune -f'
+                    sh '/usr/local/bin/docker image prune -f'
                 } else {
-                    bat 'docker image prune -f'
+                    bat '/usr/local/bin/docker image prune -f'
                 }
             }
         }
