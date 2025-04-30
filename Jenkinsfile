@@ -70,7 +70,7 @@ pipeline {
                 echo 'Building Docker images...'
                 script {
                         if (isUnix()) {
-                            sh "docker build -t ${BACKEND_IMAGE}:latest ."
+                            sh "/usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         } else {
                             bat "/usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         }
