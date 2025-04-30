@@ -80,9 +80,9 @@ pipeline {
 
                         dir('ecommerce-frontend'){
                         if (isUnix()) {
-                            sh "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
+                            sh "/usr/local/bin/docker build -t ${DOCKER_USER}/${FRONTEND_IMAGE}:latest ."
                         } else {
-                            bat "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
+                            bat "/usr/local/bin/docker build -t ${DOCKER_USER}/${FRONTEND_IMAGE}:latest ."
                             }
                         }
                 }
