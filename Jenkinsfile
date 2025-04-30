@@ -74,13 +74,12 @@ pipeline {
                         } else {
                             bat "/usr/local/bin/docker build -t ${BACKEND_IMAGE}:latest ."
                         }
-                    dir('E-commerce-Fork/ecommerce-frontend') {
+
                         if (isUnix()) {
                             sh "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
                         } else {
                             bat "/usr/local/bin/docker build -t ${FRONTEND_IMAGE}:latest ."
                         }
-                    }
                 }
             }
         }
