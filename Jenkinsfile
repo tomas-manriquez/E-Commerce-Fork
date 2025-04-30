@@ -32,7 +32,6 @@ pipeline {
 
         stage('Run Unit Tests') {
             steps {
-                dir('E-commerce-Fork') {
                     script {
                         def testDir = 'src/test/java'
                         def testMarker = TEST_MARKER.replace('/', File.separator)
@@ -63,7 +62,6 @@ pipeline {
                             }
                         }
                     }
-                }
             }
         }
 
@@ -71,13 +69,11 @@ pipeline {
             steps {
                 echo 'Building Docker images...'
                 script {
-                    dir('E-commerce-Fork') {
                         if (isUnix()) {
                             sh "docker build -t ${BACKEND_IMAGE}:latest ."
                         } else {
                             bat "docker build -t ${BACKEND_IMAGE}:latest ."
                         }
-                    }
                     dir('E-commerce-Fork/ecommerce-frontend') {
                         if (isUnix()) {
                             sh "docker build -t ${FRONTEND_IMAGE}:latest ."
