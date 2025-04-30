@@ -90,11 +90,11 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID) {
                         if (isUnix()) {
-                            sh "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
-                            sh "/usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
+                            sh "DOCKER_BUILDKIT=0 /usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
+                            sh "DOCKER_BUILDKIT=0 /usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
                         } else {
-                            bat "/usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
-                            bat "/usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
+                            bat "set DOCKER_BUILDKIT=0 && /usr/local/bin/docker push ${BACKEND_IMAGE}:latest"
+                            bat "set DOCKER_BUILDKIT=0 && /usr/local/bin/docker push ${FRONTEND_IMAGE}:latest"
                         }
                     }
                 }
