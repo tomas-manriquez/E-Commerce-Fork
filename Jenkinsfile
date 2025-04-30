@@ -7,7 +7,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-credentials'
         TEST_MARKER = 'EcommerceApplicationTests.java'
         DOCKER_USER = 'tomasmanriquez480'
-        DOCKER_PASSWORD = 'Tusach_251'
+        //DOCKER_PASSWORD = 'Tusach_251'
     }
 
     stages {
@@ -98,7 +98,7 @@ pipeline {
                 script {
 
                         if (isUnix()) {
-                            sh "docker login -u tomasmanriquez480 -p ${DOCKER_PASSWORD}"
+                            //sh "docker login -u tomasmanriquez480 -p ${DOCKER_PASSWORD}"
                             sh "/usr/local/bin/docker push ${DOCKER_USER}/${BACKEND_IMAGE}:latest"
                             sh "/usr/local/bin/docker push ${DOCKER_USER}/${FRONTEND_IMAGE}:latest"
                         } else {
